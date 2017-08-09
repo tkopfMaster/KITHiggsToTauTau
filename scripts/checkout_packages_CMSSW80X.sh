@@ -30,18 +30,17 @@ if [ "$MODE" = "artus" -o "$MODE" = "both" ]; then
     git read-tree -mu HEAD
     popd
 
-    git clone https://github.com/KappaAnalysis/KappaTools.git 
+    git clone https://github.com/KIT-CMS/KappaTools.git -b master
 
-    git clone https://github.com/artus-analysis/Artus.git
-    git clone https://github.com/artus-analysis/Artus.wiki.git Artus/Core/doc/wiki
+    git clone https://github.com/KIT-CMS/Artus.git
 
     # checkout KITHiggsToTauTau CMSSW analysis package
-    git clone https://github.com/cms-analysis/HiggsAnalysis-KITHiggsToTauTau HiggsAnalysis/KITHiggsToTauTau
-    git clone https://github.com/cms-analysis/HiggsAnalysis-KITHiggsToTauTau.wiki.git HiggsAnalysis/KITHiggsToTauTau/doc/wiki
+    git clone https://github.com/KIT-CMS/KITHiggsToTauTau HiggsAnalysis/KITHiggsToTauTau
+  #  git clone https://github.com/KIT-CMS/HiggsAnalysis-KITHiggsToTauTau.wiki.git HiggsAnalysis/KITHiggsToTauTau/doc/wiki
 
     # Svfit and HHKinFit
-    git clone https://github.com/CMSAachen3B/SVfit_standalone.git TauAnalysis/SVfitStandalone -b HIG-16-006
-    git clone https://github.com/artus-analysis/HHKinFit2.git -b artus
+    git clone https://github.com/KIT-CMS/SVfit_standalone.git TauAnalysis/SVfitStandalone -b HIG-16-006
+    #git clone https://github.com/artus-analysis/HHKinFit2.git -b artus
 
     # Jet2Tau Fakes
     git clone https://github.com/CMS-HTT/Jet2TauFakes.git HTTutilities/Jet2TauFakes
@@ -50,7 +49,7 @@ if [ "$MODE" = "artus" -o "$MODE" = "both" ]; then
     git clone https://github.com/CMS-HTT/QCDModelingEMu.git HTT-utilities/QCDModelingEMu
 
     # Fit Package for tau polarisation
-    git clone https://github.com/CMSAachen3B/SimpleFits.git -b artus_master
+    #git clone https://github.com/CMSAachen3B/SimpleFits.git -b artus_master
 
     sed '/CombineHarvester/d' ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/BuildFile.xml -i
 

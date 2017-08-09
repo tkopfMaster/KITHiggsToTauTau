@@ -1,4 +1,4 @@
-
+/*
 #include "HHKinFit2/HHKinFit2/interface/HHKinFitMasterSingleHiggs.h"
 
 #include "Artus/Consumer/interface/LambdaNtupleConsumer.h"
@@ -150,3 +150,4 @@ void HHKinFitProducer::Produce(event_type const& event, product_type& product,
 	}
 }
 
+*/

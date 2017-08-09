@@ -33,7 +33,7 @@ git clone https://github.com/KIT-CMS/KITHiggsToTauTau HiggsAnalysis/KITHiggsToTa
 # Svfit and HHKinFit
 # git clone https://github.com/veelken/SVfit_standalone.git TauAnalysis/SVfitStandalone -b HIG-16-006
 git clone https://github.com/KIT-CMS/SVfit_standalone.git TauAnalysis/SVfitStandalone -b HIG-16-006
-git clone https://github.com/artus-analysis/HHKinFit2.git -b artus
+#git clone https://github.com/artus-analysis/HHKinFit2.git -b artus
 
 # Jet2Tau Fakes
 git clone https://github.com/CMS-HTT/Jet2TauFakes.git HTTutilities/Jet2TauFakes

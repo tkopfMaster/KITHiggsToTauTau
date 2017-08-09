@@ -42,7 +42,7 @@
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/SimpleMuTauFakeRateWeightProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/JetToTauFakesProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/PolarisationQuantitiesProducer.h"
-#include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/SimpleFitProducer.h"
+//#include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/SimpleFitProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/EmuQcdWeightProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/RooWorkspaceWeightProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/TauTauTriggerScaleFactorProducer.h"
@@ -225,8 +225,8 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new JetToTauFakesProducer();
 	else if(id == PolarisationQuantitiesProducer().GetProducerId())
 		return new PolarisationQuantitiesProducer();
-	else if(id == SimpleFitProducer().GetProducerId())
-		return new SimpleFitProducer();
+//	else if(id == SimpleFitProducer().GetProducerId())
+//		return new SimpleFitProducer();
 	else if(id == ScaleVariationProducer().GetProducerId())
 		return new ScaleVariationProducer();
 	else if(id == EmuQcdWeightProducer().GetProducerId())

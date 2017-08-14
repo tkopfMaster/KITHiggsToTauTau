@@ -36,20 +36,37 @@ class HiggsToTauTauAnalysisWrapper():
 		self._args = self._parser.parse_args()
 		logger.initLogger(self._args)
 		
+		date_now = datetime.now().strftime("%Y-%m-%d_%H-%M")
+		
+		# write repository revisions to the config
+		if not self._args.disable_repo_versions:
+			self.setRepositoryRevisions()
+			self._config["Date"] = date_now
+		
 	def run(self):
-		#generate artus config
-		self.import_analysis_configs()
-		#save artus config
-		self.saveConfig(filepath)
+		
+		exitCode = 0
+		
 		
 		if self._args.batch:
+			#artus config not needed at this stage
 			#prepare grid-control config
 			
 			if not self._args.no_run:
 				#run gc
+				print "gc"
 		else:
+			#generate artus config
+			self.import_analysis_configs()
+		
+			# save final config
+			self.saveConfig(self._args.save_config)
+			if self._args.print_config:
+				log.info(self._config)
+				
 			if not self._args.no_run:
 				#run artus locally
+				print "portal/node"
 		
 		if exitCode < 256:
 			return exitCode
@@ -101,7 +118,7 @@ class HiggsToTauTauAnalysisWrapper():
 		                                help="Print out the JSON config before running Artus.")
 		configOptionsGroup.add_argument("--print-envvars", nargs="+",
 		                                help="Log specified environment variables.")
-		configOptionsGroup.add_argument("-s", "--save-config", default="",
+		configOptionsGroup.add_argument("-s", "--save-config", default=None,
 		                                help="Save the JSON config to FILENAME.")
 		configOptionsGroup.add_argument("-f", "--fast", type=int,
 		                                help="Limit number of input files or grid-control jobs. 3=files[0:3].")
@@ -158,7 +175,7 @@ class HiggsToTauTauAnalysisWrapper():
 			self._analysis_config_module = importlib.import_module(analysis_configs_dict[self._args.analysis])
 		else:
 			self._analysis_config_module = importlib.import_module(self._args.analysis)
-		self._config = self._analysis_config_module.build_config()
+		self._config += self._analysis_config_module.build_config()
 		
 	def saveConfig(self, filepath=None):
 		"""Save Config to File"""
@@ -169,7 +186,37 @@ class HiggsToTauTauAnalysisWrapper():
 		self._config.save(filepath, indent=4)
 		log.info("Saved JSON config \"%s\" for temporary usage." % self._configFilename)
 
-	
+	# write repository revisions to the config
+	def setRepositoryRevisions(self):
+		# expand possible environment variables in paths
+		if isinstance(self._args.repo_scan_base_dirs, basestring):
+			self._args.repo_scan_base_dirs = [self._args.repo_scan_base_dirs]
+		self._args.repo_scan_base_dirs = [os.path.expandvars(repoScanBaseDir) for repoScanBaseDir in self._args.repo_scan_base_dirs]
+
+		# construct possible scan paths
+		subDirWildcards = ["*/" * level for level in range(self._args.repo_scan_depth+1)]
+		scanDirWildcards = [os.path.join(repoScanBaseDir, subDirWildcard) for repoScanBaseDir in self._args.repo_scan_base_dirs for subDirWildcard in subDirWildcards]
+
+		# globbing and filter for directories
+		scanDirs = tools.flattenList([glob.glob(scanDirWildcard) for scanDirWildcard in scanDirWildcards])
+		scanDirs = [scanDir for scanDir in scanDirs if os.path.isdir(scanDir)]
+
+		# key: directory to check type of repository
+		# value: command to extract the revision
+		repoVersionCommands = {
+			".git" : "git rev-parse HEAD",
+			".svn" : "svn info"# | grep Revision | awk '{print $2}'"
+		}
+		# loop over dirs and revision control systems and write revisions to the config dict
+		for repoDir, currentRevisionCommand in repoVersionCommands.items():
+			repoScanDirs = [os.path.join(scanDir, repoDir) for scanDir in scanDirs]
+			repoScanDirs = [glob.glob(os.path.join(scanDir, repoDir)) for scanDir in scanDirs]
+			repoScanDirs = tools.flattenList([glob.glob(os.path.join(scanDir, repoDir)) for scanDir in scanDirs])
+			repoScanDirs = [os.path.abspath(os.path.join(repoScanDir, "..")) for repoScanDir in repoScanDirs]
+
+			for repoScanDir in repoScanDirs:
+				popenCout, popenCerr = subprocess.Popen(currentRevisionCommand.split(), stdout=subprocess.PIPE, cwd=repoScanDir).communicate()
+				self._config[repoScanDir] = popenCout.replace("\n", "")
 	
 '''
 class HiggsToTauTauAnalysisWrapper(kappaanalysiswrapper.KappaAnalysisWrapper):

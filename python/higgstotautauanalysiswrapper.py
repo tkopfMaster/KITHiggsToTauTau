@@ -42,6 +42,8 @@ class HiggsToTauTauAnalysisWrapper():
 		if not self._args.disable_repo_versions:
 			self.setRepositoryRevisions()
 			self._config["Date"] = date_now
+			
+		self.tmp_directory_remote_files = None #TODO
 		
 	def run(self):
 		
@@ -49,24 +51,41 @@ class HiggsToTauTauAnalysisWrapper():
 		
 		
 		if self._args.batch:
-			#artus config not needed at this stage
-			#prepare grid-control config
+			# artus config not needed at this stage, it will be generated when this is run on the batch node again
+			# prepare grid-control config
 			
 			if not self._args.no_run:
 				#run gc
-				print "gc"
+				print "gc" #TODO
 		else:
-			#generate artus config
+			# generate artus config
 			self.import_analysis_configs()
 		
 			# save final config
 			self.saveConfig(self._args.save_config)
 			if self._args.print_config:
 				log.info(self._config)
-				
-			if not self._args.no_run:
-				#run artus locally
-				print "portal/node"
+			
+			# set LD_LIBRARY_PATH
+			if not self._args.ld_library_paths is None:
+				for path in self._args.ld_library_paths:
+					if path not in os.environ.get("LD_LIBRARY_PATH", ""):
+						os.environ["LD_LIBRARY_PATH"] = path+":"+os.environ.get("LD_LIBRARY_PATH", "")
+
+			# print environment variables
+			if self._args.print_envvars:
+				for envvar in self._args.print_envvars:
+					log.info("$%s = %s" % (envvar, os.environ.get(envvar, "")))
+			
+			# if desired, run artus locally or measure performance
+			if self._args.profile:
+				exitCode = self.measurePerformance(self._args.profile,self._args.profile_options)
+			elif not self._args.no_run:
+				exitCode = self.callExecutable()
+			
+			# clean up
+			if (not self.tmp_directory_remote_files is None):
+				shutil.rmtree(self.tmp_directory_remote_files)
 		
 		if exitCode < 256:
 			return exitCode
@@ -82,7 +101,7 @@ class HiggsToTauTauAnalysisWrapper():
 		                                       description="Wrapper for Artus executables. Configs are to be set internally.")
 		
 		self._parser.add_argument("-x", "--executable", help="Artus executable. [Default: %(default)s]", default=os.path.basename(sys.argv[0]))
-		self._parser.add_argument("-a", "--analysis", required=True, help="Analysis nick [SM, MSSM] or path to the config module.")
+		self._parser.add_argument("-a", "--analysis", required=True, help="Analysis nick [SM, MSSM] or import path ('HiggsAnalysis.KITHiggsToTauTau....' in HiggsAnalysis/KITHiggsToTauTau/python/...) of the config module.")
 
 		fileOptionsGroup = self._parser.add_argument_group("File options")
 		fileOptionsGroup.add_argument("-i", "--input-files", nargs="+", required=False,
@@ -165,17 +184,20 @@ class HiggsToTauTauAnalysisWrapper():
 		
 	
 	def import_analysis_configs(self):
+		# define known analysis keys here
 		analysis_configs_dict = {
-			#'SM' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusWrapperConfigs.Run2Analysis',
+			#'SM' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusWrapperConfigs.Run2Analysis', #TODO
 			#'sm' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusWrapperConfigs.Run2Analysis',
 			'MSSM' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusWrapperConfigs.Run2MSSM',
 			'mssm' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusWrapperConfigs.Run2MSSM'
 		}
+		# check whether analysis arg is known. If not it is assumed to be a import path.
 		if self._args.analysis in analysis_configs_dict:
 			self._analysis_config_module = importlib.import_module(analysis_configs_dict[self._args.analysis])
 		else:
 			self._analysis_config_module = importlib.import_module(self._args.analysis)
-		self._config += self._analysis_config_module.build_config()
+		# import configs
+		self._config += self._analysis_config_module.build_config() #TODO
 		
 	def saveConfig(self, filepath=None):
 		"""Save Config to File"""
@@ -183,7 +205,7 @@ class HiggsToTauTauAnalysisWrapper():
 			basename = "artus_{0}.json".format(hashlib.md5(str(self._config)).hexdigest())
 			filepath = os.path.join(tempfile.gettempdir(), basename)
 		self._configFilename = filepath
-		self._config.save(filepath, indent=4)
+		self._config.save(self._configFilename, indent=4)
 		log.info("Saved JSON config \"%s\" for temporary usage." % self._configFilename)
 
 	# write repository revisions to the config
@@ -218,6 +240,44 @@ class HiggsToTauTauAnalysisWrapper():
 				popenCout, popenCerr = subprocess.Popen(currentRevisionCommand.split(), stdout=subprocess.PIPE, cwd=repoScanDir).communicate()
 				self._config[repoScanDir] = popenCout.replace("\n", "")
 	
+	def measurePerformance(self, profTool, profOpt):
+		"""run Artus with profiler"""
+
+		profile_cpp.profile_cpp(
+				command=self._executable+" "+self._configFilename,
+				profiler=profTool,
+				profiler_opt=profOpt,
+				output_dir=os.path.dirname(self._args.output_file)
+		)
+
+		return 0
+
+
+	def callExecutable(self):
+		return 0 #TODO
+		"""run Artus analysis (C++ executable)"""
+		exitCode = 0
+
+		# check output directory
+		outputDir = os.path.dirname(self._args.output_file)
+		if outputDir and not os.path.exists(outputDir):
+			os.makedirs(outputDir)
+
+		# call C++ executable locally
+		command = self._executable + " " + self._configFilename
+		log.info("Execute \"%s\"." % command)
+		exitCode = logger.subprocessCall(command.split())
+
+		if exitCode != 0:
+			log.error("Exit with code %s.\n\n" % exitCode)
+			log.info("Dump configuration:\n")
+			log.info(self._configFilename)
+
+		# remove tmp. config
+		# logging.getLogger(__name__).info("Remove temporary config file.")
+		# os.system("rm " + self._configFilename)
+
+		return exitCode
 '''
 class HiggsToTauTauAnalysisWrapper(kappaanalysiswrapper.KappaAnalysisWrapper):
 

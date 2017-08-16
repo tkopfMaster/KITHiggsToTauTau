@@ -16,7 +16,7 @@ def build_config(nickname, process=None):
   
   # define frequently used conditions
   isData = datasetsHelper.isData(nickname)
-  isEmbedding = datasetsHelper.isEmbedding(nickname)
+  isEmbedded = datasetsHelper.isEmbedded(nickname)
   isTTbar = re.match("TT(To|_|Jets)", nickname)
   isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
   isWjets = re.match("W.?JetsToLNu", nickname)
@@ -52,7 +52,6 @@ def build_config(nickname, process=None):
         35,
         36
         ]
-    }
   }
   config["BosonPdgIds"] = 0
   for key, pdgids in BosonPdgIds.items():
@@ -77,7 +76,7 @@ def build_config(nickname, process=None):
   config["MatchAllTausGenTau"] = "true"
   config["UpdateMetWithCorrectedLeptons"] = "true"
   
-  config["MetFilter"] : [
+  config["MetFilter"] = [
         "Flag_HBHENoiseFilter",
         "Flag_HBHENoiseIsoFilter",
         "Flag_EcalDeadCellTriggerPrimitiveFilter",
@@ -102,19 +101,19 @@ def build_config(nickname, process=None):
   
   config["Processors"] = []
   #config["Processors"].append("filter:RunLumiEventFilter")
-  if not isEmbedding:                  config["Processors"].append( "filter:MetFilter")
-  if isData or isEmbedding:            config["Processors"].append( "filter:JsonFilter")
+  if not isEmbedded:                  config["Processors"].append( "filter:MetFilter")
+  if isData or isEmbedded:            config["Processors"].append( "filter:JsonFilter")
   if isDY or isTTbar:                  config["Processors"].append( "producer:ScaleVariationProducer")
   config["Processors"].append(                                      "producer:NicknameProducer")
   if not isData:
     config["Processors"].extend((                                   "producer:CrossSectionWeightProducer",
                                                                     "producer:NumberGeneratedEventsWeightProducer"))
-    if not isEmbedding:                config["Processors"].append( "producer:PUWeightProducer")
+    if not isEmbedded:                config["Processors"].append( "producer:PUWeightProducer")
     if isWjets or isDY:                config["Processors"].append( "producer:GenBosonFromGenParticlesProducer")
-    if isDY or isEmbedding:            config["Processors"].append( "producer:GenDiLeptonDecayModeProducer")
+    if isDY or isEmbedded:            config["Processors"].append( "producer:GenDiLeptonDecayModeProducer")
     config["Processors"].extend((                                   "producer:GenParticleProducer",
                                                                     "producer:GenPartonCounterProducer"))
-    if isWjets or isDY or isEmbedding: config["Processors"].extend(("producer:GenTauDecayProducer",
+    if isWjets or isDY or isEmbedded: config["Processors"].extend(("producer:GenTauDecayProducer",
                                                                     "producer:GenBosonDiLeptonDecayModeProducer"))
     config["Processors"].extend((                                   "producer:GeneratorWeightProducer",
                                                                     "producer:RecoMuonGenParticleMatchingProducer",
@@ -126,7 +125,7 @@ def build_config(nickname, process=None):
                                                                     "producer:MatchedLeptonsProducer"))
     if isTTbar:                        config["Processors"].append( "producer:TTbarGenDecayModeProducer")
 
-  if isData or isEmbedding:            config["PileupWeightFile"] = "not needed"
+  if isData or isEmbedded:            config["PileupWeightFile"] = "not needed"
   elif re.match("Spring16", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2016_271036-276811_13TeVSpring16_PromptReco_69p2mbMinBiasXS.root"
   elif re.match("Summer16", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2016_271036-284044_13TeVMoriond17_23Sep2016ReReco_69p2mbMinBiasXS.root"
   else:                                config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2015_246908-260627_13TeVFall15MiniAODv2_PromptReco_69mbMinBiasXS.root"
@@ -139,7 +138,7 @@ def build_config(nickname, process=None):
   config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/CSVv2_moriond17_BtoH.csv"
   config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root"
   
-  if isData or isEmbedding:
+  if isData or isEmbedded:
     if   re.match("Run2016|Embedding2016", nickname):      config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"
     elif re.match("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"
     elif re.match("Run2015B", nickname):                   config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"
@@ -155,10 +154,18 @@ def build_config(nickname, process=None):
     config["SimpleEleTauFakeRateWeightVLoose"] = [1.21, 1.38]
     config["SimpleEleTauFakeRateWeightTight"] = [1.40, 1.90]
 
-
+  '''
   # pipelines
   config["Pipelines"] = {}
+  channel_dicts = {
+           'ee' : importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.ee).build_config(nickname),
+           'em' : importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.em).build_config(nickname),
+           'et' : importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.et).build_config(nickname),
+           'mm' : importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.mm).build_config(nickname),
+           'mt' : importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.mt).build_config(nickname),
+           'tt' : importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.tt).build_config(nickname)
+  }
   if not isData:
     print "nothing yet"
-  
+  '''  
   return config

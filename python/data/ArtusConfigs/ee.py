@@ -28,18 +28,7 @@ def build_config(nickname):
   ## fill config:
   # includes
   includes = [
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsLooseElectronID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsLooseMuonID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsElectronID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsVetoElectronID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsMuonID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsTauID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsJEC",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsJetID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsBTaggedJetID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsTauES",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsMinimalPlotlevelFilter_ee"
-  ]
+    ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
@@ -62,7 +51,7 @@ def build_config(nickname):
     ]
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["ElectronLowerPtCuts"] = ["26.0"]
+  config["ElectronLowerPtCuts" = ["26.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.1"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
@@ -88,7 +77,7 @@ def build_config(nickname):
       "HLT_VLooseIsoPFTau120_Trk50_eta2p1_v",
       "HLT_Ele25_eta2p1_WPTight_Gsf_v"
   ]
-  config["RooWorkspace"] = "HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_4.root"
+  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_4.root"
   config["RooWorkspaceWeightNames"] = [
       "0:triggerWeight",
       "0:idweight",
@@ -169,7 +158,7 @@ def build_config(nickname):
   if not isDY:        config["Processors"].append( "producer:TaggedJetCorrectionsProducer")
   config["Processors"].extend((                    "producer:ValidTaggedJetsProducer",
                                                    "producer:ValidBTaggedJetsProducer"))
-  if isDY or isWjets: config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
+  if isDY or isWjets: config["Processors"].extend(("producer:MetCorrector")) #"producer:MvaMetCorrector"
   config["Processors"].extend((                    "producer:TauTauRestFrameSelector",
                                                    "producer:DiLeptonQuantitiesProducer",
                                                    "producer:DiJetQuantitiesProducer"))
@@ -177,8 +166,8 @@ def build_config(nickname):
   if isDY:            config["Processors"].append( "producer:ZPtReweightProducer")
   config["Processors"].extend((                    "filter:MinimalPlotlevelFilter", #"producer:MVATestMethodsProducer",
                                                    "producer:MVAInputQuantitiesProducer"))
-  if not isData:      config["Processors"].append( #"producer:TriggerWeightProducer", "producer:IdentificationWeightProducer"
-                                                   "producer:RooWorkspaceWeightProducer")
+  if not isData:      config["Processors"].extend((#"producer:TriggerWeightProducer", "producer:IdentificationWeightProducer"
+                                                   "producer:RooWorkspaceWeightProducer"))
   config["Processors"].append(                     "producer:EventWeightProducer")
   
   config["AddGenMatchedParticles"] = True,
@@ -203,4 +192,5 @@ def build_config(nickname):
     longkey = "ee_" + key
     config_with_systs[longkey] = copy.deepcopy(config)
     config_with_systs[longkey] += syst
+  
   return config_with_systs

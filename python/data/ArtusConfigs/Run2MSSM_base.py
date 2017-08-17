@@ -9,8 +9,9 @@ import re
 import json
 import Artus.Utility.jsonTools as jsonTools
 import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
+import importlib
 
-def build_config(nickname, process=None):
+def build_config(nickname):
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz("Kappa/Skimming/data/datasets.json")
   
@@ -157,13 +158,13 @@ def build_config(nickname, process=None):
 
   
   # pipelines - channels including systematic shifts
-  config["Pipelines"] = {}
-  config["Pipelines"] += importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.ee).build_config(nickname)
-  config["Pipelines"] += importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.em).build_config(nickname)
-  config["Pipelines"] += importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.et).build_config(nickname)
-  config["Pipelines"] += importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.mm).build_config(nickname)
-  config["Pipelines"] += importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.mt).build_config(nickname)
-  config["Pipelines"] += importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.tt).build_config(nickname)
+  config["Pipelines"] = jsonTools.JsonDict()
+  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.ee").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.em").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.et").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.mm").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.mt").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.tt").build_config(nickname)
   
   
   return config

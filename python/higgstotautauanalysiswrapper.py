@@ -203,10 +203,10 @@ class HiggsToTauTauAnalysisWrapper():
 	def import_analysis_configs(self):
 		# define known analysis keys here
 		analysis_configs_dict = {
-			#'SM' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis', #TODO
-			#'sm' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis',
-			'MSSM' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM',
-			'mssm' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM'
+			#'SM' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis_base', #TODO
+			#'sm' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis_base',
+			'MSSM' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM_base',
+			'mssm' : 'HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM_base'
 		}
 		# check whether analysis arg is known. If not it is assumed to be a import path.
 		if self._args.analysis in analysis_configs_dict:

@@ -156,7 +156,7 @@ def build_config(nickname, process=None):
     config["SimpleEleTauFakeRateWeightTight"] = [1.40, 1.90]
 
   
-  # pipelines
+  # pipelines - channels including systematic shifts
   config["Pipelines"] = {}
   config["Pipelines"] += importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.ee).build_config(nickname)
   config["Pipelines"] += importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.em).build_config(nickname)

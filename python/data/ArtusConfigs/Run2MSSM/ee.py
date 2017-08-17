@@ -7,6 +7,7 @@ log = logging.getLogger(__name__)
 
 import re
 import json
+import copy
 import Artus.Utility.jsonTools as jsonTools
 import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
 
@@ -183,8 +184,12 @@ def build_config(nickname, process=None):
                          #"PrintEventsConsumer"
   
   
-  # pipelines
+  # pipelines - systematic shifts
   systs = importlib.import_module(HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.syst_shifts).build_config(nickname)
+  config_with_systs = jsonTools.JsonDict()
+  for key, syst in systs.items():
+    longkey = "ee_" + key
+    config_with_systs[longkey] = copy.deepcopy(config)
+    config_with_systs[longkey] += syst
   
-  
-  return config
+  return config_with_systs

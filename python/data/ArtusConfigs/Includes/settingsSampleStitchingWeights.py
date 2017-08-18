@@ -41,7 +41,7 @@ def build_config(nickname):
       "3:1.7471761634154e-5",
       "4:1.3697397756176e-5"
     ],
-    "DY.?JetsToLLM(50|150)_RunIISummer16|LFV" : [
+    "DY.?JetsToLLM(50|150)_RunIISummer16" : [
       "0:1.17315803668195e-4",
       "1:1.621414441741e-5",
       "2:1.6643877999447e-5",

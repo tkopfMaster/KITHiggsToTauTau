@@ -38,7 +38,7 @@ def build_config(nickname):
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsJetID",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsBTaggedJetID",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsTauES",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsMinimalPlotlevelFilter_mt"
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsMinimalPlotlevelFilter_mt"
   ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
@@ -91,7 +91,7 @@ def build_config(nickname):
       "HLT_VLooseIsoPFTau120_Trk50_eta2p1_v",
       "HLT_Ele25_eta2p1_WPTight_Gsf_v"
   ]
-  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_4.root"
+  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
   config["RooWorkspaceWeightNames"] = [
       "0:triggerWeight",
       "0:isoweight",
@@ -111,11 +111,11 @@ def build_config(nickname):
       "0:m_eta"
   ]
   config["FakeFaktorFiles"] = [
-      "inclusive:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/inclusive/fakeFactors_20170515_tight.root",
-      "nobtag_tight:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/nobtag_tight/fakeFactors_20170515_tight.root",
-      "nobtag_loosemt:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/nobtag_loosemt/fakeFactors_20170515_tight.root",
-      "btag_tight:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/btag_tight/fakeFactors_20170515_tight.root",
-      "btag_loosemt:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/btag_loosemt/fakeFactors_20170515_tight.root"
+      "inclusive:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/inclusive/fakeFactors_20170628_tight.root",
+      "nobtag_tight:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/nobtag_tight/fakeFactors_20170628_tight.root",
+      "nobtag_loosemt:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/nobtag_loosemt/fakeFactors_20170628_tight.root",
+      "btag_tight:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/btag_tight/fakeFactors_20170628_tight.root",
+      "btag_loosemt:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/btag_loosemt/fakeFactors_20170628_tight.root"
   ]
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
@@ -139,22 +139,13 @@ def build_config(nickname):
   
   config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.syncQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
-  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.MVAInputQuantities").build_list())
+  #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.MVAInputQuantities").build_list())
+  #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.zptQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.lheWeights").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.fakeFactorWeightQuantities").build_list())
   config["Quantities"].extend([
-      "nmediumbtag",
       "had_gen_match_pT_1",
-      "had_gen_match_pT_2",
-      "muR1p0_muF1p0_weight",
-      "muR1p0_muF2p0_weight",
-      "muR1p0_muF0p5_weight",
-      "muR2p0_muF1p0_weight",
-      "muR2p0_muF2p0_weight",
-      "muR2p0_muF0p5_weight",
-      "muR0p5_muF1p0_weight",
-      "muR0p5_muF2p0_weight",
-      "muR0p5_muF0p5_weight"
+      "had_gen_match_pT_2"
   ])
   
   config["OSChargeLeptons"] = True
@@ -190,8 +181,8 @@ def build_config(nickname):
                                                               "producer:SimpleMuTauFakeRateWeightProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
-  config["Processors"].extend((                               "filter:MinimalPlotlevelFilter", #"producer:MVATestMethodsProducer",
-                                                              "producer:MVAInputQuantitiesProducer"))
+  config["Processors"].append(                                "filter:MinimalPlotlevelFilter") #"producer:MVATestMethodsProducer",
+                                                              #"producer:MVAInputQuantitiesProducer"))
   if not isData:                 config["Processors"].append( #"producer:TriggerWeightProducer", "producer:IdentificationWeightProducer"
                                                               "producer:RooWorkspaceWeightProducer")
   if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")

@@ -26,7 +26,7 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  if re.match("DYJetsToLL.*amcatnlo|TT_", nickname):
+  if re.match("DYJetsToLL.*amcatnlo|TT", nickname):
     config["GenEventInfoMetadataNames"] = [
         "1001:muR1p0_muF1p0_weight",
         "1002:muR1p0_muF2p0_weight",
@@ -251,7 +251,7 @@ def build_config(nickname):
         "4055:MMHT2014nlo_asmzsmallrange_55_weight",
         "4056:MMHT2014nlo_asmzsmallrange_56_weight"
     ]
-  elif re.match("(DYJetsToLL|LFV).*madgraph", nickname):
+  elif re.match("DYJetsToLL.*madgraph", nickname):
     config["GenEventInfoMetadataNames"] = [
         "1:muR1p0_muF1p0_weight",
         "2:muR1p0_muF2p0_weight",

@@ -19,7 +19,7 @@ def build_config(nickname):
   isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
   #isTTbar = re.match("TT(To|_|Jets)", nickname)
-  #isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
+  isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
   #isWjets = re.match("W.?JetsToLNu", nickname)
   
   
@@ -47,16 +47,6 @@ def build_config(nickname):
     }
     config["tauEsDown"]["TauEnergyCorrectionShift"] = 0.984
     
-    
-    config["muonEsUp"] = {
-      "JetEnergyCorrectionUncertaintyShift" : [0.0]
-    }
-    config["muonEsUp"]["MuonEnergyCorrectionShift"] = 1.01
-      
-    config["muonEsDown"] = {
-      "JetEnergyCorrectionUncertaintyShift" : [0.0]
-    }
-    config["muonEsDown"]["MuonEnergyCorrectionShift"] = 0.99
   
   if not (isEmbedded or isData):
     config["tauEsOneProngUp"] = {
@@ -90,6 +80,29 @@ def build_config(nickname):
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
     config["tauEsThreeProngDown"]["TauEnergyCorrectionThreeProng"] = 0.994
+    
+    
+  if isDY:
+    config["eleTauEsOneProngZeroPiZeroUp"] = {
+      "JetEnergyCorrectionUncertaintyShift" : [0.0]
+    }
+    config["eleTauEsOneProngZeroPiZeroUp"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.029
+    
+    config["eleTauEsOneProngZeroPiZeroDown"] = {
+      "JetEnergyCorrectionUncertaintyShift" : [0.0]
+    }
+    config["eleTauEsOneProngZeroPiZeroDown"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.019
+    
+    
+    config["eleTauEsOneProngOnePiZeroUp"] = {
+      "JetEnergyCorrectionUncertaintyShift" : [0.0]
+    }
+    config["eleTauEsOneProngOnePiZeroUp"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.086
+    
+    config["eleTauEsOneProngOnePiZeroDown"] = {
+      "JetEnergyCorrectionUncertaintyShift" : [0.0]
+    }
+    config["eleTauEsOneProngOnePiZeroDown"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.066
   
   
   return config

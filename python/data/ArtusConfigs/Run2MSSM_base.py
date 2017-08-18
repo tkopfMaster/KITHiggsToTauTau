@@ -27,6 +27,9 @@ def build_config(nickname):
   ## fill config:
   # includes
   includes = [
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.settingsKappa",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.lheWeightAssignment",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.settingsSampleStitchingWeights"
     ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)

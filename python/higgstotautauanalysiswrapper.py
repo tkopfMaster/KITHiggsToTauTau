@@ -27,7 +27,7 @@ class HiggsToTauTauAnalysisWrapper():
 	def __init__(self, executable=None, userArgParsers=None):
 		
 		self._config = jsonTools.JsonDict()
-		self._executable = None
+		self._executable = "HiggsToTauTauAnalysis"
 
 		self._parser = None
 		#Load default argument parser

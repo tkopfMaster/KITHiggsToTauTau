@@ -38,8 +38,7 @@ class HiggsToTauTauAnalysisWrapper():
 		
 		self._date_now = datetime.now().strftime("%Y-%m-%d_%H-%M")
 			
-		self.tmp_directory_remote_files = None #TODO
-		
+		self.tmp_directory_remote_files = None
 		
 		self._gridControlInputFiles = {}
 		
@@ -74,14 +73,21 @@ class HiggsToTauTauAnalysisWrapper():
 				self._config["Date"] = self._date_now
 			# import analysis dependent config
 			self.import_analysis_configs()
+			# treat environment variables
+			if self._args.envvar_expansion:
+				self._config = self._config.doExpandvars()
+			# treat remote files
+			if self._args.copy_remote_files and (not self._args.batch):
+				self.useLocalCopiesOfRemoteFiles()
+			# set log level
+			self._config["LogLevel"] = self._args.log_level
+			# set output filename
+			if self._args.output_file:
+				self._config["OutputPath"] = self._args.output_file
 			# save final config
 			self.saveConfig(self._args.save_config)
 			if self._args.print_config:
 				log.info(self._config)
-			
-			# set output filename
-			if self._args.output_file:
-				self._config["OutputPath"] = self._args.output_file
 			
 			# set LD_LIBRARY_PATH
 			if not self._args.ld_library_paths is None:
@@ -129,7 +135,7 @@ class HiggsToTauTauAnalysisWrapper():
 		                              help="Work directory base. [Default: %(default)s]")
 		fileOptionsGroup.add_argument("-n", "--project-name", default="analysis",
 		                              help="Name for this Artus project specifies the name of the work subdirectory.")
-		#TODO
+		
 		configOptionsGroup = self._parser.add_argument_group("Config options")
 		#configOptionsGroup.add_argument("-c", "--base-configs", nargs="+", required=False, default={},
 		#                                help="JSON base configurations. All configs are merged.")
@@ -251,6 +257,65 @@ class HiggsToTauTauAnalysisWrapper():
 			else:
 				log.warning("Found file in input search path that is not further considered: " + entry + "\n")
 	
+	def readDbsFile(self, path):
+		dbsInput = {}
+		with open(path, "r") as dbsfile:
+			key = ""
+			for line in dbsfile:
+				if "[" in line:
+					key = line.strip().replace("[", "").replace("]", "")
+					dbsInput[key] = []
+				elif "=" in line:
+					first, second = line.split("=")
+					try:
+						float(second)
+					except ValueError:
+						continue
+					dbsInput[key].append(first.strip())
+		return dbsInput
+
+	def removeProcessedFiles(self, dbs, path):
+		#import pdb
+		base_path, trash = os.path.split(path)
+		base_path = os.path.join(base_path, "workdir")
+		job_list = glob.glob(os.path.join(base_path, "jobs/job_*.txt"))
+		for job in job_list:
+			with open(job, "r") as jobinfo:
+				parse_files = False
+				for line in jobinfo:
+					var, status = line.strip().split("=")
+					status = status.replace('"', '')
+					if "status" in line and "SUCCESS" in line:
+						parse_files = True
+						break
+			if parse_files:
+				job_gc = job.replace("/jobs/", "/output/").replace(".txt", "/gc.stdout")
+				files = ""
+				with open(job_gc, "r") as gcfile:
+					for line in gcfile:
+						if "export FILE_NAMES" in line:
+							var, files = line.split("=")
+							files = files.strip().replace('\\', '').replace('"', '')
+							files = files.split(", ")
+							break
+				main_key = ""
+				for key in dbs.keys():
+					#pdb.set_trace()
+					if re.search("kappa_%s_[0-9]+.root"%key, files[0]):
+						main_key = key
+						break
+				for sfile in files:
+					try:
+						ind = dbs[main_key].index(sfile)
+						dbs[main_key].pop(ind)
+					except ValueError:
+						continue
+		length = 0
+		for key, item in dbs.iteritems():
+			length += len(item)
+		log.info("Final dbs consists of %i files" %length)
+		return dbs
+	
 	def extractNickname(self, string): ###could be inherited from artusWrapper!
 		filename = os.path.basename(string)
 		nickname = filename[filename.find("_")+1:filename.rfind("_")]
@@ -277,6 +342,13 @@ class HiggsToTauTauAnalysisWrapper():
 					if not self._args.batch:
 						log.warning("Input files do have different nicknames, which could cause errors.")
 		return nickname
+	
+	def useLocalCopiesOfRemoteFiles(self, remote_identifiers=None):
+		if remote_identifiers is None:
+			remote_identifiers = ["dcap", "root"]
+
+		self.tmp_directory_remote_files = tempfile.mkdtemp(prefix="artus_remote_files_")
+		self._config = self._config.doReplaceFilesByLocalCopies(self.tmp_directory_remote_files, remote_identifiers)
 
 	# write repository revisions to the config
 	def setRepositoryRevisions(self): ###could be inherited from artusWrapper!
@@ -309,6 +381,34 @@ class HiggsToTauTauAnalysisWrapper():
 			for repoScanDir in repoScanDirs:
 				popenCout, popenCerr = subprocess.Popen(currentRevisionCommand.split(), stdout=subprocess.PIPE, cwd=repoScanDir).communicate()
 				self._config[repoScanDir] = popenCout.replace("\n", "")
+	
+	def readInExternals(self):
+		if not "NumberGeneratedEvents" in self._config or (int(self._config["NumberGeneratedEvents"]) < 0):
+			from Kappa.Skimming.registerDatasetHelper import get_n_generated_events_from_nick
+			from Kappa.Skimming.datasetsHelper2015 import isData
+			n_events_from_db = get_n_generated_events_from_nick(self._config["Nickname"])
+			if(n_events_from_db > 0):
+				self._config["NumberGeneratedEvents"] = n_events_from_db
+			elif not isData(self._config["Nickname"]):
+				log.fatal("Number of Generated Events not set! Check your datasets.json for nick " + self._config["Nickname"])
+				sys.exit(1)
+
+		if not ("CrossSection" in self._config) or (self._config["CrossSection"] < 0):
+			from Kappa.Skimming.registerDatasetHelper import get_xsec
+			from Kappa.Skimming.datasetsHelper2015 import isData
+			xsec = get_xsec(self._config["Nickname"])
+			if(xsec > 0):
+				self._config["CrossSection"] = xsec
+			elif not isData(self._config["Nickname"]):
+				log.fatal("Cross section for " + self._config["Nickname"] + " not set! Check your datasets.json")
+				sys.exit(1)
+
+		if not ("GeneratorWeight" in self._config):
+			from Kappa.Skimming.registerDatasetHelper import get_generator_weight
+			from Kappa.Skimming.datasetsHelper2015 import isData
+			generator_weight = get_generator_weight(self._config["Nickname"])
+			if(generator_weight > 0 and generator_weight <= 1.0):
+				self._config["GeneratorWeight"] = generator_weight
 	
 	def measurePerformance(self, profTool, profOpt): ###could be inherited from artusWrapper!
 		"""run Artus with profiler"""
@@ -457,99 +557,3 @@ class HiggsToTauTauAnalysisWrapper():
 	
 	def modify_replacing_dict(self):
 		self.replacingDict["areafiles"] += " auxiliaries/mva_weights"
-'''
-class HiggsToTauTauAnalysisWrapper(kappaanalysiswrapper.KappaAnalysisWrapper):
-
-	def __init__(self):
-		super(HiggsToTauTauAnalysisWrapper, self).__init__("HiggsToTauTauAnalysis")
-
-	def _initArgumentParser(self, userArgParsers=None):
-		super(HiggsToTauTauAnalysisWrapper, self)._initArgumentParser(userArgParsers)
-
-	def modify_replacing_dict(self):
-		self.replacingDict["areafiles"] += " auxiliaries/mva_weights"
-
-	def remove_pipeline_copies(self):
-		pipelines = self._config.get("Pipelines", {}).keys()
-		pipelines_to_remove = []
-		pipeline_renamings = {}
-		for index1, pipeline1 in enumerate(pipelines):
-			if pipeline1 in pipelines_to_remove:
-				continue
-
-			for pipeline2 in pipelines[index1+1:]:
-				if pipeline2 in pipelines_to_remove:
-					continue
-
-				difference = jsonTools.JsonDict.deepdiff(self._config["Pipelines"][pipeline1],
-				                                         self._config["Pipelines"][pipeline2])
-				if len(difference[0]) == 0 and len(difference[1]) == 0:
-					pipelines_to_remove.append(pipeline2)
-					new_name = tools.find_common_string(pipeline_renamings.get(pipeline1, pipeline1),
-					                                    pipeline_renamings.get(pipeline2, pipeline2))
-					# Needed for systematic shifts that are only applied to certain samples.
-					# In that case we do not want an extra pipeline with the same configuration
-					# as the nominal one.
-					if "Down" not in new_name or "Up" not in new_name:
-						new_name = new_name.replace(new_name.split("_")[-1], "")
-					# Add "nominal" to pipelines without systematic shifts
-					if new_name.endswith("_"):
-						new_name += "nominal"
-					elif "_" not in new_name:
-						new_name += "_nominal"
-					pipeline_renamings[pipeline1] = new_name.strip("_").replace("__", "_")
-
-		for pipeline in pipelines_to_remove:
-			self._config["Pipelines"].pop(pipeline)
-
-		for old_name, new_name in pipeline_renamings.iteritems():
-			self._config["Pipelines"][new_name] = self._config["Pipelines"].pop(old_name)
-
-	def readInExternals(self):
-		if not "NumberGeneratedEvents" in self._config or (int(self._config["NumberGeneratedEvents"]) < 0):
-			from Kappa.Skimming.registerDatasetHelper import get_n_generated_events_from_nick
-			from Kappa.Skimming.datasetsHelper2015 import isData
-			n_events_from_db = get_n_generated_events_from_nick(self._config["Nickname"])
-			if(n_events_from_db > 0):
-				self._config["NumberGeneratedEvents"] = n_events_from_db
-			elif not isData(self._config["Nickname"]):
-				log.fatal("Number of Generated Events not set! Check your datasets.json for nick " + self._config["Nickname"])
-				sys.exit(1)
-
-		if not ("CrossSection" in self._config) or (self._config["CrossSection"] < 0):
-			from Kappa.Skimming.registerDatasetHelper import get_xsec
-			from Kappa.Skimming.datasetsHelper2015 import isData
-			xsec = get_xsec(self._config["Nickname"])
-			if(xsec > 0):
-				self._config["CrossSection"] = xsec
-			elif not isData(self._config["Nickname"]):
-				log.fatal("Cross section for " + self._config["Nickname"] + " not set! Check your datasets.json")
-				sys.exit(1)
-
-		if not ("GeneratorWeight" in self._config):
-			from Kappa.Skimming.registerDatasetHelper import get_generator_weight
-			from Kappa.Skimming.datasetsHelper2015 import isData
-			generator_weight = get_generator_weight(self._config["Nickname"])
-			if(generator_weight > 0 and generator_weight <= 1.0):
-				self._config["GeneratorWeight"] = generator_weight
-
-
-	def run(self):
-		#symlinkBaseDir = os.path.expandvars("$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/ArtusOutputs")
-		#if not os.path.exists(symlinkBaseDir):
-		#	os.makedirs(symlinkBaseDir)
-		
-		#if not projectPath is None:
-		#	symlinkDir = os.path.join(symlinkBaseDir, "recent")
-		#	if os.path.islink(symlinkDir):
-		#		os.remove(symlinkDir)
-		#	os.symlink(projectPath, symlinkDir)
-		
-		exitCode = super(HiggsToTauTauAnalysisWrapper, self).run()
-		
-		#if not projectPath is None:
-		#	symlinkDir = os.path.join(symlinkBaseDir, os.path.basename(projectPath))
-		#	os.symlink(projectPath, symlinkDir)
-		
-		return exitCode
-'''

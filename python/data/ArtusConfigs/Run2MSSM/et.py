@@ -205,10 +205,10 @@ def build_config(nickname):
   
   
   # pipelines - systematic shifts
-  systs = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.syst_shifts").build_config(nickname)
+  systs = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.syst_shifts_et").build_config(nickname)
   config_with_systs = jsonTools.JsonDict()
   for key, syst in systs.items():
-    longkey = "mt_" + key
+    longkey = "et_" + key
     config_with_systs[longkey] = copy.deepcopy(config)
     config_with_systs[longkey] += syst
   return config_with_systs

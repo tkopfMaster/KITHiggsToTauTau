@@ -67,7 +67,7 @@ def build_config(nickname):
   config["MuonLowerPtCuts"] = ["23.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.1"]
   config["TauLowerPtCuts"] = ["30.0"]
-  config["MuonUpperAbsEtaCuts"] = ["2.3"]
+  config["TauUpperAbsEtaCuts"] = ["2.3"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairHLTLast"] = True
@@ -140,7 +140,7 @@ def build_config(nickname):
   config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.syncQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
   #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.MVAInputQuantities").build_list())
-  #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.zptQuantities").build_list())
+  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.zptQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.lheWeights").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.fakeFactorWeightQuantities").build_list())
   config["Quantities"].extend([

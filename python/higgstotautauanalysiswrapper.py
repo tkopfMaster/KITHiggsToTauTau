@@ -124,7 +124,7 @@ class HiggsToTauTauAnalysisWrapper():
 		                                       description="Wrapper for Artus executables. Configs are to be set internally.")
 		
 		self._parser.add_argument("-x", "--executable", help="Artus executable. [Default: %(default)s]", default=os.path.basename(sys.argv[0]))
-		self._parser.add_argument("-a", "--analysis", required=True, help="Analysis nick [SM, MSSM] or import path ('HiggsAnalysis.KITHiggsToTauTau....' in HiggsAnalysis/KITHiggsToTauTau/python/...) of the config module.")
+		self._parser.add_argument("-a", "--analysis", required=True, help="Analysis nick [SM, MSSM] or import path ('HiggsAnalysis.KITHiggsToTauTau. ...' or 'HiggsAnalysis/KITHiggsToTauTau/python/ ... .py') of the config module.")
 
 		fileOptionsGroup = self._parser.add_argument_group("File options")
 		fileOptionsGroup.add_argument("-i", "--input-files", nargs="+", required=True,
@@ -218,6 +218,9 @@ class HiggsToTauTauAnalysisWrapper():
 		if self._args.analysis in analysis_configs_dict:
 			analysis_config_module = importlib.import_module(analysis_configs_dict[self._args.analysis])
 		else:
+			#transform linux paths
+			self._args.analysis = self._args.analysis.replace("/",".").replace(".python.",".")
+			if self._args.analysis.endswith(".py"): self._args.analysis = self._args.analysis[:-3]
 			analysis_config_module = importlib.import_module(self._args.analysis)
 		#determine nickname
 		nickname = self.determineNickname(self._args.nick)

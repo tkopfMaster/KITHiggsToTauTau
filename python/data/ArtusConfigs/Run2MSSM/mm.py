@@ -20,9 +20,9 @@ def build_config(nickname):
   # define frequently used conditions
   isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
-  isTTbar = re.match("TT(To|_|Jets)", nickname)
-  isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
-  isWjets = re.match("W.?JetsToLNu", nickname)
+  isTTbar = re.search("TT(To|_|Jets)", nickname)
+  isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+  isWjets = re.search("W.?JetsToLNu", nickname)
   
   
   ## fill config:
@@ -48,7 +48,7 @@ def build_config(nickname):
   config["Channel"] = "MM"
   config["MinNMuons"] = 2
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer.
-  if re.match("(Run2016|Embedding2016|Summer16)", nickname): config["HltPaths"] = [
+  if re.search("(Run2016|Embedding2016|Summer16)", nickname): config["HltPaths"] = [
           "HLT_IsoMu22",
           "HLT_IsoTkMu22",
           "HLT_IsoMu22_eta2p1",
@@ -114,7 +114,7 @@ def build_config(nickname):
       "trg_doubletau:HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v",
       "trg_muonelectron:HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v",
       "trg_muonelectron:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v"]
-  config["DiTauPairLepton1LowerPtCuts" = [
+  config["DiTauPairLepton1LowerPtCuts"] = [
       "HLT_IsoMu22_v:23.0",
       "HLT_IsoTkMu22_v:23.0",
       "HLT_IsoMu22_eta2p1_v:23.0",
@@ -122,7 +122,7 @@ def build_config(nickname):
     ]
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
-  if re.match("(Run2016|Embedding2016|Summer16)", nickname): config["MuonTriggerFilterNames"] = [
+  if re.search("(Run2016|Embedding2016|Summer16)", nickname): config["MuonTriggerFilterNames"] = [
           "HLT_IsoMu22_v:hltL3crIsoL1sMu20L1f0L2f10QL3f22QL3trkIsoFiltered0p09",
           "HLT_IsoTkMu22_v:hltL3fL1sMu20L1f0Tkf22QL3trkIsoFiltered0p09",
           "HLT_IsoMu22_eta2p1_v:hltL3crIsoL1sSingleMu20erL1f0L2f10QL3f22QL3trkIsoFiltered0p09",
@@ -147,7 +147,7 @@ def build_config(nickname):
   
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run1"
-  if re.match("(Fall15MiniAODv2|Run2015)", nickname):
+  if re.search("(Fall15MiniAODv2|Run2015)", nickname):
     config["MuonEnergyCorrection"] = "rochcorr2015"
     config["MuonRochesterCorrectionsFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/rochcorr/RoccoR_13tev_2015.txt"
   else:
@@ -164,7 +164,7 @@ def build_config(nickname):
                                                               "producer:MuonTriggerMatchingProducer",
                                                               "filter:MinMuonsCountFilter",
                                                               "producer:HttValidVetoMuonsProducer",
-                                                              "producer:ValidElectronsProducer"))
+                                                              "producer:ValidElectronsProducer"]
   if isDY or isWjets:            config["Processors"].append( "producer:TauCorrectionsProducer")
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "producer:TauTriggerMatchingProducer",
@@ -189,11 +189,11 @@ def build_config(nickname):
   
     
   
-  config["AddGenMatchedParticles"] = True,
-  config["AddGenMatchedTaus"] = True,
-  config["AddGenMatchedTauJets"] = True,
-  config["BranchGenMatchedMuons"] = True,
-  config["BranchGenMatchedTaus"] = True,
+  config["AddGenMatchedParticles"] = True
+  config["AddGenMatchedTaus"] = True
+  config["AddGenMatchedTauJets"] = True
+  config["BranchGenMatchedMuons"] = True
+  config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
                          #"CutFlowTreeConsumer",
@@ -209,6 +209,6 @@ def build_config(nickname):
   config_with_systs = jsonTools.JsonDict()
   for key, syst in systs.items():
     longkey = "mm_" + key
-    config_with_systs[longkey] = copy.deepcopy(config)
-    config_with_systs[longkey] += syst
+    config_with_systs[longkey] = jsonTools.JsonDict(syst)
+    config_with_systs[longkey] += config
   return config_with_systs

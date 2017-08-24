@@ -28,17 +28,17 @@ def build_config(nickname):
   
   # explicit configuration
   
-  config["Year"] = 2016 if re.match("(Spring16|Summer16|Run2016|Embedding2016)", nickname) else 2015
+  config["Year"] = 2016 if re.search("(Spring16|Summer16|Run2016|Embedding2016)", nickname) else 2015
   
-  config["LooseMuonID"] = mediumHIPsafe2016 if re.match("(Run|Embedding)2016(B|C|D|E|F)|Spring16", nickname) else "medium"
+  config["LooseMuonID"] = mediumHIPsafe2016 if re.search("(Run|Embedding)2016(B|C|D|E|F)|Spring16", nickname) else "medium"
   
   config["LooseMuonIsoType"] = "user"
   config["LooseMuonIso"] = "none"
   config["LooseMuonIsoPtSumOverPtUpperThresholdEB"] = 0.3
   config["LooseMuonIsoPtSumOverPtUpperThresholdEE"] = 0.3
   
-  config["LooseMuonLowerPtCuts"] = [10.0]
-  config["LooseMuonUpperAbsEtaCuts"] = [0.2]
+  config["LooseMuonLowerPtCuts"] = ["10.0"]
+  config["LooseMuonUpperAbsEtaCuts"] = ["2.4"]
   config["LooseMuonTrackDxyCut"] = 0.045
   config["LooseMuonTrackDzCut"] = 0.2
   config["DirectIso"] = True

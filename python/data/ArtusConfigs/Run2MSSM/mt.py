@@ -20,9 +20,9 @@ def build_config(nickname):
   # define frequently used conditions
   isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
-  isTTbar = re.match("TT(To|_|Jets)", nickname)
-  isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
-  isWjets = re.match("W.?JetsToLNu", nickname)
+  isTTbar = re.search("TT(To|_|Jets)", nickname)
+  isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+  isWjets = re.search("W.?JetsToLNu", nickname)
   
   
   ## fill config:
@@ -49,7 +49,7 @@ def build_config(nickname):
   config["MinNMuons"] = 1
   config["MinNTaus"] = 1
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer..
-  if re.match("(Run2016|Embedding2016|Summer16)", nickname): config["HltPaths"] = [
+  if re.search("(Run2016|Embedding2016|Summer16)", nickname): config["HltPaths"] = [
           "HLT_IsoMu22",
           "HLT_IsoTkMu22",
           "HLT_IsoMu22_eta2p1",
@@ -119,7 +119,7 @@ def build_config(nickname):
   ]
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
-  if re.match("(Run2016|Embedding2016|Summer16)", nickname): config["MuonTriggerFilterNames"] = [
+  if re.search("(Run2016|Embedding2016|Summer16)", nickname): config["MuonTriggerFilterNames"] = [
           "HLT_IsoMu22_v:hltL3crIsoL1sMu20L1f0L2f10QL3f22QL3trkIsoFiltered0p09",
           "HLT_IsoTkMu22_v:hltL3fL1sMu20L1f0Tkf22QL3trkIsoFiltered0p09",
           "HLT_IsoMu22_eta2p1_v:hltL3crIsoL1sSingleMu20erL1f0L2f10QL3f22QL3trkIsoFiltered0p09",
@@ -168,7 +168,8 @@ def build_config(nickname):
                                                               "producer:TauTriggerMatchingProducer",
                                                               "filter:MinTausCountFilter",
                                                               "producer:ValidMTPairCandidatesProducer",
-                                                              "filter:ValidDiTauPairCandidatesFilter", #"producer:MvaMetSelector",
+                                                              "filter:ValidDiTauPairCandidatesFilter",
+                                                              "producer:Run2DecayChannelProducer", #"producer:MvaMetSelector",
                                                               "producer:DiVetoMuonVetoProducer",
                                                               "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
@@ -188,11 +189,11 @@ def build_config(nickname):
   if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   
-  config["AddGenMatchedParticles"] = True,
-  config["AddGenMatchedTaus"] = True,
-  config["AddGenMatchedTauJets"] = True,
-  config["BranchGenMatchedMuons"] = True,
-  config["BranchGenMatchedTaus"] = True,
+  config["AddGenMatchedParticles"] = True
+  config["AddGenMatchedTaus"] = True
+  config["AddGenMatchedTauJets"] = True
+  config["BranchGenMatchedMuons"] = True
+  config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
                          #"CutFlowTreeConsumer",
@@ -208,6 +209,6 @@ def build_config(nickname):
   config_with_systs = jsonTools.JsonDict()
   for key, syst in systs.items():
     longkey = "mt_" + key
-    config_with_systs[longkey] = copy.deepcopy(config)
-    config_with_systs[longkey] += syst
+    config_with_systs[longkey] = jsonTools.JsonDict(syst)
+    config_with_systs[longkey] += config
   return config_with_systs

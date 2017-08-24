@@ -26,10 +26,10 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  config["GenParticles"] = "" if re.match("(?<!PFembedded).Run201", nickname) else "genParticles"
-  config["GenTaus"] = "" if re.match("(?<!PFembedded).Run201", nickname) else "genTaus"
-  config["GenTauJets"] = "" if re.match("(?<!PFembedded).Run201|8TeV", nickname) else "tauGenJets"
-  config["GenMet"] = "" if re.match("(?<!PFembedded).Run201", nickname) else "genmetTrue"
+  config["GenParticles"] = "" if re.search("(?<!PFembedded).Run201", nickname) else "genParticles"
+  config["GenTaus"] = "" if re.search("(?<!PFembedded).Run201", nickname) else "genTaus"
+  config["GenTauJets"] = "" if re.search("(?<!PFembedded).Run201|8TeV", nickname) else "tauGenJets"
+  config["GenMet"] = "" if re.search("(?<!PFembedded).Run201", nickname) else "genmetTrue"
   config["GenJets"] = ""
   config["Electrons"] = "electrons"
   config["ElectronMetadata"] = "electronMetadata"
@@ -37,14 +37,15 @@ def build_config(nickname):
   config["Taus"] = "taus"
   config["TauMetadata"] = "taus"
   
-  if re.match("8TeV|13TeV", nickname):     config["TaggedJets"] = "AK5PFTaggedJets"
-  elif re.match("MINIAOD|USER", nickname): config["TaggedJets"] = "ak4PF"
+  if re.search("8TeV|13TeV.*_AODSIM", nickname):     config["TaggedJets"] = "AK5PFTaggedJets"
+  elif re.search("MINIAOD|USER", nickname): config["TaggedJets"] = "ak4PF"
   
-  if re.match("8TeV", nickname):    config["PileupDensity"] = "KT6Area"
-  elif re.match("13TeV", nickname): config["PileupDensity"] = "pileupDensity"
+  if re.search("8TeV", nickname):    config["PileupDensity"] = "KT6Area"
+  elif re.search("13TeV", nickname): config["PileupDensity"] = "pileupDensity"
   
   config["Met"] = "met"
-  config["PuppiMet"] = "metPuppi" if re.match("(16Dec2015v1|Fall15|Spring16|Run2015)", nickname) else ""
+  config["PuppiMet"] = "metPuppi" if re.search("(16Dec2015v1|Fall15|Spring16|Run2015)", nickname) else ""
+  config["MvaMets"] = "MVAMET"
   #config["PFChargedHadronsPileUp"] = "pfPileUpChargedHadrons"
   #config["PFChargedHadronsNoPileUp"] = "pfNoPileUpChargedHadrons"
   #config["PFChargedHadronsNoPileUp"] = "pfAllChargedParticles"

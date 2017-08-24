@@ -19,9 +19,9 @@ def build_config(nickname):
   # define frequently used conditions
   isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
-  isTTbar = re.match("TT(To|_|Jets)", nickname)
-  isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
-  isWjets = re.match("W.?JetsToLNu", nickname)
+  isTTbar = re.search("TT(To|_|Jets)", nickname)
+  isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+  isWjets = re.search("W.?JetsToLNu", nickname)
   
   
   ## fill config:
@@ -61,11 +61,11 @@ def build_config(nickname):
   }
   config["BosonPdgIds"] = 0
   for key, pdgids in BosonPdgIds.items():
-    if re.match(key, nickname): config["BosonPdgIds"] = pdgids
+    if re.search(key, nickname): config["BosonPdgIds"] = pdgids
   
-  config["BosonStatuses"] = 62
+  config["BosonStatuses"] = [62]
   config["ChooseMvaMet"] = False
-  config["DeltaRMatchingRecoElectronGenParticle"] = 0.2
+  config["DeltaRMatchingRecoElectronsGenParticle"] = 0.2
   config["DeltaRMatchingRecoElectronGenTau"] = 0.2
   config["DeltaRMatchingRecoMuonGenParticle"] = 0.2
   config["DeltaRMatchingRecoMuonGenTau"] = 0.2
@@ -132,10 +132,11 @@ def build_config(nickname):
     if isTTbar:                        config["Processors"].append( "producer:TTbarGenDecayModeProducer")
 
   if isData or isEmbedded:             config["PileupWeightFile"] = "not needed"
-  elif re.match("Summer16", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2016_271036-284044_13TeVMoriond17_23Sep2016ReReco_69p2mbMinBiasXS.root"
+  elif re.search(".*Summer16", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2016_271036-284044_13TeVMoriond17_23Sep2016ReReco_69p2mbMinBiasXS.root"
   else:                                config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2015_246908-260627_13TeVFall15MiniAODv2_PromptReco_69mbMinBiasXS.root"
 
-  config["ZptReweightProducerWeights"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/zpt/zpt_weights_2016_BtoH_MSSM_v2.root"
+  config["ZptRooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
+  config["DoZptUncertainties"] = True
   config["MetRecoilCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/TypeI-PFMet_Run2016BtoH.root"
   config["MetShiftCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/PFMEtSys_2016.root"
   config["MvaMetRecoilCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/MvaMET_2016BCD.root"
@@ -144,11 +145,11 @@ def build_config(nickname):
   config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root"
   
   if isData or isEmbedded:
-    if   re.match("Run2016|Embedding2016", nickname):      config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"
-    elif re.match("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"
-    elif re.match("Run2015B", nickname):                   config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"
+    if   re.search("Run2016|Embedding2016", nickname):      config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"
+    elif re.search("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"
+    elif re.search("Run2015B", nickname):                   config["JsonFiles"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"
     
-  if re.match("Fall15MiniAODv2", nickname):
+  if re.search("Fall15MiniAODv2", nickname):
     config["SimpleMuTauFakeRateWeightLoose"] = [1.0, 1.0, 1.0, 1.0, 1.0]
     config["SimpleMuTauFakeRateWeightTight"] = [1.0, 1.0, 1.0, 1.0, 1.0]
     config["SimpleEleTauFakeRateWeightVLoose"] = [1.02, 1.11]

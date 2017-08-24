@@ -20,9 +20,9 @@ def build_config(nickname):
   # define frequently used conditions
   isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
-  isTTbar = re.match("TT(To|_|Jets)", nickname)
-  isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
-  isWjets = re.match("W.?JetsToLNu", nickname)
+  isTTbar = re.search("TT(To|_|Jets)", nickname)
+  isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+  isWjets = re.search("W.?JetsToLNu", nickname)
   
   
   ## fill config:
@@ -48,7 +48,7 @@ def build_config(nickname):
   config["Channel"] = "EE"
   config["MinNElectrons"] = 2
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer.
-  if re.match("(Run2016|Embedding2016|Summer16)", nickname): config["HltPaths"] = [
+  if re.search("(Run2016|Embedding2016|Summer16)", nickname): config["HltPaths"] = [
           "HLT_IsoMu22",
           "HLT_IsoTkMu22",
           "HLT_IsoMu22_eta2p1",
@@ -118,7 +118,7 @@ def build_config(nickname):
   ]
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
-  if re.match("(Run2016|Embedding2016|Summer16)", nickname): config["ElectronTriggerFilterNames"] = [
+  if re.search("(Run2016|Embedding2016|Summer16)", nickname): config["ElectronTriggerFilterNames"] = [
           "HLT_Ele25_eta2p1_WPTight_Gsf_v:hltEle25erWPTightGsfTrackIsoFilter",
           "HLT_VLooseIsoPFTau120_Trk50_eta2p1_v:hltPFTau120TrackPt50LooseAbsOrRelVLooseIso"
     ]
@@ -182,11 +182,11 @@ def build_config(nickname):
                                                    "producer:RooWorkspaceWeightProducer")
   config["Processors"].append(                     "producer:EventWeightProducer")
   
-  config["AddGenMatchedParticles"] = True,
-  config["AddGenMatchedTaus"] = True,
-  config["AddGenMatchedTauJets"] = True,
-  config["BranchGenMatchedElectrons"] = True,
-  config["BranchGenMatchedTaus"] = True,
+  config["AddGenMatchedParticles"] = True
+  config["AddGenMatchedTaus"] = True
+  config["AddGenMatchedTauJets"] = True
+  config["BranchGenMatchedElectrons"] = True
+  config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
                          #"CutFlowTreeConsumer",
@@ -202,6 +202,6 @@ def build_config(nickname):
   config_with_systs = jsonTools.JsonDict()
   for key, syst in systs.items():
     longkey = "ee_" + key
-    config_with_systs[longkey] = copy.deepcopy(config)
-    config_with_systs[longkey] += syst
+    config_with_systs[longkey] = jsonTools.JsonDict(syst)
+    config_with_systs[longkey] += config
   return config_with_systs

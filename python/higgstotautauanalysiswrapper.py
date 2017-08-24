@@ -73,6 +73,8 @@ class HiggsToTauTauAnalysisWrapper():
 				self._config["Date"] = self._date_now
 			# import analysis dependent config
 			self.import_analysis_configs()
+			#read in external values
+			self.readInExternals()
 			# treat environment variables
 			if self._args.envvar_expansion:
 				self._config = self._config.doExpandvars()
@@ -109,6 +111,52 @@ class HiggsToTauTauAnalysisWrapper():
 			# clean up
 			if (not self.tmp_directory_remote_files is None):
 				shutil.rmtree(self.tmp_directory_remote_files)
+			
+			### comparison to configs generated in the former artusWrapper (to be removed when configs are successfully; Also remove -ii option
+			if not self._args.input_files_comp == None:
+				config2 = jsonTools.JsonDict(self._args.input_files_comp)
+				config3 = jsonTools.JsonDict(self._configFilename)
+				for entry in config3["Processors"]:
+					if not entry in config2["Processors"]: print entry + " is additional in base!"
+				for entry in config2["Processors"]:
+					if not entry in config3["Processors"]: print entry + " is missing in base!"
+				config3["Processors"]=[]
+				config2["Processors"]=[]
+				for pipe, diction in config2["Pipelines"].items():
+					for entry in config3["Pipelines"][pipe]["Processors"]:
+						if not entry in diction["Processors"]: print entry + " is additional in " + pipe + "!"
+					for entry in diction["Processors"]:
+						if not entry in config3["Pipelines"][pipe]["Processors"]: print entry + " is missing in " + pipe + "!"
+					for entry in config3["Pipelines"][pipe]["Quantities"]:
+						if not entry in diction["Quantities"]: print entry + " is additional in " + pipe + "!"
+					for entry in diction["Quantities"]:
+						if not entry in config3["Pipelines"][pipe]["Quantities"]: print entry + " is missing in " + pipe + "!"
+					diction["Processors"]=[]
+					diction["Quantities"]=[]
+					config3["Pipelines"][pipe]["Processors"]=[]
+					config3["Pipelines"][pipe]["Quantities"]=[]
+					dict1=jsonTools.JsonDict(config3["Pipelines"][pipe])
+					dict2=jsonTools.JsonDict(diction)
+					for key, entry in dict1.items():
+						if "#" in key or "documentation" in key or "comment" in key:
+							del dict1[key]
+					for key, entry in dict2.items():
+						if "#" in key or "documentation" in key or "comment" in key:
+							del dict2[key]
+					print pipe
+					print dict1.diff(dict2)
+					print "########################"
+				del config2["Pipelines"]
+				del config3["Pipelines"]
+				for key, entry in config2.items():
+					if "#" in key or "documentation" in key or "comment" in key:
+						del config2[key]
+				for key, entry in config3.items():
+					if "#" in key or "documentation" in key or "comment" in key:
+						del config3[key]
+				print "compare baseline"
+				print config3.diff(config2)
+			### comparison end
 		
 		if exitCode < 256:
 			return exitCode
@@ -128,6 +176,8 @@ class HiggsToTauTauAnalysisWrapper():
 
 		fileOptionsGroup = self._parser.add_argument_group("File options")
 		fileOptionsGroup.add_argument("-i", "--input-files", nargs="+", required=True,
+		                              help="Input root files. Leave empty (\"\") if input files from root file should be taken.")
+		fileOptionsGroup.add_argument("-ii", "--input-files-comp", nargs="+", required=False, default = None,
 		                              help="Input root files. Leave empty (\"\") if input files from root file should be taken.")
 		fileOptionsGroup.add_argument("-o", "--output-file", default="output.root",
 		                              help="Output root file. [Default: %(default)s]")

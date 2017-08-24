@@ -20,9 +20,9 @@ def build_config(nickname):
   # define frequently used conditions
   isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
-  isTTbar = re.match("TT(To|_|Jets)", nickname)
-  isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
-  isWjets = re.match("W.?JetsToLNu", nickname)
+  isTTbar = re.search("TT(To|_|Jets)", nickname)
+  isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+  isWjets = re.search("W.?JetsToLNu", nickname)
   
   
   ## fill config:
@@ -49,7 +49,7 @@ def build_config(nickname):
   config["MaxNLooseElectrons"] = 1
   config["MaxNLooseMuons"] = 1
   # HltPaths_comment: The first path must be one with the higher pt cut on the electron. The second and last path must be one with the higher pt cut on the muon. Corresponding Pt cuts are implemented in the Run2DecayChannelProducer..
-  if re.match("(Run2016|Embedding2016|Summer16)", nickname): config["HltPaths"] = [
+  if re.search("(Run2016|Embedding2016|Summer16)", nickname): config["HltPaths"] = [
           "HLT_IsoMu22",
           "HLT_IsoTkMu22",
           "HLT_IsoMu22_eta2p1",
@@ -68,6 +68,7 @@ def build_config(nickname):
   config["MuonLowerPtCuts"] = ["10.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.4"]
   config["DiTauPairMinDeltaRCut"] = 0.3
+  config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairLepton1LowerPtCuts"] = [
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v:24.0",
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:24.0"]
@@ -99,7 +100,7 @@ def build_config(nickname):
       "HLT_Ele25_eta2p1_WPTight_Gsf_v"
   ]
   
-  if re.match("Summer16", nickname):
+  if re.search("Summer16", nickname):
     config["TriggerEfficiencyData"] = [
       "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_Run2016_Electron_Ele12leg_eff.root",
       "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_Run2016_Electron_Ele23leg_eff.root",
@@ -116,7 +117,7 @@ def build_config(nickname):
     config["IdentificationEfficiencyMc"] = [
       "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/identificationWeights/identificationEfficiency_MC_Electron_IdIso_IsoLt0p15_eff.root",
       "1:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/identificationWeights/identificationEfficiency_MC_Muon_IdIso_IsoLt0p2_2016BtoH_eff.root"]
-  elif re.match("Run2016", nickname):
+  elif re.search("Run2016", nickname):
     config["TriggerEfficiencyData"] = [
       "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_dummy.root",
       "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_dummy.root",
@@ -133,8 +134,8 @@ def build_config(nickname):
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
   
-  if re.match("(Run2016|Embedding2016|Summer16)", nickname):
-     config["ElectronTriggerFilterNames"] = [
+  if re.search("(Run2016|Embedding2016|Summer16)", nickname):
+    config["ElectronTriggerFilterNames"] = [
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v:hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter",
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter",
           "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v:hltMu8TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter",
@@ -184,14 +185,14 @@ def build_config(nickname):
                                                               "producer:Run2DecayChannelProducer", #"producer:MvaMetSelector",
                                                               "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
-                                                              "producer:ValidBTaggedJetsProducer"))
+                                                              "producer:ValidBTaggedJetsProducer"]
   if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
-  config["Processors"].append(                                "MinimalPlotlevelFilter") #"producer:MVATestMethodsProducer",
+  config["Processors"].append(                                "filter:MinimalPlotlevelFilter") #"producer:MVATestMethodsProducer",
                                                               #"producer:MVAInputQuantitiesProducer"))
   if not (isData or isEmbedded): config["Processors"].extend(("producer:TriggerWeightProducer",
                                                               "producer:IdentificationWeightProducer"))
@@ -201,9 +202,9 @@ def build_config(nickname):
     
   
   
-  config["AddGenMatchedParticles"] = True,
-  config["BranchGenMatchedElectrons"] = True,
-  config["BranchGenMatched"] = True,
+  config["AddGenMatchedParticles"] = True
+  config["BranchGenMatchedElectrons"] = True
+  config["BranchGenMatchedMuons"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
                          #"CutFlowTreeConsumer",
@@ -219,6 +220,6 @@ def build_config(nickname):
   config_with_systs = jsonTools.JsonDict()
   for key, syst in systs.items():
     longkey = "em_" + key
-    config_with_systs[longkey] = copy.deepcopy(config)
-    config_with_systs[longkey] += syst
+    config_with_systs[longkey] = jsonTools.JsonDict(syst)
+    config_with_systs[longkey] += config
   return config_with_systs

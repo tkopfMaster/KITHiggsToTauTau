@@ -20,9 +20,9 @@ def build_config(nickname):
   # define frequently used conditions
   isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
-  isTTbar = re.match("TT(To|_|Jets)", nickname)
-  isDY = re.match("DY.?JetsToLLM(50|150)", nickname)
-  isWjets = re.match("W.?JetsToLNu", nickname)
+  isTTbar = re.search("TT(To|_|Jets)", nickname)
+  isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+  isWjets = re.search("W.?JetsToLNu", nickname)
   
   
   ## fill config:
@@ -166,9 +166,9 @@ def build_config(nickname):
   
   
   
-  config["AddGenMatchedTaus"] = True,
-  config["AddGenMatchedTauJets"] = True,
-  config["BranchGenMatchedTaus"] = True,
+  config["AddGenMatchedTaus"] = True
+  config["AddGenMatchedTauJets"] = True
+  config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
                          #"CutFlowTreeConsumer",
@@ -184,6 +184,6 @@ def build_config(nickname):
   config_with_systs = jsonTools.JsonDict()
   for key, syst in systs.items():
     longkey = "tt_" + key
-    config_with_systs[longkey] = copy.deepcopy(config)
-    config_with_systs[longkey] += syst
+    config_with_systs[longkey] = jsonTools.JsonDict(syst)
+    config_with_systs[longkey] += config
   return config_with_systs

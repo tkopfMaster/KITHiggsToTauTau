@@ -71,7 +71,7 @@ def build_config(nickname):
     ]
   }
   for key, val in StitchingWeights.items():
-    if re.match(key, nickname): config["StitchingWeights"] = val
+    if re.search(key, nickname): config["StitchingWeights"] = val
   
   StitchingWeightsHighMass = {
     "DY.?JetsToLLM(50|150)_RunIIFall15" : [
@@ -90,7 +90,7 @@ def build_config(nickname):
     ]
   }
   for key, val in StitchingWeightsHighMass.items():
-    if re.match(key, nickname): config["StitchingWeightsHighMass"] = val
+    if re.search(key, nickname): config["StitchingWeightsHighMass"] = val
 
   
 

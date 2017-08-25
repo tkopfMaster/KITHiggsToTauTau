@@ -12,6 +12,8 @@ import Artus.Utility.jsonTools as jsonTools
 import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
 import importlib
 
+import HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.ArtusConfigUtility as ACU
+
 def build_config(nickname):
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz("Kappa/Skimming/data/datasets.json")
@@ -180,10 +182,4 @@ def build_config(nickname):
   
   
   # pipelines - systematic shifts
-  systs = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.syst_shifts").build_config(nickname)
-  config_with_systs = jsonTools.JsonDict()
-  for key, syst in systs.items():
-    longkey = "tt_" + key
-    config_with_systs[longkey] = jsonTools.JsonDict(syst)
-    config_with_systs[longkey] += config
-  return config_with_systs
+  return ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.syst_shifts").build_config(nickname))

@@ -18,8 +18,8 @@ def build_config(nickname):
   
   
   # define frequently used conditions
-  isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
+  isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
@@ -92,11 +92,11 @@ def build_config(nickname):
       "HLT_VLooseIsoPFTau120_Trk50_eta2p1_v",
       "HLT_Ele25_eta2p1_WPTight_Gsf_v"
   ]
-  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
+  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
   config["RooWorkspaceWeightNames"] = [
       "0:triggerWeight",
-      "0:isoweight",
       "0:idweight",
+      "0:isoweight",
       "0:trackWeight"
   ]
   config["RooWorkspaceObjectNames"] = [

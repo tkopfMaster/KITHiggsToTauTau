@@ -28,7 +28,7 @@ def build_config(nickname):
   # explicit configuration
   config["TauEnergyCorrection"] = "mssmhtt2016" if re.search("Summer16|Embedding2016", nickname) else "none"
   
-  if datasetsHelper.isData(nickname):
+  if re.search("Run201", nickname):
     config["TauEnergyCorrectionOneProng"] = 1.0
     config["TauEnergyCorrectionOneProngPiZeros"] = 1.0
     config["TauEnergyCorrectionThreeProng"] = 1.0

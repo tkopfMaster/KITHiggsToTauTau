@@ -16,8 +16,8 @@ def build_config(nickname):
   
   
   # define frequently used conditions
-  isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
+  isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   #isTTbar = re.search("TT(To|_|Jets)", nickname)
   #isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
   #isWjets = re.search("W.?JetsToLNu", nickname)

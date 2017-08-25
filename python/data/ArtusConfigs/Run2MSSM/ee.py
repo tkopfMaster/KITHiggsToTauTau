@@ -18,11 +18,12 @@ def build_config(nickname):
   
   
   # define frequently used conditions
-  isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
+  isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
+  isHtt = re.search("HToTauTau", nickname)
   
   
   ## fill config:
@@ -151,36 +152,36 @@ def build_config(nickname):
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run1"
   
-  config["Processors"] = [                         "producer:HttValidLooseElectronsProducer",
-                                                   "producer:HttValidLooseMuonsProducer",
-                                                   "producer:HltProducer",
-                                                   "producer:MetSelector",
-                                                   "producer:ValidElectronsProducer",
-                                                   "filter:ValidElectronsFilter",
-                                                   "producer:ElectronTriggerMatchingProducer",
-                                                   "filter:MinElectronsCountFilter",
-                                                   "producer:HttValidVetoElectronsProducer",
-                                                   "producer:ValidMuonsProducer",
-                                                   "producer:ValidTausProducer",
-                                                   "producer:TauTriggerMatchingProducer",
-                                                   "producer:ValidEEPairCandidatesProducer",
-                                                   "filter:ValidDiTauPairCandidatesFilter",
-                                                   "producer:Run2DecayChannelProducer", #"producer:MvaMetSelector",
-                                                   "producer:DiVetoElectronVetoProducer"]
-  if not isDY:        config["Processors"].append( "producer:TaggedJetCorrectionsProducer")
-  config["Processors"].extend((                    "producer:ValidTaggedJetsProducer",
-                                                   "producer:ValidBTaggedJetsProducer"))
-  if isDY or isWjets: config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
-  config["Processors"].extend((                    "producer:TauTauRestFrameSelector",
-                                                   "producer:DiLeptonQuantitiesProducer",
-                                                   "producer:DiJetQuantitiesProducer"))
-  if isTTbar:         config["Processors"].append( "producer:TopPtReweightingProducer")
-  if isDY:            config["Processors"].append( "producer:ZPtReweightProducer")
-  config["Processors"].extend((                    "filter:MinimalPlotlevelFilter", #"producer:MVATestMethodsProducer",
-                                                   "producer:MVAInputQuantitiesProducer"))
-  if not isData:      config["Processors"].append( #"producer:TriggerWeightProducer", "producer:IdentificationWeightProducer"
-                                                   "producer:RooWorkspaceWeightProducer")
-  config["Processors"].append(                     "producer:EventWeightProducer")
+  config["Processors"] = [                                  "producer:HttValidLooseElectronsProducer",
+                                                            "producer:HttValidLooseMuonsProducer",
+                                                            "producer:HltProducer",
+                                                            "producer:MetSelector",
+                                                            "producer:ValidElectronsProducer",
+                                                            "filter:ValidElectronsFilter",
+                                                            "producer:ElectronTriggerMatchingProducer",
+                                                            "filter:MinElectronsCountFilter",
+                                                            "producer:HttValidVetoElectronsProducer",
+                                                            "producer:ValidMuonsProducer",
+                                                            "producer:ValidTausProducer",
+                                                            "producer:TauTriggerMatchingProducer",
+                                                            "producer:ValidEEPairCandidatesProducer",
+                                                            "filter:ValidDiTauPairCandidatesFilter",
+                                                            "producer:Run2DecayChannelProducer", #"producer:MvaMetSelector",
+                                                            "producer:DiVetoElectronVetoProducer"]
+  if not isDY:                 config["Processors"].append( "producer:TaggedJetCorrectionsProducer")
+  config["Processors"].extend((                             "producer:ValidTaggedJetsProducer",
+                                                            "producer:ValidBTaggedJetsProducer"))
+  if isDY or isWjets or isHtt: config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
+  config["Processors"].extend((                             "producer:TauTauRestFrameSelector",
+                                                            "producer:DiLeptonQuantitiesProducer",
+                                                            "producer:DiJetQuantitiesProducer"))
+  if isTTbar:                  config["Processors"].append( "producer:TopPtReweightingProducer")
+  if isDY:                     config["Processors"].append( "producer:ZPtReweightProducer")
+  config["Processors"].extend((                             "filter:MinimalPlotlevelFilter", #"producer:MVATestMethodsProducer",
+                                                            "producer:MVAInputQuantitiesProducer"))
+  if not isData:               config["Processors"].append( #"producer:TriggerWeightProducer", "producer:IdentificationWeightProducer"
+                                                            "producer:RooWorkspaceWeightProducer")
+  config["Processors"].append(                              "producer:EventWeightProducer")
   
   config["AddGenMatchedParticles"] = True
   config["AddGenMatchedTaus"] = True

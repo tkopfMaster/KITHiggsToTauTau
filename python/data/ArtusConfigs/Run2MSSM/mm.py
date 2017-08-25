@@ -18,11 +18,12 @@ def build_config(nickname):
   
   
   # define frequently used conditions
-  isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
+  isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
+  isHtt = re.search("HToTauTau", nickname)
   
   
   ## fill config:
@@ -165,7 +166,7 @@ def build_config(nickname):
                                                               "filter:MinMuonsCountFilter",
                                                               "producer:HttValidVetoMuonsProducer",
                                                               "producer:ValidElectronsProducer"]
-  if isDY or isWjets:            config["Processors"].append( "producer:TauCorrectionsProducer")
+  if isDY or isWjets or isHtt:   config["Processors"].append( "producer:TauCorrectionsProducer")
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "producer:TauTriggerMatchingProducer",
                                                               "producer:ValidMMPairCandidatesProducer",
@@ -175,7 +176,7 @@ def build_config(nickname):
                                                               "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
-  if isDY or isWjets:            config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
+  if isDY or isWjets or isHtt:   config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))

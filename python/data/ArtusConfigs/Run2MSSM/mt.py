@@ -18,8 +18,8 @@ def build_config(nickname):
   
   
   # define frequently used conditions
-  isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
+  isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
@@ -91,25 +91,25 @@ def build_config(nickname):
       "HLT_VLooseIsoPFTau120_Trk50_eta2p1_v",
       "HLT_Ele25_eta2p1_WPTight_Gsf_v"
   ]
-  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
-  config["RooWorkspaceWeightNames"] = [
-      "0:triggerWeight",
+  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
+  config["RooWorkspaceWeightNames"] = [] if isEmbedded else ["0:triggerWeight"]
+  config["RooWorkspaceWeightNames"].extend((
       "0:isoweight",
       "0:idweight",
       "0:trackWeight"
-  ]
-  config["RooWorkspaceObjectNames"] = [
-      "0:m_trgOR4_binned_ratio",
+  ))
+  config["RooWorkspaceObjectNames"] = [] if isEmbedded else ["0:m_trgOR4_binned_ratio"]
+  config["RooWorkspaceObjectNames"].extend((
       "0:m_iso_binned_ratio",
       "0:m_id_ratio",
       "0:m_trk_ratio"
-  ]
-  config["RooWorkspaceObjectArguments"] = [
-      "0:m_pt,m_eta,m_iso",
+  ))
+  config["RooWorkspaceObjectArguments"] = [] if isEmbedded else ["0:m_pt,m_eta,m_iso"]
+  config["RooWorkspaceObjectArguments"].extend((
       "0:m_pt,m_eta,m_iso",
       "0:m_pt,m_eta",
       "0:m_eta"
-  ]
+  ))
   config["FakeFaktorFiles"] = [
       "inclusive:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/inclusive/fakeFactors_20170628_tight.root",
       "nobtag_tight:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/nobtag_tight/fakeFactors_20170628_tight.root",
@@ -174,9 +174,9 @@ def build_config(nickname):
                                                               "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
-  if not (isData or isEmbedded): config["Processors"].extend(("producer:MetCorrector", #"producer:MvaMetCorrector"
-                                                              "producer:TauTauRestFrameSelector"))
-  config["Processors"].extend((                               "producer:DiLeptonQuantitiesProducer",
+  if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
+  config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
+                                                              "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))
   if not isEmbedded:             config["Processors"].extend(("producer:SimpleEleTauFakeRateWeightProducer",
                                                               "producer:SimpleMuTauFakeRateWeightProducer"))

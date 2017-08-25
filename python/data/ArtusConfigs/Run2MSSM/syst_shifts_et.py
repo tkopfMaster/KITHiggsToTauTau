@@ -16,8 +16,8 @@ def build_config(nickname):
   
   
   # define frequently used conditions
-  isData = datasetsHelper.isData(nickname)
   isEmbedded = datasetsHelper.isEmbedded(nickname)
+  isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   #isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
   #isWjets = re.search("W.?JetsToLNu", nickname)
@@ -35,20 +35,9 @@ def build_config(nickname):
   config["nominal"] = {
     "JetEnergyCorrectionUncertaintyShift" : [0.0]
   }
-  
-  if isEmbedded:
-    config["tauEsUp"] = {
-      "JetEnergyCorrectionUncertaintyShift" : [0.0]
-    }
-    config["tauEsUp"]["TauEnergyCorrectionShift"] = 1.016
-    
-    config["tauEsDown"] = {
-      "JetEnergyCorrectionUncertaintyShift" : [0.0]
-    }
-    config["tauEsDown"]["TauEnergyCorrectionShift"] = 0.984
     
   
-  if not (isEmbedded or isData):
+  if not isData:
     config["tauEsOneProngUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
@@ -82,7 +71,7 @@ def build_config(nickname):
     config["tauEsThreeProngDown"]["TauEnergyCorrectionThreeProng"] = 0.994
     
     
-  if isDY:
+  if isDY or isEmbedded:
     config["eleTauEsOneProngZeroPiZeroUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }

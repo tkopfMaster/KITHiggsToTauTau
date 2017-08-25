@@ -29,7 +29,7 @@ def build_config(nickname):
   
   config["Year"] = 2016 if re.search("(Spring16|Summer16|Run2016|Embedding2016)", nickname) else 2015
   
-  config["MuonID"] = mediumHIPsafe2016 if re.search("(Run|Embedding)2016(B|C|D|E|F)|Spring16", nickname) else "medium"
+  config["MuonID"] = "mediumHIPsafe2016" if re.search("(Run|Embedding)2016(B|C|D|E|F)|Spring16", nickname) else "medium"
   
   config["MuonIsoTypeUserMode"] = "fromcmsswr04" if re.search("(Spring16|Summer16|Run2016|Embedding2016)", nickname) else "fromcmssw"
     

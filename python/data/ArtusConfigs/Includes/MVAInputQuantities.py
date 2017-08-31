@@ -48,8 +48,5 @@ def build_list():
     "diCJetm",
     "pVecSumCSVJets"
   ]
-  '''
-    
-  '''
   
   return quantities_list

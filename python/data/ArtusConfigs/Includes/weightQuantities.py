@@ -45,8 +45,5 @@ def build_list():
     "eleTauFakeRateWeight",
     "muTauFakeRateWeight"
   ]
-  '''
-  
-  '''
   
   return quantities_list

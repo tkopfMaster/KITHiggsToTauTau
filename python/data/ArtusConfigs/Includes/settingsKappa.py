@@ -9,13 +9,16 @@ import re
 import json
 import copy
 import Artus.Utility.jsonTools as jsonTools
-import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
+#import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
 import importlib
+#import os
 
 def build_config(nickname):
   config = jsonTools.JsonDict()
-  datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz("Kappa/Skimming/data/datasets.json")
+  #datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
   
+  # define frequently used conditions
+  isMC = not re.search("(?<!PFembedded).Run201", nickname)
   
   ## fill config:
   # includes
@@ -26,10 +29,10 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  config["GenParticles"] = "" if re.search("(?<!PFembedded).Run201", nickname) else "genParticles"
-  config["GenTaus"] = "" if re.search("(?<!PFembedded).Run201", nickname) else "genTaus"
-  config["GenTauJets"] = "" if re.search("(?<!PFembedded).Run201|8TeV", nickname) else "tauGenJets"
-  config["GenMet"] = "" if re.search("(?<!PFembedded).Run201", nickname) else "genmetTrue"
+  config["GenParticles"] = "genParticles" if isMC else ""
+  config["GenTaus"] = "genTaus" if isMC else ""
+  config["GenTauJets"] = "tauGenJets" if isMC else ""
+  config["GenMet"] = "" "genmetTrue" if isMC else ""
   config["GenJets"] = ""
   config["Electrons"] = "electrons"
   config["ElectronMetadata"] = "electronMetadata"
@@ -37,11 +40,9 @@ def build_config(nickname):
   config["Taus"] = "taus"
   config["TauMetadata"] = "taus"
   
-  if re.search("8TeV|13TeV.*_AODSIM", nickname):     config["TaggedJets"] = "AK5PFTaggedJets"
-  elif re.search("MINIAOD|USER", nickname): config["TaggedJets"] = "ak4PF"
+  if re.search("MINIAOD|USER", nickname): config["TaggedJets"] = "ak4PF"
   
-  if re.search("8TeV", nickname):    config["PileupDensity"] = "KT6Area"
-  elif re.search("13TeV", nickname): config["PileupDensity"] = "pileupDensity"
+  if re.search("13TeV", nickname): config["PileupDensity"] = "pileupDensity"
   
   config["Met"] = "met"
   config["PuppiMet"] = "metPuppi" if re.search("(16Dec2015v1|Fall15|Spring16|Run2015)", nickname) else ""

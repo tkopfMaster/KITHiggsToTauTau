@@ -537,6 +537,7 @@ class HiggsToTauTauAnalysisWrapper():
 		sepathRaw = os.path.join(projectPath, "output")
 
 		epilogArguments  = r"epilog arguments = "
+		epilogArguments += r"-a %s " % self._args.analysis
 		epilogArguments += r"--disable-repo-versions "
 		epilogArguments += r"--log-level " + self._args.log_level + " "
 		if self._args.log_to_se:

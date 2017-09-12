@@ -183,43 +183,69 @@ class Samples(samples.SamplesBase):
 
 	def embedding_stitchingweight(self,channel):
 		if channel=='mt':
-			runB = "((run >= 272007) && (run < 275657))*3768958.+"
-			runC = "((run >= 275657) && (run < 276315))*1583897.+"
-			runD = "((run >= 276315) && (run < 276831))*2570815.+"
-			runE = "((run >= 276831) && (run < 277772))*2514506.+"
-			runF = "((run >= 277772) && (run < 278820))*1879819.+"
-			runG = "((run >= 278820) && (run < 280919))*5008746.+"
-			runH = "((run >= 280919) && (run < 284045))*6325743."
-			totalevents = "3768958.+1583897.+2570815.+2514506.+1879819.+5008746.+6325743."
-			return "("+runB+runC+runD+runE+runF+runG+runH+")/("+totalevents+")"
+			comp_eff_B="(1.0/0.899)"
+			comp_eff_C="(1.0/0.881)"
+			comp_eff_D="(1.0/0.877)"
+			comp_eff_E="(1.0/0.939)"
+			comp_eff_F="(1.0/0.936)"
+			comp_eff_G="(1.0/0.908)"
+			comp_eff_H="(1.0/0.962)"
+			runB = "((run >= 272007) && (run < 275657))*"+comp_eff_B
+			runC = "+((run >= 275657) && (run < 276315))*"+comp_eff_C
+			runD = "+((run >= 276315) && (run < 276831))*"+comp_eff_D
+			runE = "+((run >= 276831) && (run < 277772))*"+comp_eff_E
+			runF = "+((run >= 277772) && (run < 278820))*"+comp_eff_F
+			runG = "+((run >= 278820) && (run < 280919))*"+comp_eff_G
+			runH = "+((run >= 280919) && (run < 284045))*"+comp_eff_H
+			return "("+runB+runC+runD+runE+runF+runG+runH+")"
 		elif channel=='et':
-			runB = "((run >= 272007) && (run < 275657))*3570181.+"
-			runC = "((run >= 275657) && (run < 276315))*1543340.+"
-			runD = "((run >= 276315) && (run < 276831))*2614984.+"
-			runE = "((run >= 276831) && (run < 277772))*2387033.+"
-			runF = "((run >= 277772) && (run < 278820))*1733082.+"
-			runG = "((run >= 278820) && (run < 280919))*4700036.+"
-			runH = "((run >= 280919) && (run < 284045))*5830114."
-			totalevents = "3570181.+1543340.+2614984.+2387033.+1733082.+4700036.+5830114."
-			return "("+runB+runC+runD+runE+runF+runG+runH+")/("+totalevents+")"
+			comp_eff_B="(1.0/0.902)"
+			comp_eff_C="(1.0/0.910)"
+			comp_eff_D="(1.0/0.945)"
+			comp_eff_E="(1.0/0.945)"
+			comp_eff_F="(1.0/0.915)"
+			comp_eff_G="(1.0/0.903)"
+			comp_eff_H="(1.0/0.933)"
+			runB = "((run >= 272007) && (run < 275657))*"+comp_eff_B
+			runC = "+((run >= 275657) && (run < 276315))*"+comp_eff_C
+			runD = "+((run >= 276315) && (run < 276831))*"+comp_eff_D
+			runE = "+((run >= 276831) && (run < 277772))*"+comp_eff_E
+			runF = "+((run >= 277772) && (run < 278820))*"+comp_eff_F
+			runG = "+((run >= 278820) && (run < 280919))*"+comp_eff_G
+			runH = "+((run >= 280919) && (run < 284045))*"+comp_eff_H
+			return "("+runB+runC+runD+runE+runF+runG+runH+")"
 		elif channel=='tt':
-			runB = "((run >= 272007) && (run < 275657))*1331777.+"
-			runC = "((run >= 275657) && (run < 276315))*577219.+"
-			runD = "((run >= 276315) && (run < 276831))*984751.+"
-			runE = "((run >= 276831) && (run < 277772))*813524.+"
-			runF = "((run >= 277772) && (run < 278820))*665461.+"
-			runG = "((run >= 278820) && (run < 280919))*1773204."
-			totalevents = "1331777.+577219.+984751.+813524.+665461.+1773204."
-			return "("+runB+runC+runD+runE+runF+runG+")/("+totalevents+")"
+			comp_eff_B="(1.0/0.897)"
+			comp_eff_C="(1.0/0.908)"
+			comp_eff_D="(1.0/0.950)"
+			comp_eff_E="(1.0/0.861)"
+			comp_eff_F="(1.0/0.941)"
+			comp_eff_G="(1.0/0.908)"
+			comp_eff_H="(1.0/0.949)"
+			runB = "((run >= 272007) && (run < 275657))*"+comp_eff_B
+			runC = "+((run >= 275657) && (run < 276315))*"+comp_eff_C
+			runD = "+((run >= 276315) && (run < 276831))*"+comp_eff_D
+			runE = "+((run >= 276831) && (run < 277772))*"+comp_eff_E
+			runF = "+((run >= 277772) && (run < 278820))*"+comp_eff_F
+			runG = "+((run >= 278820) && (run < 280919))*"+comp_eff_G
+			runH = "+((run >= 280919) && (run < 284045))*"+comp_eff_H
+			return "("+runB+runC+runD+runE+runF+runG+runH+")"
 		elif channel=='em':
-			runB = "((run >= 272007) && (run < 275657))*4475455.+"
-			runC = "((run >= 275657) && (run < 276315))*1961248.+"
-			runD = "((run >= 276315) && (run < 276831))*3356220.+"
-			runE = "((run >= 276831) && (run < 277772))*3055567.+"
-			runF = "((run >= 277772) && (run < 278820))*2280011.+"
-			runG = "((run >= 278820) && (run < 280919))*5993673."
-			totalevents = "4475455.+1961248.+3356220.+3055567.+2280011.+5993673."
-			return "("+runB+runC+runD+runE+runF+runG+")/("+totalevents+")"
+			comp_eff_B="(1.0/0.891)"
+			comp_eff_C="(1.0/0.910)"
+			comp_eff_D="(1.0/0.953)"
+			comp_eff_E="(1.0/0.947)"
+			comp_eff_F="(1.0/0.942)"
+			comp_eff_G="(1.0/0.906)"
+			comp_eff_H="(1.0/0.950)"
+			runB = "((run >= 272007) && (run < 275657))*"+comp_eff_B
+			runC = "+((run >= 275657) && (run < 276315))*"+comp_eff_C
+			runD = "+((run >= 276315) && (run < 276831))*"+comp_eff_D
+			runE = "+((run >= 276831) && (run < 277772))*"+comp_eff_E
+			runF = "+((run >= 277772) && (run < 278820))*"+comp_eff_F
+			runG = "+((run >= 278820) && (run < 280919))*"+comp_eff_G
+			runH = "+((run >= 280919) && (run < 284045))*"+comp_eff_H
+			return "("+runB+runC+runD+runE+runF+runG+runH+")"
 		else:
 			log.error("Embedding currently not implemented for channel \"%s\"!" % channel)
 		
@@ -315,25 +341,17 @@ class Samples(samples.SamplesBase):
 			mc_weight = "({mc_scale})*".format(mc_scale=kwargs["scale_mc_only"]) + mc_weight
 		return clean_multiplication(data_weight), clean_multiplication(mc_weight)
 
-	def get_weights_ztt(self,channel, cut_type, weight="(1.0)", mc_sample_weight="(1.0)", doStitching=True,**kwargs):
+	def get_weights_ztt(self,channel, cut_type, weight="(1.0)", mc_sample_weight="(1.0)", doStitching=True,use_mc=False,**kwargs):
 		data_weight, mc_weight = self.projection(kwargs)
-		if self.embedding:
+		if self.embedding and not use_mc:
 			if channel == "et":
-				if not 'eventWeight' in mc_sample_weight:
-					return make_multiplication([mc_sample_weight, self.embedding_stitchingweight(channel), "(eventWeight)*(eventWeight<1.0)",self.embedding_weight[1]])
-				return make_multiplication([mc_sample_weight, self.embedding_stitchingweight(channel), "(eventWeight<1.0)",self.embedding_weight[1]])			
+				return make_multiplication([weight,self.embedding_stitchingweight(channel),"1.250*idisoweight_1*(idisoweight_1<1.1)","trigweight_1*(trigweight_1<1.1)","generatorWeight*(generatorWeight<1.0)",self.embedding_weight[1]])	
 			elif channel == "mt":
-				if not 'eventWeight' in mc_sample_weight:
-					return make_multiplication([mc_sample_weight, self.embedding_stitchingweight(channel), "(eventWeight)*(eventWeight<1.0)",self.embedding_weight[0]])
-				return make_multiplication([mc_sample_weight, self.embedding_stitchingweight(channel), "(eventWeight<1.0)",self.embedding_weight[0]])			
+				return make_multiplication([weight,self.embedding_stitchingweight(channel),"1.192*idisoweight_1*(idisoweight_1<1.1)","trigweight_1*(trigweight_1<1.1)","generatorWeight*(generatorWeight<1.0)",self.embedding_weight[0]])	
 			elif channel == "tt":
-				if not 'eventWeight' in mc_sample_weight:
-					return make_multiplication([mc_sample_weight, self.embedding_stitchingweight(channel), "(eventWeight)*(eventWeight<1.0)",self.embedding_weight[3]])
-				return make_multiplication([mc_sample_weight, self.embedding_stitchingweight(channel), "(eventWeight<1.0)",self.embedding_weight[3]])
+				return make_multiplication([weight,self.embedding_stitchingweight(channel),"2.515*generatorWeight*(generatorWeight<1.0)",self.embedding_weight[3]])	
 			elif channel == "em" or channel == "ttbar":
-				if not 'eventWeight' in mc_sample_weight:
-					return make_multiplication([mc_sample_weight, self.embedding_stitchingweight(channel), "(eventWeight)*(eventWeight<1.0)",self.embedding_weight[2]])
-				return make_multiplication([mc_sample_weight, self.embedding_stitchingweight(channel), "(eventWeight<1.0)",self.embedding_weight[2]])
+				return make_multiplication([weight,self.embedding_stitchingweight(channel),"1.140*idisoweight_1","trigweight_1*(trigweight_1<1.1)*idisoweight_2","trigweight_2*(trigweight_2<1.1)","generatorWeight*(generatorWeight<1.0)",self.embedding_weight[2]])	
 			else:
 				log.error("Embedding currently not implemented for channel \"%s\"!" % channel)
 		elif mc_sample_weight != "(1.0)":
@@ -430,16 +448,17 @@ class Samples(samples.SamplesBase):
 	def files_dy_m50(self, channel):
 		return self.artus_file_names({"process" : "DYJetsToLLM50", "data": False, "campaign" : self.mc_campaign, "generator" : "madgraph\-pythia8"}, 2)
 
-	def files_ztt(self, channel):
-		if self.embedding:
+	def files_ztt(self, channel, use_mc=False):
+		if self.embedding and not use_mc:
 			if channel=='mt':
+				return self.artus_file_names({"process" : "Embedding2016.*" , "campaign" : "MuTauFinalState","scenario": ".*v2" }, 7)
 				return self.artus_file_names({"process" : "Embedding2016.*" , "campaign" : "MuTauFinalState","scenario": ".*v2" }, 7)
 			elif channel=='et':
 				return self.artus_file_names({"process" : "Embedding2016.*" , "campaign" : "ElTauFinalState","scenario": ".*v2" }, 7)
 			elif channel=='tt':
-				return self.artus_file_names({"process" : "Embedding2016.*" , "campaign" : "TauTauFinalState","scenario": "imputSep16DoubleMu_mirror_miniAODv2" }, 6)				
+				return self.artus_file_names({"process" : "Embedding2016.*" , "campaign" : "TauTauFinalState","scenario": ".*(v2|v3)" } ,7)			
 			elif channel=='em':
-				return self.artus_file_names({"process" : "Embedding2016.*" , "campaign" : "ElMuFinalState","scenario": "imputSep16DoubleMu_mirror_miniAODv2" }, 6)
+				return self.artus_file_names({"process" : "Embedding2016.*" , "campaign" : "ElMuFinalState","scenario": ".*(v2|v3|v4)" }, 7)
 			else:
 				log.error("Embedding currently not implemented for channel \"%s\"!" % channel)
 								
@@ -450,7 +469,7 @@ class Samples(samples.SamplesBase):
 			exclude_cuts = []
 		
 		zmm_cr_factor = kwargs.get("zmm_cr_factor", "(1.0)")
-
+		
 		scale_factor = 1.0
 		if not self.postfit_scales is None:
 			scale_factor *= self.postfit_scales.get("ZTT", 1.0)
@@ -469,7 +488,7 @@ class Samples(samples.SamplesBase):
 					config,
 					self.files_ztt(channel),
 					self.root_file_folder(channel),
-					lumi,
+					lumi if not self.embedding else 1.0,
 					Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts, cut_type=cut_type)+"*zPtReweightWeight"+"*"+self.decay_mode_reweight(channel)+"*"+zmm_cr_factor+"*"+self.em_triggerweight_dz_filter(channel, cut_type=cut_type),
 					"ztt",
 					nick_suffix=nick_suffix
@@ -835,7 +854,7 @@ class Samples(samples.SamplesBase):
 					config,
 					self.files_ztt(channel),
 					self.root_file_folder(channel),
-					lumi,
+					lumi if not self.embedding else 1.0,
 					make_multiplication([Samples.ztt_genmatch(channel), ttbar_data_weight, self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight), self._cut_string(channel, exclude_cuts=exclude_cuts+["pzeta", "nobtag"], cut_type=cut_type) ],"zPtReweightWeight", zmm_cr_factor, self.em_triggerweight_dz_filter(channel, cut_type)),
 					"noplot_ztt_mc_ttj_control",
 					nick_suffix=nick_suffix
@@ -1377,7 +1396,7 @@ class Samples(samples.SamplesBase):
 						config,
 						self.files_ztt(channel),
 						self.root_file_folder(channel),
-						lumi,
+						lumi if not self.embedding else 1.0,
 						Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=wj_weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts_high_mt, cut_type=high_mt_cut_type)+"*zPtReweightWeight"+"*"+zmm_cr_factor,
 						("noplot_" if not controlregions else "") + "ztt_os_highmt",
 						nick_suffix=nick_suffix
@@ -1517,7 +1536,7 @@ class Samples(samples.SamplesBase):
 						config,
 						self.files_ztt(channel),
 						self.root_file_folder(channel),
-						lumi,
+						lumi if not self.embedding else 1.0,
 						Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=wj_weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts_high_mt_ss, cut_type=high_mt_ss_cut_type)+"*zPtReweightWeight"+"*"+zmm_cr_factor,
 						("noplot_" if not controlregions else "") + "ztt_ss_highmt",
 						nick_suffix=nick_suffix
@@ -2061,7 +2080,7 @@ class Samples(samples.SamplesBase):
 							config,
 							self.files_ztt(channel),
 							self.root_file_folder(channel),
-							lumi,
+							lumi if not self.embedding else 1.0,
 							Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts_high_mt_ss, cut_type=high_mt_ss_cut_type)+"*zPtReweightWeight"+"*"+zmm_cr_factor,
 							"noplot_ztt_ss_mc_wj_control",
 							nick_suffix=nick_suffix
@@ -2230,7 +2249,7 @@ class Samples(samples.SamplesBase):
 						config,
 						self.files_ztt(channel),
 						self.root_file_folder(channel),
-						lumi,
+						lumi if not self.embedding else 1.0,
 						Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts+["os"], cut_type=cut_type)+"*((q_1*q_2)>0.0)"+"*zPtReweightWeight"+"*"+zmm_cr_factor+"*"+self.em_triggerweight_dz_filter(channel, cut_type=cut_type),
 						"noplot_ztt_mc_qcd_control",
 						nick_suffix=nick_suffix
@@ -2369,7 +2388,7 @@ class Samples(samples.SamplesBase):
 							config,
 							self.files_ztt(channel),
 							self.root_file_folder(channel),
-							lumi,
+							lumi if not self.embedding else 1.0,
 							Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts+["os"], cut_type=cut_type)+"*((q_1*q_2)>0.0)"+"*zPtReweightWeight"+"*"+zmm_cr_factor,
 							("noplot_" if not controlregions else "") + "ztt_ss_lowmt",
 							nick_suffix=nick_suffix
@@ -2508,7 +2527,7 @@ class Samples(samples.SamplesBase):
 							config,
 							self.files_ztt(channel),
 							self.root_file_folder(channel),
-							lumi,
+							lumi if not self.embedding else 1.0,
 							Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=qcd_shape_weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts+["os"], cut_type=qcd_shape_cut)+"*((q_1*q_2)>0.0)"+"*zPtReweightWeight"+"*"+zmm_cr_factor,
 							"noplot_ztt_shape_ss_qcd_control",
 							nick_suffix=nick_suffix
@@ -2647,7 +2666,7 @@ class Samples(samples.SamplesBase):
 							config,
 							self.files_ztt(channel),
 							self.root_file_folder(channel),
-							lumi,
+							lumi if not self.embedding else 1.0,
 							Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts_high_mt_ss, cut_type=high_mt_ss_cut_type)+"*zPtReweightWeight"+"*"+zmm_cr_factor,
 							"noplot_ztt_shape_ss_highmt",
 							nick_suffix=nick_suffix
@@ -2911,7 +2930,7 @@ class Samples(samples.SamplesBase):
 								config,
 								self.files_ztt(channel),
 								self.root_file_folder(channel),
-								lumi,
+								lumi if not self.embedding else 1.0,
 								Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,mc_sample_weight=mc_sample_weight)+"*zPtReweightWeight"+"*"+zmm_cr_factor+"*"+self.em_triggerweight_dz_filter(channel, cut_type=cut_type),
 								"noplot_ztt_"+estimation_type,
 								nick_suffix=nick_suffix
@@ -3085,7 +3104,7 @@ class Samples(samples.SamplesBase):
 								config,
 								self.files_ztt(channel),
 								self.root_file_folder(channel),
-								lumi,
+								lumi if not self.embedding else 1.0,
 								Samples.ztt_genmatch(channel)+"*"+self.get_weights_ztt(channel=channel,cut_type=cut_type,mc_sample_weight=mc_selection_weights[key])+"*zPtReweightWeight"+"*"+zmm_cr_factor,
 								"noplot_ztt_"+key,
 								nick_suffix=nick_suffix
@@ -3595,10 +3614,10 @@ class Samples(samples.SamplesBase):
 
 			Samples._add_input(
 					config,
-					self.files_ztt(channel),
+					self.files_ztt(channel,use_mc=True),
 					self.root_file_folder(channel),
 					lumi,
-					self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts+["iso_2"], cut_type=cut_type)+"*zPtReweightWeight*(gen_match_2 < 6)*jetToTauFakeWeight_comb",
+					self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight,use_mc=True)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts+["iso_2"], cut_type=cut_type)+"*zPtReweightWeight*(gen_match_2 < 6)*jetToTauFakeWeight_comb",
 					"noplot_dy_ff_control",
 					nick_suffix=nick_suffix
 			)
@@ -3641,10 +3660,10 @@ class Samples(samples.SamplesBase):
 
 			Samples._add_input(
 					config,
-					self.files_ztt(channel),
+					self.files_ztt(channel,use_mc=True),
 					self.root_file_folder(channel),
 					lumi,
-					self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts+["iso_2"], cut_type=cut_type)+"*zPtReweightWeight*(gen_match_2 < 6)*jetToTauFakeWeight_comb",
+					self.get_weights_ztt(channel=channel,cut_type=cut_type,weight=weight,use_mc=True)+"*"+self._cut_string(channel, exclude_cuts=exclude_cuts+["iso_2"], cut_type=cut_type)+"*zPtReweightWeight*(gen_match_2 < 6)*jetToTauFakeWeight_comb",
 					"noplot_dy_ff_norm",
 					nick_suffix=nick_suffix
 			)

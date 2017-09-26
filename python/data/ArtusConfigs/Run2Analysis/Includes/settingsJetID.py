@@ -27,13 +27,15 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  if re.search("Run2016|Embedding2016", nickname):
-    config["JetEnergyCorrectionUncertaintyParameters"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/jec/Summer16/Summer16_23Sep2016V4_DATA_Uncertainty_AK4PFchs.txt"
-  else:
-    config["JetEnergyCorrectionUncertaintyParameters"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/jec/Summer16/Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt"
+  config["JetID"] = "loose"
+  config["JetIDVersion"] = "2015"
+  config["PuJetIDs"] = []
+  config["PuJetIDFullDiscrName"] = "pileupJetIdfullDiscriminant"
+  config["JetTaggerLowerCuts"] = []
+  config["JetTaggerUpperCuts"] = []
+  config["JetLowerPtCuts"] = ["20.0"]
+  config["JetUpperAbsEtaCuts"] = ["4.7"]
+  config["JetLeptonLowerDeltaRCut"] = 0.5
   
-  #config["JetEnergyCorrectionUncertaintySource"] = ""
-  #config["JetEnergyCorrectionUncertaintyShift"] = 0.0
-
 
   return config

@@ -33,25 +33,15 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  config["nominal"] = {
-    "ElectronEnergyCorrectionShiftEB" : 1.0, 
-    "ElectronEnergyCorrectionShiftEE" : 1.0, 
-    "JetEnergyCorrectionUncertaintyShift" : 0.0, 
-    "MetUncertaintyShift" : false, 
-    "MetUncertaintyType" : "", 
-    "SvfitCacheFileFolder" : "nominal", 
-    "TauElectronFakeEnergyCorrection" : 1.0, 
-    "TauElectronFakeEnergyCorrectionOneProngPiZerosShift" : 1.0, 
-    "TauElectronFakeEnergyCorrectionOneProngShift" : 1.0, 
-    "TauEnergyCorrectionOneProngPiZerosShift" : 1.0, 
-    "TauEnergyCorrectionOneProngShift" : 1.0, 
-    "TauEnergyCorrectionShift" : 1.0, 
-    "TauEnergyCorrectionThreeProngShift" : 1.0, 
-    "TauJetFakeEnergyCorrection" : 0.0, 
-    "TauMuonFakeEnergyCorrection" : 1.0, 
-    "TauMuonFakeEnergyCorrectionOneProngPiZerosShift" : 1.0, 
-    "TauMuonFakeEnergyCorrectionOneProngShift" : 1.0
-  }
+  if re.search("DY.?JetsToLL|EWKZ2Jets", nickname):
+    config["tauMuFakeEsUp"] = {
+      "TauMuonFakeEnergyCorrection" : 1.015,
+      "SvfitCacheFileFolder" : "tauMuFakeEsUp"
+    }
+    config["tauMuFakeEsDown"] = {
+      "TauMuonFakeEnergyCorrection" : 0.985,
+      "SvfitCacheFileFolder" : "tauMuFakeEsDown"
+    }
   
   
   return config

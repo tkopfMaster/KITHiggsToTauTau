@@ -32,7 +32,7 @@ file_handler = logging.FileHandler("make_systematic.log")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
-directory = "/portal/ekpbms1/home/akhmet/workdir/AnalysisMain/CMSSW_9_2_12/src/merged/"
+directory = "/storage/b/akhmet/merged_files_from_nrg/06_10_2017_mssm_data_mc_2017_test/"
 era=Run2017BCD()
 
 mt = MT()

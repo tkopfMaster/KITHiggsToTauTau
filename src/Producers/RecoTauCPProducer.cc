@@ -154,39 +154,6 @@ void RecoTauCPProducer::Init(setting_type const& settings)
 		return product.m_recoChargedHadronEnergies.second;
 	});
 
-	// impact parameters d0=dxy and dz
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("d0_refitPV_1", [](event_type const& event, product_type const& product)
-	{
-		return product.m_refitPV ? product.m_flavourOrderedLeptons.at(0)->track.getDxy(product.m_refitPV) : DefaultValues::UndefinedDouble;
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("d0_refitPVBS_1", [](event_type const& event, product_type const& product)
-	{
-		return product.m_refitPVBS ? product.m_flavourOrderedLeptons.at(0)->track.getDxy(product.m_refitPVBS) : DefaultValues::UndefinedDouble;
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("dZ_refitPV_1", [](event_type const& event, product_type const& product)
-	{
-		return product.m_refitPV ? product.m_flavourOrderedLeptons.at(0)->track.getDz(product.m_refitPV) : DefaultValues::UndefinedDouble;
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("dZ_refitPVBS_1", [](event_type const& event, product_type const& product)
-	{
-		return product.m_refitPVBS ? product.m_flavourOrderedLeptons.at(0)->track.getDz(product.m_refitPVBS) : DefaultValues::UndefinedDouble;
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("d0_refitPV_2", [](event_type const& event, product_type const& product)
-	{
-		return product.m_refitPV ? product.m_flavourOrderedLeptons.at(1)->track.getDxy(product.m_refitPV) : DefaultValues::UndefinedDouble;
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("d0_refitPVBS_2", [](event_type const& event, product_type const& product)
-	{
-		return product.m_refitPVBS ? product.m_flavourOrderedLeptons.at(1)->track.getDxy(product.m_refitPVBS) : DefaultValues::UndefinedDouble;
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("dZ_refitPV_2", [](event_type const& event, product_type const& product)
-	{
-		return product.m_refitPV ? product.m_flavourOrderedLeptons.at(1)->track.getDz(product.m_refitPV) : DefaultValues::UndefinedDouble;
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("dZ_refitPVBS_2", [](event_type const& event, product_type const& product)
-	{
-		return product.m_refitPVBS ? product.m_flavourOrderedLeptons.at(1)->track.getDz(product.m_refitPVBS) : DefaultValues::UndefinedDouble;
-	});
 //	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("recoImpactParameter1", [](event_type const& event, product_type const& product)
 //	{
 //		return product.m_recoIP1;
@@ -230,32 +197,6 @@ void RecoTauCPProducer::Init(setting_type const& settings)
 		return ((&product.m_recoIP2 != nullptr) ? (product.m_recoIP2).z() : DefaultValues::UndefinedFloat);
 	});
 
-	// IP vectors wrt refitted PV
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("IP_refitPV_1x", [](event_type const& event, product_type const& product)
-	{
-		return ((&product.m_recoIP1_refitPV != nullptr) ? (product.m_recoIP1_refitPV).x() : DefaultValues::UndefinedFloat);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("IP_refitPV_1y", [](event_type const& event, product_type const& product)
-	{
-		return ((&product.m_recoIP1_refitPV != nullptr) ? (product.m_recoIP1_refitPV).y() : DefaultValues::UndefinedFloat);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("IP_refitPV_1z", [](event_type const& event, product_type const& product)
-	{
-		return ((&product.m_recoIP1_refitPV != nullptr) ? (product.m_recoIP1_refitPV).z() : DefaultValues::UndefinedFloat);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("IP_refitPV_2x", [](event_type const& event, product_type const& product)
-	{
-		return ((&product.m_recoIP2_refitPV != nullptr) ? (product.m_recoIP2_refitPV).x() : DefaultValues::UndefinedFloat);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("IP_refitPV_2y", [](event_type const& event, product_type const& product)
-	{
-		return ((&product.m_recoIP2_refitPV != nullptr) ? (product.m_recoIP2_refitPV).y() : DefaultValues::UndefinedFloat);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("IP_refitPV_2z", [](event_type const& event, product_type const& product)
-	{
-		return ((&product.m_recoIP2_refitPV != nullptr) ? (product.m_recoIP2_refitPV).z() : DefaultValues::UndefinedFloat);
-	});
-
 	// cosPsi
 	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("cosPsiPlus", [](event_type const& event, product_type const& product)
 	{
@@ -291,34 +232,6 @@ void RecoTauCPProducer::Init(setting_type const& settings)
 	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("errIP_2", [](event_type const& event, product_type const& product)
 	{
 		return product.m_errorIP2vec.at(2);
-	});
-
-
-	// errors on dxy, dz and IP wrt refitted PV
-	// using propagation of errors
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("errD0_refitPV_1", [](event_type const& event, product_type const& product)
-	{
-		return product.m_errorIP1vec_refitPV.at(0);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("errDZ_refitPV_1", [](event_type const& event, product_type const& product)
-	{
-		return product.m_errorIP1vec_refitPV.at(1);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("errIP_refitPV_1", [](event_type const& event, product_type const& product)
-	{
-		return product.m_errorIP1vec_refitPV.at(2);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("errD0_refitPV_2", [](event_type const& event, product_type const& product)
-	{
-		return product.m_errorIP2vec_refitPV.at(0);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("errDZ_refitPV_2", [](event_type const& event, product_type const& product)
-	{
-		return product.m_errorIP2vec_refitPV.at(1);
-	});
-	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("errIP_refitPV_2", [](event_type const& event, product_type const& product)
-	{
-		return product.m_errorIP2vec_refitPV.at(2);
 	});
 
 
@@ -370,8 +283,6 @@ void RecoTauCPProducer::Produce(event_type const& event, product_type& product, 
 	// initialization of TVector3 objects
 	product.m_recoIP1.SetXYZ(-999,-999,-999);
 	product.m_recoIP2.SetXYZ(-999,-999,-999);
-	product.m_recoIP1_refitPV.SetXYZ(-999,-999,-999);
-	product.m_recoIP2_refitPV.SetXYZ(-999,-999,-999);
 	TVector3 IPPlus;
 	TVector3 IPMinus;
 	IPPlus.SetXYZ(-999,-999,-999);
@@ -426,69 +337,5 @@ void RecoTauCPProducer::Produce(event_type const& event, product_type& product, 
 	// ---------
 	// phi*CP wrt thePV
 	product.m_recoPhiStarCP = cpq.CalculatePhiStarCP(product.m_thePV, trackP, trackM, momentumP, momentumM);
-
-	if (product.m_refitPV != nullptr){
-		// calculation of the IP vectors and relative errors
-		product.m_recoIP1 = cpq.CalculateIPVector(recoParticle1, product.m_thePV);
-		product.m_recoIP2 = cpq.CalculateIPVector(recoParticle2, product.m_thePV);
-		product.m_errorIP1vec = cpq.CalculateIPErrors(recoParticle1, product.m_thePV, &product.m_recoIP1);
-		product.m_errorIP2vec = cpq.CalculateIPErrors(recoParticle2, product.m_thePV, &product.m_recoIP2);
-
-		product.m_recoIP1_refitPV = cpq.CalculateIPVector(recoParticle1, product.m_refitPV);
-		product.m_recoIP2_refitPV = cpq.CalculateIPVector(recoParticle2, product.m_refitPV);
-		product.m_errorIP1vec_refitPV = cpq.CalculateIPErrors(recoParticle1, product.m_refitPV, &product.m_recoIP1_refitPV);
-		product.m_errorIP2vec_refitPV = cpq.CalculateIPErrors(recoParticle2, product.m_refitPV, &product.m_recoIP2_refitPV);
-
-		// calculate cosPsi
-		if (recoParticle1->charge() == +1){
-			product.m_cosPsiPlus  = cpq.CalculateCosPsi(recoParticle1->p4, product.m_recoIP1_refitPV);
-			product.m_cosPsiMinus = cpq.CalculateCosPsi(recoParticle2->p4, product.m_recoIP2_refitPV);
-		} else {
-			product.m_cosPsiPlus  = cpq.CalculateCosPsi(recoParticle2->p4, product.m_recoIP2_refitPV);
-			product.m_cosPsiMinus = cpq.CalculateCosPsi(recoParticle1->p4, product.m_recoIP1_refitPV);
-		}
-
-		// calculate phi*cp using the refitted PV
-		// FIXME two functions are called, need to remove one of the two
-		// in this case, the ipvectors are calculated within the CalculatePhiStarCP functions
-		product.m_recoPhiStarCPrPV = cpq.CalculatePhiStarCP(product.m_refitPV, trackP, trackM, momentumP, momentumM);
-
-		// calcalute phi*cp by passing ipvectors as arguments
-		// get the IP vectors corresponding to charge+ and charge- particles
-		if (recoParticle1->getHash() == chargedPart1->getHash()){
-			IPPlus  = product.m_recoIP1_refitPV;
-			IPMinus = product.m_recoIP2_refitPV;
-		} else {
-			IPPlus  = product.m_recoIP2_refitPV;
-			IPMinus = product.m_recoIP1_refitPV;
-		}
-		
-		// calculate phi*cp
-		product.m_recoPhiStarCPrPV2 = cpq.CalculatePhiStarCP(momentumP, momentumM, IPPlus, IPMinus);
-			
-
-
-		if (!m_isData){
-			// calculate deltaR, deltaEta, deltaPhi and delta between recoIPvec and genIPvec
-			// only for recoIPvec wrt refitted PV
-			if(&product.m_genIP1 != nullptr && product.m_genIP1.x() != -999){
-				product.m_deltaEtaGenRecoIP1 = product.m_recoIP1_refitPV.Eta() - product.m_genIP1.Eta();
-				product.m_deltaPhiGenRecoIP1 = product.m_recoIP1_refitPV.DeltaPhi(product.m_genIP1);
-				product.m_deltaRGenRecoIP1   = product.m_recoIP1_refitPV.DeltaR(product.m_genIP1);
-				product.m_deltaGenRecoIP1    = product.m_recoIP1_refitPV.Angle(product.m_genIP1);
-			} // if genIP1 exists
-
-			if(&product.m_genIP2 != nullptr && product.m_genIP2.x() != -999){
-				product.m_deltaEtaGenRecoIP2 = product.m_recoIP2_refitPV.Eta() - product.m_genIP2.Eta();
-				product.m_deltaPhiGenRecoIP2 = product.m_recoIP2_refitPV.DeltaPhi(product.m_genIP2);
-				product.m_deltaRGenRecoIP2   = product.m_recoIP2_refitPV.DeltaR(product.m_genIP2);
-				product.m_deltaGenRecoIP2    = product.m_recoIP2_refitPV.Angle(product.m_genIP2);
-			} // if genIP2 exists
-
-		} // if MC sample
-
-
-	} // if the refitPV exists
-
 
 }

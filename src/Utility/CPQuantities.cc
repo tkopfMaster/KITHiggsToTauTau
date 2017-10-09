@@ -75,28 +75,6 @@ double CPQuantities::CalculatePhiStarCP_rho(RMFLV chargedPiP, RMFLV chargedPiM, 
 
 }
 
-// this version uses track and refitted vertex to calculate the decay planes (useful for RecoTauCPProducer)
-// FIXME KRefitVertex inherites from KVertex class, so I don't need this overloaded method (it can be removed)
-double CPQuantities::CalculatePhiStarCP(KRefitVertex* pv, KTrack track1, KTrack track2,  RMFLV chargPart1, RMFLV chargPart2)
-{
-	//Primary vertex
-	RMFLV::BetaVector pvpos;
-	pvpos.SetXYZ((pv->position).X(), (pv->position).Y(), (pv->position).Z());
-
-	//Points on tau tracks
-	RMFLV::BetaVector track1pos, track2pos;
-	track1pos.SetXYZ((track1.ref).X(), (track1.ref).Y(), (track1.ref).Z());
-	track2pos.SetXYZ((track2.ref).X(), (track2.ref).Y(), (track2.ref).Z());
-
-	//Flight direction of taus determined from pv and trackpos
-	RMFLV::BetaVector k1, k2;
-	k1 = track1pos - pvpos;
-	k2 = track2pos - pvpos;
-	return this->CalculatePhiStarCPSame(k1, k2, chargPart1, chargPart2, "reco");
-
-}
-
-
 // calculation of variables Phi* and Phi*CP
 // IP vectors calculated within the function
 double CPQuantities::CalculatePhiStarCPSame(RMFLV::BetaVector k1, RMFLV::BetaVector k2, RMFLV chargPart1, RMFLV chargPart2, std::string level)

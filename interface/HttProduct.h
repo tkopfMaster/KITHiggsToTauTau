@@ -205,8 +205,6 @@ public:
 
 
 	// filled by RefitVertexSelector
-	KRefitVertex* m_refitPV = 0;
-	KRefitVertex* m_refitPVBS = 0;
 	RMPoint* m_refP1 = 0;
 	RMPoint* m_refP2 = 0;
 	RMFLV* m_track1p4 = 0;
@@ -259,16 +257,11 @@ public:
 
 	TVector3 m_recoIP1; // IPvec wrt thePV
 	TVector3 m_recoIP2; // IPvec wrt thePV
-	TVector3 m_recoIP1_refitPV; // IPvec wrt refitted PV
-	TVector3 m_recoIP2_refitPV; // IPvec wrt refitted PV
 	double m_cosPsiPlus  = DefaultValues::UndefinedDouble;
 	double m_cosPsiMinus = DefaultValues::UndefinedDouble;
 	
 	std::vector<double> m_errorIP1vec {DefaultValues::UndefinedDouble, DefaultValues::UndefinedDouble, DefaultValues::UndefinedDouble};
 	std::vector<double> m_errorIP2vec {DefaultValues::UndefinedDouble, DefaultValues::UndefinedDouble, DefaultValues::UndefinedDouble};
-
-	std::vector<double> m_errorIP1vec_refitPV {DefaultValues::UndefinedDouble, DefaultValues::UndefinedDouble, DefaultValues::UndefinedDouble};
-	std::vector<double> m_errorIP2vec_refitPV {DefaultValues::UndefinedDouble, DefaultValues::UndefinedDouble, DefaultValues::UndefinedDouble};
 
 	double m_deltaEtaGenRecoIP1  = DefaultValues::UndefinedDouble;
 	double m_deltaEtaGenRecoIP2  = DefaultValues::UndefinedDouble;

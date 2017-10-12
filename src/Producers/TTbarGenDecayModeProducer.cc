@@ -54,9 +54,9 @@ void TTbarGenDecayModeProducer::Produce(event_type const& event, product_type& p
 
 	if(product.m_TTbarGenDecayMode == 0)
 	{
-	std::cout << std::endl << "Number of tops: " << top_count << std::endl;
-	std::cout << "Number of W's: " << W_count << std::endl;
-	std::cout << "Number of quarks from W's: " << n_quarks << std::endl;
-	std::cout << "Number of leptons from W's: " << n_leptons << std::endl;
+	//std::cout << std::endl << "Number of tops: " << top_count << std::endl;
+	//std::cout << "Number of W's: " << W_count << std::endl;
+	//std::cout << "Number of quarks from W's: " << n_quarks << std::endl;
+	//std::cout << "Number of leptons from W's: " << n_leptons << std::endl;
 	}
 }

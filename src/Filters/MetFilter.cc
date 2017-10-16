@@ -35,6 +35,7 @@ bool MetFilter::DoesEventPass(event_type const& event, product_type const& produ
     {
         int filterid = event.m_triggerObjectMetadata->metFilterPos(metfilter);                                     
         bool result = event.m_triggerObjects->passesMetFilter(filterid);
+        //std::cout << "MetFilter Name: " << metfilter << " Decision: " << result << std::endl;
         // check if the filter should be inverted
         if(std::find(m_invertedFilters.begin(),m_invertedFilters.end(), metfilter) != m_invertedFilters.end())
         {

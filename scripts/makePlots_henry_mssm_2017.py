@@ -15,7 +15,7 @@ from Artus.HenryPlotter.process import Process
 
 # Estimation methods, import only what is really necessary
 from Artus.HenryPlotter.estimation_methods_2017 import Ztt_estimation, Zll_estimation, Data_estimation, TT_estimation, WJ_estimation, QCD_estimation # roughest possible estimations. Write your own, inheriting from Estimation_method
-from Artus.HenryPlotter.era import Run2017BCD
+from Artus.HenryPlotter.era import Run2017BCDE
 from Artus.HenryPlotter.channel import MT
 
 # Logging
@@ -32,8 +32,8 @@ file_handler = logging.FileHandler("make_systematic.log")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
-directory = "/storage/b/akhmet/merged_files_from_nrg/06_10_2017_mssm_data_mc_2017_test/"
-era=Run2017BCD()
+directory = "/storage/b/akhmet/merged_files_from_nrg/artusjobs_Data_and_MC_2017_13_10_2017_metfilters_corrected/"
+era=Run2017BCDE()
 
 mt = MT()
 ztt_mt = Process("ZTT", Ztt_estimation(era, directory, mt))

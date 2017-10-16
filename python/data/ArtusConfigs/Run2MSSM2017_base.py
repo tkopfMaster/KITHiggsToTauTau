@@ -81,32 +81,28 @@ def build_config(nickname):
   config["UpdateMetWithCorrectedLeptons"] = "true"
   
   config["MetFilter"] = [
-        #"Flag_HBHENoiseFilter",
-        #"Flag_HBHENoiseIsoFilter",
-        #"Flag_EcalDeadCellTriggerPrimitiveFilter",
-        #"Flag_goodVertices",
-        #"Flag_globalTightHalo2016Filter",
-        #"Flag_BadPFMuonFilter",
-        #"Flag_BadChargedCandidateFilter"
+        "Flag_HBHENoiseFilter",
+        "Flag_HBHENoiseIsoFilter",
+        "Flag_EcalDeadCellTriggerPrimitiveFilter",
+        "Flag_goodVertices",
+        "Flag_globalSuperTightHalo2016Filter",
+        "Flag_BadPFMuonFilter",
+        "Flag_BadChargedCandidateFilter"
   ]
   if isData:
     config["MetFilter"].extend((
-        #"Flag_eeBadScFilter",
-        #"!Flag_duplicateMuons",
-        #"!Flag_badMuons"
+        "Flag_eeBadScFilter",
     ))
   else:
     config["MetFilter"].extend((
-       # "!Flag_badGlobalMuonTaggerMAOD",
-       # "!Flag_cloneGlobalMuonTaggerMAOD"
     ))
   
   config["OutputPath"] = "output.root"
   
   config["Processors"] = []
   #config["Processors"].append("filter:RunLumiEventFilter")
-  if not isEmbedded:                   config["Processors"].append( "filter:MetFilter")
   if isData or isEmbedded:             config["Processors"].append( "filter:JsonFilter")
+  if not isEmbedded:                   config["Processors"].append( "filter:MetFilter")
   if isDY or isTTbar:                  config["Processors"].append( "producer:ScaleVariationProducer")
   config["Processors"].append(                                      "producer:NicknameProducer")
   if not isData:
@@ -143,7 +139,7 @@ def build_config(nickname):
   config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root"
   
   if isData or isEmbedded:
-    if   re.search("Run2017|Embedding2017", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_294927-302654_13TeV_PromptReco_Collisions17_JSON.txt"]
+    if   re.search("Run2017|Embedding2017", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_294927-304120_13TeV_PromptReco_Collisions17_JSON.txt"]
     elif re.search("Run2016|Embedding2016", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"]
     elif re.search("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"]
     elif re.search("Run2015B", nickname):                   config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"]
@@ -162,12 +158,12 @@ def build_config(nickname):
   
   # pipelines - channels including systematic shifts
   config["Pipelines"] = jsonTools.JsonDict()
-  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.ee").build_config(nickname)
-  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.em").build_config(nickname)
-  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.et").build_config(nickname)
-  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.mm").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.mt").build_config(nickname)
-  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.tt").build_config(nickname)
+  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.ee").build_config(nickname)
+  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.em").build_config(nickname)
+  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.et").build_config(nickname)
+  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
+  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname)
+  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname)
   
   
   return config

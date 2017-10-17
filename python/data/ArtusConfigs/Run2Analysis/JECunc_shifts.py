@@ -33,16 +33,14 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  if re.search("Summer16|Embedding2016", nickname):
-    config["eleEsUp"] = {
-      "ElectronEnergyCorrectionShiftEB" : 1.01,
-      "ElectronEnergyCorrectionShiftEE" : 1.025,
-      "SvfitCacheFileFolder" : "eleEsUp"
+  if not re.search("Run201|Embedding", nickname):
+    config["jecUncUp"] = {
+      "JetEnergyCorrectionUncertaintyShift" : 1.0,
+      "SvfitCacheFileFolder" : "nominal"
     }
-    config["eleEsDown"] = {
-      "ElectronEnergyCorrectionShiftEB" : 0.99,
-      "ElectronEnergyCorrectionShiftEE" : 0.975,
-      "SvfitCacheFileFolder" : "eleEsDown"
+    config["jecUncDown"] = {
+      "JetEnergyCorrectionUncertaintyShift" : -1.0,
+      "SvfitCacheFileFolder" : "nominal"
     }
   
   

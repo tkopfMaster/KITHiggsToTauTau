@@ -27,7 +27,7 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  if re.search("DYJetsToLL.*amcatnlo|TT", nickname):
+  if re.search("DYJetsToLL.*amcatnlo|TT_", nickname):
     config["GenEventInfoMetadataNames"] = [
         "1001:muR1p0_muF1p0_weight",
         "1002:muR1p0_muF2p0_weight",

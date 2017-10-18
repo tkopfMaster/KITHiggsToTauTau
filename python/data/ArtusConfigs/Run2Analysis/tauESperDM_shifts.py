@@ -36,52 +36,52 @@ def build_config(nickname):
   if re.search("Summer16", nickname):
     config["tauEsOneProngUp"] = {
       "TauEnergyCorrectionOneProngShift" : 1.012,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsOneProngUp"
     }
     config["tauEsOneProngDown"] = {
       "TauEnergyCorrectionOneProngShift" : 0.988,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsOneProngDown"
     }
     config["tauEsOneProngPiZerosUp"] = {
       "TauEnergyCorrectionOneProngPiZerosShift" : 1.012,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsOneProngPiZerosUp"
     }
     config["tauEsOneProngPiZerosDown"] = {
       "TauEnergyCorrectionOneProngPiZerosShift" : 0.988,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsOneProngPiZerosDown"
     }
     config["tauEsThreeProngUp"] = {
       "TauEnergyCorrectionThreeProngShift" : 1.012,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsThreeProngUp"
     }
     config["tauEsThreeProngDown"] = {
       "TauEnergyCorrectionThreeProngShift" : 0.988,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsThreeProngDown"
     }
   elif re.search("Embedding2016", nickname):
     config["tauEsOneProngUp"] = {
       "TauEnergyCorrectionOneProngShift" : 1.03,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsOneProngUp"
     }
     config["tauEsOneProngDown"] = {
       "TauEnergyCorrectionOneProngShift" : 0.97,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsOneProngDown"
     }
     config["tauEsOneProngPiZerosUp"] = {
       "TauEnergyCorrectionOneProngPiZerosShift" : 1.03,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsOneProngPiZerosUp"
     }
     config["tauEsOneProngPiZerosDown"] = {
       "TauEnergyCorrectionOneProngPiZerosShift" : 0.97,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsOneProngPiZerosDown"
     }
     config["tauEsThreeProngUp"] = {
       "TauEnergyCorrectionThreeProngShift" : 1.03,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsThreeProngUp"
     }
     config["tauEsThreeProngDown"] = {
       "TauEnergyCorrectionThreeProngShift" : 0.97,
-      "SvfitCacheFileFolder" : "nominal"
+      "SvfitCacheFileFolder" : "tauEsThreeProngDown"
     }
   
   

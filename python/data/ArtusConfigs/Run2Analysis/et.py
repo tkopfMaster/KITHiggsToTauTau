@@ -43,8 +43,8 @@ def build_config(nickname):
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsBTaggedJetID",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsMinimalPlotlevelFilter_et",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsSvfit",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsTauES"
-    #"HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.settingsMVATestMethods"
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsTauES",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.settingsMVATestMethods"
   ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
@@ -53,7 +53,7 @@ def build_config(nickname):
   # explicit configuration
   config["Channel"] = "ET"
   config["MinNElectrons"] = 1
-  config["MinTaus"] = 1
+  config["MinNTaus"] = 1
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer.
   if re.search("Run2016|Summer16", nickname): config["HltPaths"] = [
           "HLT_Ele25_eta2p1_WPTight_Gsf"]
@@ -108,6 +108,7 @@ def build_config(nickname):
   config["InvalidateNonMatchingTaus"] = True
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
+  config["UseUWGenMatching"] = "true"
   
   config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.fourVectorQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.syncQuantities").build_list())
@@ -147,7 +148,7 @@ def build_config(nickname):
                                                               "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer",
-                                                              "producer:TaggedJetUncertaintyShiftProducer"]
+                                                              "producer:TaggedJetUncertaintyShiftProducer"))
   if not isData:                 config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",

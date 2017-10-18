@@ -21,20 +21,24 @@ def build_config(nickname):
   ## fill config:
   # includes
   includes = [
-    ]
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsMuonID"
+  ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  config["JetEnergyCorrectionParameters"] = []
-  if re.search("Run2016|Embedding2016", nickname):
-    config["JetEnergyCorrectionUncertaintyParameters"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/jec/Summer16/Summer16_23Sep2016V4_DATA_Uncertainty_AK4PFchs.txt"
-  else:
-    config["JetEnergyCorrectionUncertaintyParameters"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/jec/Summer16/Summer16_23Sep2016V4_MC_Uncertainty_AK4PFchs.txt"
-    
-  config["JetEnergyCorrectionUncertaintySource"] = ""
-  #config["JetEnergyCorrectionUncertaintyShift"] = 0.0
-
+  config["VetoMuonID"] = "veto"
+  
+  config["VetoMuonIsoType"] = "user"
+  config["VetoMuonIso"] = "none"
+  config["VetoMuonIsoPtSumOverPtUpperThresholdEB"] = 0.3
+  config["VetoMuonIsoPtSumOverPtUpperThresholdEE"] = 0.3
+  
+  config["VetoMuonLowerPtCuts"] = ["15.0"]
+  config["VetoMuonUpperAbsEtaCuts"] = ["2.4"]
+  config["DiVetoMuonMinDeltaRCut"] = 0.15
+  config["DiVetoMuonVetoMode"] = "veto_os_keep_ss"
+  config["DirectIso"] = True
 
   return config

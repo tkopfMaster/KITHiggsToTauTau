@@ -33,26 +33,14 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  if re.search("Summer16", nickname):
-    config["metJetEnUp"] = {
-      "MetUncertaintyShift" : True,
-      "MetUncertaintyType" : "JetEnUp",
-      "SvfitCacheFileFolder" : "metJetEnUp"
+  if re.search("DY.?JetsToLL|EWKZ2Jets", nickname):
+    config["tauMuFakeEsUp"] = {
+      "TauMuonFakeEnergyCorrection" : 1.015,
+      "SvfitCacheFileFolder" : "tauMuFakeEsUp"
     }
-    config["metJetEnDown"] = {
-      "MetUncertaintyShift" : True,
-      "MetUncertaintyType" : "JetEnDown",
-      "SvfitCacheFileFolder" : "metJetEnDown"
-    }
-    config["metUnclusteredEnUp"] = {
-      "MetUncertaintyShift" : True,
-      "MetUncertaintyType" : "UnclusteredEnUp",
-      "SvfitCacheFileFolder" : "metUnclusteredEnUp"
-    }
-    config["metUnclusteredEnDown"] = {
-      "MetUncertaintyShift" : True,
-      "MetUncertaintyType" : "UnclusteredEnDown",
-      "SvfitCacheFileFolder" : "metUnclusteredEnDown"
+    config["tauMuFakeEsDown"] = {
+      "TauMuonFakeEnergyCorrection" : 0.985,
+      "SvfitCacheFileFolder" : "tauMuFakeEsDown"
     }
   
   

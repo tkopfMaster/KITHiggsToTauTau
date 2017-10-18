@@ -33,26 +33,16 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  if re.search("Summer16", nickname):
-    config["metJetEnUp"] = {
-      "MetUncertaintyShift" : True,
-      "MetUncertaintyType" : "JetEnUp",
-      "SvfitCacheFileFolder" : "metJetEnUp"
+  if re.search("Summer16|Embedding2016", nickname):
+    config["eleEsUp"] = {
+      "ElectronEnergyCorrectionShiftEB" : 1.01,
+      "ElectronEnergyCorrectionShiftEE" : 1.025,
+      "SvfitCacheFileFolder" : "eleEsUp"
     }
-    config["metJetEnDown"] = {
-      "MetUncertaintyShift" : True,
-      "MetUncertaintyType" : "JetEnDown",
-      "SvfitCacheFileFolder" : "metJetEnDown"
-    }
-    config["metUnclusteredEnUp"] = {
-      "MetUncertaintyShift" : True,
-      "MetUncertaintyType" : "UnclusteredEnUp",
-      "SvfitCacheFileFolder" : "metUnclusteredEnUp"
-    }
-    config["metUnclusteredEnDown"] = {
-      "MetUncertaintyShift" : True,
-      "MetUncertaintyType" : "UnclusteredEnDown",
-      "SvfitCacheFileFolder" : "metUnclusteredEnDown"
+    config["eleEsDown"] = {
+      "ElectronEnergyCorrectionShiftEB" : 0.99,
+      "ElectronEnergyCorrectionShiftEE" : 0.975,
+      "SvfitCacheFileFolder" : "eleEsDown"
     }
   
   

@@ -63,7 +63,7 @@ def build_config(nickname):
   
   config["BosonStatuses"] = [62]
   config["ChooseMvaMet"] = False
-  config["DeltaRMatchingRecoElectronsGenParticle"] = 0.2
+  config["DeltaRMatchingRecoElectronGenParticle"] = 0.2
   config["DeltaRMatchingRecoElectronGenTau"] = 0.2
   config["DeltaRMatchingRecoMuonGenParticle"] = 0.2
   config["DeltaRMatchingRecoMuonGenTau"] = 0.2
@@ -158,10 +158,10 @@ def build_config(nickname):
   
   # pipelines - channels including systematic shifts
   config["Pipelines"] = jsonTools.JsonDict()
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.ee").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.ee").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.em").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.et").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname)
   

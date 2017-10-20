@@ -29,7 +29,7 @@ def build_config(nickname):
   
   # explicit configuration
   
-  config["Year"] = 2016 if re.search("(Spring16|Summer16|Run2016|Embedding2016)", nickname) else 2015
+  config["Year"] = 2016 if re.search("(Spring|Summer|Run20|Embedding20)(16|17)", nickname) else 2015
   
   config["LooseMuonID"] = "mediumHIPsafe2016" if re.search("(Run|Embedding)2016(B|C|D|E|F)|Spring16", nickname) else "medium"
   

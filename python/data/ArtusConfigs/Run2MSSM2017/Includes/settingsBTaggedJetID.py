@@ -37,7 +37,7 @@ def build_config(nickname):
     "loose:0.5426"
   ]
   config["BTaggedJetAbsEtaCut"] = 2.4
-  config["ApplyBTagSF"] = not isEmbedded
+  config["ApplyBTagSF"] = False
   config["JetTaggerUpperCuts"] = []
   config["BTagSFMethod"] = "PromotionDemotion"
   config["BTagShift"] = 0

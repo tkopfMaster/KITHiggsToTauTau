@@ -58,7 +58,7 @@ def build_config(nickname):
   
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["MuonLowerPtCuts"] = ["23.0"]
+  config["MuonLowerPtCuts"] = ["29.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.1"]
   config["TauLowerPtCuts"] = ["30.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
@@ -113,7 +113,6 @@ def build_config(nickname):
   
   config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.syncQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
-  #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.MVAInputQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.zptQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.lheWeights").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.fakeFactorWeightQuantities").build_list())
@@ -143,7 +142,7 @@ def build_config(nickname):
                                                               "filter:MinTausCountFilter",
                                                               "producer:ValidMTPairCandidatesProducer",
                                                               "filter:ValidDiTauPairCandidatesFilter",
-                                                              "producer:Run2DecayChannelProducer", #"producer:MvaMetSelector",
+                                                              "producer:Run2DecayChannelProducer",
                                                               "producer:DiVetoMuonVetoProducer",
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
@@ -156,10 +155,8 @@ def build_config(nickname):
                                                               "producer:SimpleMuTauFakeRateWeightProducer"))
   #if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
-  #config["Processors"].append(                                "filter:MinimalPlotlevelFilter") #"producer:MVATestMethodsProducer",
-                                                              #"producer:MVAInputQuantitiesProducer"))
-  if not isData:                 config["Processors"].append( #"producer:TriggerWeightProducer", "producer:IdentificationWeightProducer"
-                                                              "producer:RooWorkspaceWeightProducer")
+  #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
+  if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
   if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   
@@ -170,13 +167,6 @@ def build_config(nickname):
   config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
-                         #"CutFlowTreeConsumer",
-                         #"KappaElectronsConsumer",
-                         #"KappaTausConsumer",
-                         #"KappaTaggedJetsConsumer",
-                         #"RunTimeConsumer",
-                         #"PrintEventsConsumer"
-  
   
   # pipelines - systematic shifts
   return ACU.apply_uncertainty_shift_configs('mt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.syst_shifts_nom").build_config(nickname))

@@ -31,16 +31,16 @@ def build_config(nickname):
   ## fill config:
   # includes
   includes = [
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsLooseElectronID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsLooseMuonID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsElectronID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsMuonID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsTauID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsJEC",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsJetID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsBTaggedJetID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsTauES",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsMinimalPlotlevelFilter_tt"
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsLooseElectronID",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsLooseMuonID",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsElectronID",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsMuonID",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsTauID",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsJEC",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsJetID",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsBTaggedJetID",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsTauES",
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsMinimalPlotlevelFilter_tt"
   ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
@@ -49,45 +49,31 @@ def build_config(nickname):
   # explicit configuration
   config["Channel"] = "TT"
   config["MinNTaus"] = 2
-  config["HltPaths"] = [
-          "HLT_IsoMu22",
-          "HLT_IsoTkMu22",
-          "HLT_IsoMu22_eta2p1",
-          "HLT_IsoTkMu22_eta2p1",
-          "HLT_VLooseIsoPFTau120_Trk50_eta2p1",
-          "HLT_Ele25_eta2p1_WPTight_Gsf",
-          "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg",
-          "HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg",
-          "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL",
-          "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL"
+  if re.search("(Run201|Embedding201|Summer1)", nickname): config["HltPaths"] = [
+          "HLT_IsoMu27",
+          "HLT_Ele32_WPTight_Gsf",
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+          "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
+          "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
     ]
   
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["TauLowerPtCuts"] = ["40.0"]
+  config["TauLowerPtCuts"] = ["43.0"]
   config["TauUpperAbsEtaCuts"] = ["2.1"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairHLTLast"] = True
   config["HLTBranchNames"] = [
-      "trg_singlemuon:HLT_IsoMu22_v",
-      "trg_singlemuon:HLT_IsoTkMu22_v",
-      "trg_singlemuon:HLT_IsoMu22_eta2p1_v",
-      "trg_singlemuon:HLT_IsoTkMu22_eta2p1_v",
-      "trg_singletau:HLT_VLooseIsoPFTau120_Trk50_eta2p1_v",
-      "trg_singleelectron:HLT_Ele25_eta2p1_WPTight_Gsf_v",
-      "trg_doubletau:HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v",
-      "trg_doubletau:HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v",
-      "trg_muonelectron:HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_v",
-      "trg_muonelectron:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_v"
+      "trg_singlemuon:HLT_IsoMu27_v",
+      "trg_singleelectron:HLT_Ele32_WPTight_Gsf_v",
+      "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
+      "trg_muonelectron:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
+      "trg_muonelectron:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
   ]
   config["DiTauPairHltPathsWithoutCommonMatchRequired"] = [
-      "HLT_IsoMu22_v",
-      "HLT_IsoTkMu22_v",
-      "HLT_IsoMu22_eta2p1_v",
-      "HLT_IsoTkMu22_eta2p1_v",
-      "HLT_VLooseIsoPFTau120_Trk50_eta2p1_v",
-      "HLT_Ele25_eta2p1_WPTight_Gsf_v"
+      "HLT_IsoMu27_v",
+      "HLT_Ele32_WPTight_Gsf_v"
   ]
   config["EventWeight"] = "eventWeight"
   config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
@@ -112,10 +98,8 @@ def build_config(nickname):
   
   config["TauTauRestFrameReco"] = "collinear_approximation"
   config["TauTriggerFilterNames"] = [
-          "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v:hltDoublePFTau35TrackPt1MediumIsolationDz02Reg",
-          "HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v:hltDoublePFTau35TrackPt1MediumCombinedIsolationDz02Reg"
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:hltDoublePFTau40TrackPt1TightChargedIsolationDz02Reg"
     ]
-  config["TriggerObjectLowerPtCut"] = 28.0
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = False
   config["InvalidateNonMatchingMuons"] = False
@@ -123,12 +107,11 @@ def build_config(nickname):
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
   
-  config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.syncQuantities").build_list()
+  config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.syncQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
-  #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.MVAInputQuantities").build_list())
-  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.lheWeights").build_list())
-  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.zptQuantities").build_list())
-  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.fakeFactorWeightQuantities_tt").build_list())
+  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.lheWeights").build_list())
+  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.zptQuantities").build_list())
+  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.fakeFactorWeightQuantities_tt").build_list())
   config["Quantities"].extend([
       "had_gen_match_pT_1",
       "had_gen_match_pT_2"
@@ -141,7 +124,7 @@ def build_config(nickname):
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
                                                               "producer:MetSelector"]
-  if not isData:                 config["Processors"].append( "producer:TauCorrectionsProducer")
+  #if not isData:                 config["Processors"].append( "producer:TauCorrectionsProducer")
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "filter:ValidTausFilter",
                                                               "producer:TauTriggerMatchingProducer",
@@ -150,37 +133,28 @@ def build_config(nickname):
                                                               "producer:ValidMuonsProducer",
                                                               "producer:ValidTTPairCandidatesProducer",
                                                               "filter:ValidDiTauPairCandidatesFilter",
-                                                              "producer:Run2DecayChannelProducer",#"producer:MvaMetSelector",
+                                                              "producer:Run2DecayChannelProducer",
+  #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
-                                                              "producer:ValidBTaggedJetsProducer",
-                                                              "producer:TaggedJetCorrectionsProducer"))
-  if not isData:                 config["Processors"].extend(("producer:MetCorrector", #"producer:MvaMetCorrector"
+                                                              "producer:ValidBTaggedJetsProducer"))
+  if not isData:                 config["Processors"].extend((#"producer:MetCorrector",
                                                               "producer:SimpleEleTauFakeRateWeightProducer",
                                                               "producer:SimpleMuTauFakeRateWeightProducer",
                                                               "producer:TauTauTriggerWeightProducer"))
-  if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
-  if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
-  config["Processors"].extend((                               "filter:MinimalPlotlevelFilter",
+  #if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
+  #if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
+  config["Processors"].extend((                               #"filter:MinimalPlotlevelFilter",
                                                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer",
                                                               "producer:JetToTauFakesProducer",
                                                               "producer:EventWeightProducer"))
   
-  
-  
   config["AddGenMatchedTaus"] = True
   config["AddGenMatchedTauJets"] = True
   config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
-                         #"CutFlowTreeConsumer",
-                         #"KappaElectronsConsumer",
-                         #"KappaTausConsumer",
-                         #"KappaTaggedJetsConsumer",
-                         #"RunTimeConsumer",
-                         #"PrintEventsConsumer"
-  
   
   # pipelines - systematic shifts
-  return ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.syst_shifts").build_config(nickname))
+  return ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.syst_shifts").build_config(nickname))

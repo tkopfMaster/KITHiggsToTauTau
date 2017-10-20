@@ -163,10 +163,10 @@ def build_list():
     "decayMode_2",
     "npartons",
     "genbosonmass",
-    "#trg_singleelectron",
+    "trg_singleelectron",
     "trg_singlemuon",
-    "#trg_doubletau",
-    "#trg_muonelectron"
+    "trg_doubletau",
+    "trg_muonelectron"
   ]
   '''
     "#mcweight",

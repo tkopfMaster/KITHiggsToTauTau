@@ -53,7 +53,11 @@ def build_config(nickname):
   config["MinNTaus"] = 1
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer..
   if re.search("(Run201|Embedding201|Summer1)", nickname): config["HltPaths"] = [
-          "HLT_IsoMu27"
+          "HLT_IsoMu27",
+          "HLT_Ele32_WPTight_Gsf",
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+          "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
+          "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
     ]
   
   config["TauID"] = "TauIDRecommendation13TeV"
@@ -66,10 +70,15 @@ def build_config(nickname):
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairHLTLast"] = True
   config["HLTBranchNames"] = [
-      "trg_singlemuon:HLT_IsoMu27_v"
+      "trg_singlemuon:HLT_IsoMu27_v",
+      "trg_singleelectron:HLT_Ele32_WPTight_Gsf_v",
+      "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
+      "trg_muonelectron:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
+      "trg_muonelectron:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
   ]
   config["DiTauPairHltPathsWithoutCommonMatchRequired"] = [
       "HLT_IsoMu27_v",
+      "HLT_Ele32_WPTight_Gsf_v"
   ]
   config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
   config["RooWorkspaceWeightNames"] = [] if isEmbedded else ["0:triggerWeight"]
@@ -100,9 +109,7 @@ def build_config(nickname):
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
   config["MuonTriggerFilterNames"] = [
-          "HLT_IsoMu27_v:hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07",
-    ]
-  config["TauTriggerFilterNames"] = [
+          "HLT_IsoMu27_v:hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07"
     ]
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = False
@@ -147,7 +154,7 @@ def build_config(nickname):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
-  #if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector") #"producer:MvaMetCorrector"
+  #if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))

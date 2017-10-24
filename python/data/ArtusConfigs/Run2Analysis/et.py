@@ -42,7 +42,7 @@ def build_config(nickname):
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsJetID",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsBTaggedJetID",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsMinimalPlotlevelFilter_et",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsSvfit",
+    #"HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsSvfit",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsTauES",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.settingsMVATestMethods"
   ]
@@ -63,9 +63,9 @@ def build_config(nickname):
   config["NoHltFiltering"] = True if isEmbedded else False
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["ElectronLowerPtCuts"] = ["26.0"]
+  config["ElectronLowerPtCuts"] = ["25.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.1"]
-  config["TauLowerPtCuts"] = ["30.0"]
+  config["TauLowerPtCuts"] = ["20.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
   config["TriggerObjectLowerPtCut"] = -1.0
   config["DiTauPairMinDeltaRCut"] = 0.5

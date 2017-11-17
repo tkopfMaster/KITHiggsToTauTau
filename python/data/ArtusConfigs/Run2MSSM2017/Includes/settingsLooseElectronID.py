@@ -21,7 +21,7 @@ def build_config(nickname):
   ## fill config:
   # includes
   includes = [
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsElectronID"
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsElectronID"
     ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)

@@ -28,7 +28,7 @@ def build_config(nickname):
   
   # explicit configuration
   config["JetID"] = "loose"
-  config["JetIDVersion"] = "2015"
+  config["JetIDVersion"] = "2016"
   config["PuJetIDs"] = []
   config["PuJetIDFullDiscrName"] = "pileupJetIdfullDiscriminant"
   config["JetTaggerLowerCuts"] = []

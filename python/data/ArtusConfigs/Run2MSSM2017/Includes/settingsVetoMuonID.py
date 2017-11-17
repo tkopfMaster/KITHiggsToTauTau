@@ -21,14 +21,14 @@ def build_config(nickname):
   ## fill config:
   # includes
   includes = [
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.settingsMuonID"
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsMuonID"
     ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  config["VetoMuonID"] = "veto"
+  config["VetoMuonID"] = "loose"
   
   config["VetoMuonIsoType"] = "user"
   config["VetoMuonIso"] = "none"

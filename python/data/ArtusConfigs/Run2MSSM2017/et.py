@@ -115,9 +115,9 @@ def build_config(nickname):
           "HLT_Ele35_WPTight_Gsf_v:hltEle35noerWPTightGsfTrackIsoFilter"
     ]
   config["BTagWPs"] = ["medium"]
-  config["InvalidateNonMatchingElectrons"] = True
+  config["InvalidateNonMatchingElectrons"] = False
   config["InvalidateNonMatchingMuons"] = False
-  config["InvalidateNonMatchingTaus"] = True
+  config["InvalidateNonMatchingTaus"] = False
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
   

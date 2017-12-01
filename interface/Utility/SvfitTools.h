@@ -8,8 +8,11 @@
 #include <TChain.h>
 #include <TMemFile.h>
 
-#include "TauAnalysis/SVfitStandalone/interface/SVfitStandaloneAlgorithm.h"
-#include "TauAnalysis/SVfitStandalone/interface/SVfitStandaloneQuantities.h"
+//#include "TauAnalysis/SVfitStandalone/interface/SVfitStandaloneAlgorithm.h"
+//#include "TauAnalysis/SVfitStandalone/interface/SVfitStandaloneQuantities.h"
+#include "TauAnalysis/ClassicSVfit/interface/ClassicSVfit.h"
+#include "TauAnalysis/ClassicSVfit/interface/MeasuredTauLepton.h"
+#include "TauAnalysis/ClassicSVfit/interface/svFitHistogramAdapter.h"
 
 #include "Kappa/DataFormats/interface/Kappa.h"
 
@@ -20,7 +23,7 @@ typedef ROOT::Math::DisplacementVector3D<ROOT::Math::Cartesian3D<float>,ROOT::Ma
 typedef ROOT::Math::SMatrix<double, 2, 2, ROOT::Math::MatRepSym<double, 2> > RMSM2x2;
 
 
-class TauSVfitQuantity : public svFitStandalone::SVfitQuantity
+class TauSVfitQuantity : public classic_svFit::SVfitQuantity
 {
 
 public:
@@ -35,43 +38,43 @@ class TauESVfitQuantity : public TauSVfitQuantity
 {
 public:
 	TauESVfitQuantity(size_t tauIndex);
-	virtual TH1* CreateHistogram(std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
-	virtual double FitFunction(std::vector<svFitStandalone::LorentzVector> const& fittedTauLeptons, std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
+	virtual TH1* createHistogram(const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
+	virtual double fitFunction(const classic_svFit::LorentzVector& tau1P4, const classic_svFit::LorentzVector& tau2P4, const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
 };
 
 class TauERatioSVfitQuantity : public TauSVfitQuantity
 {
 public:
 	TauERatioSVfitQuantity(size_t tauIndex);
-	virtual TH1* CreateHistogram(std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
-	virtual double FitFunction(std::vector<svFitStandalone::LorentzVector> const& fittedTauLeptons, std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
+	virtual TH1* createHistogram(const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
+	virtual double fitFunction(const classic_svFit::LorentzVector& tau1P4, const classic_svFit::LorentzVector& tau2P4, const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
 };
 
 class TauPtSVfitQuantity : public TauSVfitQuantity
 {
 public:
 	TauPtSVfitQuantity(size_t tauIndex);
-	virtual TH1* CreateHistogram(std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
-	virtual double FitFunction(std::vector<svFitStandalone::LorentzVector> const& fittedTauLeptons, std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
+	virtual TH1* createHistogram(const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
+	virtual double fitFunction(const classic_svFit::LorentzVector& tau1P4, const classic_svFit::LorentzVector& tau2P4, const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
 };
 
 class TauEtaSVfitQuantity : public TauSVfitQuantity
 {
 public:
 	TauEtaSVfitQuantity(size_t tauIndex);
-	virtual TH1* CreateHistogram(std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
-	virtual double FitFunction(std::vector<svFitStandalone::LorentzVector> const& fittedTauLeptons, std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
+	virtual TH1* createHistogram(const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
+	virtual double fitFunction(const classic_svFit::LorentzVector& tau1P4, const classic_svFit::LorentzVector& tau2P4, const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
 };
 
 class TauPhiSVfitQuantity : public TauSVfitQuantity
 {
 public:
 	TauPhiSVfitQuantity(size_t tauIndex);
-	virtual TH1* CreateHistogram(std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
-	virtual double FitFunction(std::vector<svFitStandalone::LorentzVector> const& fittedTauLeptons, std::vector<svFitStandalone::LorentzVector> const& measuredTauLeptons, svFitStandalone::Vector const& measuredMET) const;
+	virtual TH1* createHistogram(const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
+	virtual double fitFunction(const classic_svFit::LorentzVector& tau1P4, const classic_svFit::LorentzVector& tau2P4, const classic_svFit::LorentzVector& vis1P4, const classic_svFit::LorentzVector& vis2P4, const classic_svFit::Vector& met) const;
 };
 
-class MCTauTauQuantitiesAdapter : public svFitStandalone::MCPtEtaPhiMassAdapter
+class MCTauTauQuantitiesAdapter : public classic_svFit::DiTauSystemHistogramAdapter
 {
 
 public:
@@ -117,12 +120,12 @@ public:
 	
 	SvfitEventKey() {};
 	SvfitEventKey(ULong64_t const& runLumiEvent,
-	              svFitStandalone::kDecayType const& decayType1, svFitStandalone::kDecayType const& decayType2,
+	              classic_svFit::MeasuredTauLepton::kDecayType const& decayType1, classic_svFit::MeasuredTauLepton::kDecayType const& decayType2,
 	              HttEnumTypes::SystematicShift const& systematicShift,
 	              float const& systematicShiftSigma, IntegrationMethod const& integrationMethod, ULong64_t const &hash);
 	
 	void Set(ULong64_t const& runLumiEvent,
-	         svFitStandalone::kDecayType const& decayType1, svFitStandalone::kDecayType const& decayType2,
+	         classic_svFit::MeasuredTauLepton::kDecayType const& decayType1, classic_svFit::MeasuredTauLepton::kDecayType const& decayType2,
 	         HttEnumTypes::SystematicShift const& systematicShift,
 	         float const& systematicShiftSigma, IntegrationMethod const& integrationMethod, ULong64_t const &hash);
 	
@@ -176,10 +179,8 @@ public:
 	bool operator==(SvfitInputs const& rhs) const;
 	bool operator!=(SvfitInputs const& rhs) const;
 	
-	SVfitStandaloneAlgorithm GetSvfitStandaloneAlgorithm(SvfitEventKey const& svfitEventKey, int verbosity, bool addLogM, TFile* &visPtResolutionFile) const;
-
-private:
-	std::vector<svFitStandalone::MeasuredTauLepton> GetMeasuredTauLeptons(SvfitEventKey const& svfitEventKey) const;
+	ClassicSVfit GetSvfitAlgorithm(int verbosity, SvfitEventKey const& svfitEventKey, bool addLogM) const;
+	std::vector<classic_svFit::MeasuredTauLepton> GetMeasuredTauLeptons(SvfitEventKey const& svfitEventKey) const;
 	TMatrixD GetMetCovarianceMatrix() const;
 };
 
@@ -198,11 +199,11 @@ public:
 	
 	SvfitResults() {};
 	SvfitResults(double fittedTransverseMass, RMFLV const& fittedHiggsLV, float fittedTau1ERatio, RMFLV const& fittedTau1LV, float fittedTau2ERatio, RMFLV const& fittedTau2LV);
-	SvfitResults(SVfitStandaloneAlgorithm const& svfitStandaloneAlgorithm);
+	SvfitResults(ClassicSVfit const& svfitAlgorithm);
 	~SvfitResults();
 	
 	void Set(double fittedTransverseMass, RMFLV const& fittedHiggsLV, float fittedTau1ERatio, RMFLV const& fittedTau1LV, float fittedTau2ERatio, RMFLV const& fittedTau2LV);
-	void Set(SVfitStandaloneAlgorithm const& svfitStandaloneAlgorithm);
+	void Set(ClassicSVfit const& svfitAlgorithm);
 	inline void FromRecalculation() { recalculated = true; }
 	inline void FromCache() { recalculated = false; }
 	
@@ -216,12 +217,12 @@ public:
 	bool recalculated;
 
 private:
-	double GetFittedTransverseMass(SVfitStandaloneAlgorithm const& svfitStandaloneAlgorithm) const;
-	RMFLV GetFittedHiggsLV(SVfitStandaloneAlgorithm const& svfitStandaloneAlgorithm) const;
-	float GetFittedTau1ERatio(SVfitStandaloneAlgorithm const& svfitStandaloneAlgorithm) const;
-	RMFLV GetFittedTau1LV(SVfitStandaloneAlgorithm const& svfitStandaloneAlgorithm) const;
-	float GetFittedTau2ERatio(SVfitStandaloneAlgorithm const& svfitStandaloneAlgorithm) const;
-	RMFLV GetFittedTau2LV(SVfitStandaloneAlgorithm const& svfitStandaloneAlgorithm) const;
+	double GetFittedTransverseMass(ClassicSVfit const& svfitAlgorithm) const;
+	RMFLV GetFittedHiggsLV(ClassicSVfit const& svfitAlgorithm) const;
+	float GetFittedTau1ERatio(ClassicSVfit const& svfitAlgorithm) const;
+	RMFLV GetFittedTau1LV(ClassicSVfit const& svfitAlgorithm) const;
+	float GetFittedTau2ERatio(ClassicSVfit const& svfitAlgorithm) const;
+	RMFLV GetFittedTau2LV(ClassicSVfit const& svfitAlgorithm) const;
 };
 
 
@@ -236,7 +237,7 @@ public:
 	void Init(std::string const& cacheFileName, std::string const& cacheTreeName);
 	SvfitResults GetResults(SvfitEventKey const& svfitEventKey, SvfitInputs const& svfitInputs,
 	                        bool& neededRecalculation, HttEnumTypes::SvfitCacheMissBehaviour svfitCacheMissBehaviour);
-	TFile * m_visPtResolutionFile = nullptr;
+	//TFile * m_visPtResolutionFile = nullptr;
 
 private:
 	static std::map<std::string, TFile*> svfitCacheInputFiles;

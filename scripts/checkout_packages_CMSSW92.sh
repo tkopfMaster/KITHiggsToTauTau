@@ -40,7 +40,8 @@ if [ "$MODE" = "artus" -o "$MODE" = "both" ]; then
     git clone https://github.com/cms-analysis/HiggsAnalysis-KITHiggsToTauTau.wiki.git HiggsAnalysis/KITHiggsToTauTau/doc/wiki
 
     # Svfit and HHKinFit
-    git clone https://github.com/CMSAachen3B/SVfit_standalone.git TauAnalysis/SVfitStandalone -b HIG-16-006
+    #git clone https://github.com/CMSAachen3B/SVfit_standalone.git TauAnalysis/SVfitStandalone -b HIG-16-006
+    git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit
     git clone https://github.com/artus-analysis/HHKinFit2.git -b artus
 
     # Jet2Tau Fakes

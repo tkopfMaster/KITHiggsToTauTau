@@ -36,10 +36,11 @@ git clone https://github.com/cms-analysis/HiggsAnalysis-KITHiggsToTauTau.wiki.gi
 #svn co https://ekptrac.physik.uni-karlsruhe.de/svn/KITHiggsToTauTau-auxiliaries/trunk HiggsAnalysis/KITHiggsToTauTau/auxiliaries
 
 # Svfit and HHKinFit
-git clone https://github.com/veelken/SVfit_standalone.git TauAnalysis/SVfitStandalone
-cd TauAnalysis/SVfitStandalone
-git checkout dd7cf43e3f930040959f7d700cef976307d7cec3 -b current
-cd $CMSSW_BASE/src
+#git clone https://github.com/veelken/SVfit_standalone.git TauAnalysis/SVfitStandalone
+#cd TauAnalysis/SVfitStandalone
+#git checkout dd7cf43e3f930040959f7d700cef976307d7cec3 -b current
+#cd $CMSSW_BASE/src
+git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit
 
 # Jet2Tau Fakes
 git clone https://github.com/CMS-HTT/Jet2TauFakes.git HTTutilities/Jet2TauFakes

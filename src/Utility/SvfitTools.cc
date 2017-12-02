@@ -395,7 +395,7 @@ ClassicSVfit SvfitInputs::GetSvfitAlgorithm(int verbosity, SvfitEventKey const& 
 	
 	double kappa = 3.;
 	if (svfitEventKey.decayType1==1) kappa += 1.;
-	if (svfitEventKey.decayType1==2) kappa += 1.;
+	if (svfitEventKey.decayType2==1) kappa += 1.;
 	svfitAlgorithm.addLogM_fixed(addLogM, kappa);
 	/*if (visPtResolutionFile == 0)
 	{

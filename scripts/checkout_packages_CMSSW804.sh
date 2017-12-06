@@ -41,6 +41,7 @@ git clone https://github.com/cms-analysis/HiggsAnalysis-KITHiggsToTauTau.wiki.gi
 #git checkout dd7cf43e3f930040959f7d700cef976307d7cec3 -b current
 #cd $CMSSW_BASE/src
 git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit
+git clone https://github.com/svfit/SVfitTF TauAnalysis/SVfitTF
 
 # Jet2Tau Fakes
 git clone https://github.com/CMS-HTT/Jet2TauFakes.git HTTutilities/Jet2TauFakes

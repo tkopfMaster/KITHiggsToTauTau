@@ -104,7 +104,7 @@ def build_config(nickname):
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = False
   config["InvalidateNonMatchingMuons"] = False
-  config["InvalidateNonMatchingTaus"] = False
+  config["InvalidateNonMatchingTaus"] = True
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
   
@@ -138,19 +138,18 @@ def build_config(nickname):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
-  if not isData:                 config["Processors"].extend((#"producer:MetCorrector",
-                                                              "producer:SimpleEleTauFakeRateWeightProducer",
-                                                              "producer:SimpleMuTauFakeRateWeightProducer",
-                                                              "producer:TauTauTriggerWeightProducer"))
+  #if not isData:                 config["Processors"].extend((#"producer:MetCorrector",
+  #                                                            "producer:SimpleEleTauFakeRateWeightProducer",
+  #                                                            "producer:SimpleMuTauFakeRateWeightProducer",
+  #                                                            "producer:TauTauTriggerWeightProducer"))
   #if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
   config["Processors"].extend((                               #"filter:MinimalPlotlevelFilter",
                                                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer",
-                                                              "producer:JetToTauFakesProducer",
+  #                                                            "producer:JetToTauFakesProducer",
                                                               "producer:EventWeightProducer"))
-  
   config["AddGenMatchedTaus"] = True
   config["AddGenMatchedTauJets"] = True
   config["BranchGenMatchedTaus"] = True

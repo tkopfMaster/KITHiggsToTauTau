@@ -53,7 +53,10 @@ def build_config(nickname):
   config["MinNTaus"] = 1
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer..
   if re.search("(Run201|Embedding201|Summer1)", nickname): config["HltPaths"] = [
+  #        "HLT_IsoMu24",
           "HLT_IsoMu27",
+  #        "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+  #       "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1",
           "HLT_Ele35_WPTight_Gsf",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
           "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
@@ -72,13 +75,17 @@ def build_config(nickname):
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairHLTLast"] = True
   config["HLTBranchNames"] = [
+  #    "trg_singlemuon:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
+  #    "trg_muontau:HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v",
+  #    "trg_muontau:HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v",
       "trg_singleelectron:HLT_Ele35_WPTight_Gsf_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
       "trg_muonelectron:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
       "trg_muonelectron:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
   ]
   config["DiTauPairHltPathsWithoutCommonMatchRequired"] = [
+  #    "HLT_IsoMu24_v",
       "HLT_IsoMu27_v",
       "HLT_Ele35_WPTight_Gsf_v"
   ]
@@ -111,12 +118,23 @@ def build_config(nickname):
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
   config["MuonTriggerFilterNames"] = [
-          "HLT_IsoMu27_v:hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07"
+  #        "HLT_IsoMu24_v:hltL3crIsoL1sSingleMu22L1f0L2f10QL3f24QL3trkIsoFiltered0p07",
+          "HLT_IsoMu27_v:hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07",
+  #        "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltL3crIsoL1sMu18erTau24erIorMu20erTau24erL1f0L2f10QL3f20QL3trkIsoFiltered0p07",
+  #        "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltOverlapFilterIsoMu20LooseChargedIsoPFTau27L1Seeded",
+  #        "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:hltL3crIsoL1sSingleMu22erL1f0L2f10QL3f24QL3trkIsoFiltered0p07",
+  #        "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:hltOverlapFilterIsoMu24LooseChargedIsoPFTau20"
+    ]
+  config["TauTriggerFilterNames"] = [
+  #        "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltSelectedPFTau27LooseChargedIsolationAgainstMuonL1HLTMatched",
+  #        "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltOverlapFilterIsoMu20LooseChargedIsoPFTau27L1Seeded",
+  #        "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:hltPFTau20TrackLooseChargedIsoAgainstMuon",
+  #        "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:hltOverlapFilterIsoMu24LooseChargedIsoPFTau20"
     ]
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = False
-  config["InvalidateNonMatchingMuons"] = False
-  config["InvalidateNonMatchingTaus"] = False
+  config["InvalidateNonMatchingMuons"] = True
+  config["InvalidateNonMatchingTaus"] = True
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
   
@@ -160,13 +178,13 @@ def build_config(nickname):
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))
-  if not isEmbedded:             config["Processors"].extend(("producer:SimpleEleTauFakeRateWeightProducer",
-                                                              "producer:SimpleMuTauFakeRateWeightProducer"))
+  #if not isEmbedded:             config["Processors"].extend(("producer:SimpleEleTauFakeRateWeightProducer",
+  #                                                            "producer:SimpleMuTauFakeRateWeightProducer"))
   #if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
-  if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
-  if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
+  #if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   
   config["AddGenMatchedParticles"] = True

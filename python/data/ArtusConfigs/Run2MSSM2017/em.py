@@ -134,8 +134,8 @@ def build_config(nickname):
       ]
   
   config["BTagWPs"] = ["medium"]
-  config["InvalidateNonMatchingElectrons"] = False
-  config["InvalidateNonMatchingMuons"] = False
+  config["InvalidateNonMatchingElectrons"] = True
+  config["InvalidateNonMatchingMuons"] = True
   config["InvalidateNonMatchingTaus"] = False
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
@@ -178,11 +178,12 @@ def build_config(nickname):
   #if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
-  if not (isData or isEmbedded): config["Processors"].extend(("producer:TriggerWeightProducer",
-                                                              "producer:IdentificationWeightProducer"))
-  if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
-  config["Processors"].extend((                               "producer:EmuQcdWeightProducer",
-                                                              "producer:EventWeightProducer"))
+  #if not (isData or isEmbedded): config["Processors"].extend(("producer:TriggerWeightProducer",
+  #                                                            "producer:IdentificationWeightProducer"))
+  #if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  #config["Processors"].extend((                               "producer:EmuQcdWeightProducer",
+  config["Processors"].append(
+                                                              "producer:EventWeightProducer")#)
     
   config["AddGenMatchedParticles"] = True
   config["BranchGenMatchedElectrons"] = True

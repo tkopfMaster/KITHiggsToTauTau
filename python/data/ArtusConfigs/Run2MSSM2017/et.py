@@ -115,9 +115,9 @@ def build_config(nickname):
           "HLT_Ele35_WPTight_Gsf_v:hltEle35noerWPTightGsfTrackIsoFilter"
     ]
   config["BTagWPs"] = ["medium"]
-  config["InvalidateNonMatchingElectrons"] = False
+  config["InvalidateNonMatchingElectrons"] = True
   config["InvalidateNonMatchingMuons"] = False
-  config["InvalidateNonMatchingTaus"] = False
+  config["InvalidateNonMatchingTaus"] = True
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
   
@@ -161,13 +161,13 @@ def build_config(nickname):
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))
-  if not isEmbedded:             config["Processors"].extend(("producer:SimpleEleTauFakeRateWeightProducer",
-                                                              "producer:SimpleMuTauFakeRateWeightProducer"))
+  #if not isEmbedded:             config["Processors"].extend(("producer:SimpleEleTauFakeRateWeightProducer",
+  #                                                            "producer:SimpleMuTauFakeRateWeightProducer"))
   #if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
-  if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
-  if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
+  #if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   
   config["AddGenMatchedParticles"] = True

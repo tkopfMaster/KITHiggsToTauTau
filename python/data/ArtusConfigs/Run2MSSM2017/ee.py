@@ -129,7 +129,7 @@ def build_config(nickname):
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = True
   config["InvalidateNonMatchingMuons"] = False
-  config["InvalidateNonMatchingTaus"] = True
+  config["InvalidateNonMatchingTaus"] = False
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
   
@@ -203,4 +203,3 @@ def build_config(nickname):
   
   # pipelines - systematic shifts
   return ACU.apply_uncertainty_shift_configs('ee', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.syst_shifts_nom").build_config(nickname))
-  

@@ -11,14 +11,14 @@
 	<use name="roottmva"/>
 	<use name="boost"/>
 	<use name="boost_regex"/>
-	<!-- dependencies of TauSpinner -->
+	<!-- dependencies of TauSpinner:
 	<use name="SimGeneral/HepPDTRecord"/>
 	<use name="heppdt"/>
 	<use name="clhep"/>
 	<use name="hepmc"/>
 	<use name="tauspinner"/>
 	<flags EDM_PLUGIN="1"/>
-	<!-- dependencies of TauSpinner -->
+	 dependencies of TauSpinner -->
 </bin>
 
 <bin name="ComputeSvfit" file="ComputeSvfit.cc">

@@ -24,7 +24,7 @@ elif [[ `hostname` == *ekpbms* ]] && [ ${USER} == "wayand" ]; then
     echo "Hallo stefan auf der bms"
     export ARTUS_WORK_BASE="/portal/ekpbms2/home/wayand/htautau/artus"
 elif [[ `hostname` == *ekp* ]]; then
-	STORAGELIST=(a 5 6 7 8 9 jbod) #list of allowed storages ordered by priority (descending)
+	STORAGELIST=(b 5 6 7 8 9 jbod) #list of allowed storages ordered by priority (descending)
 	for STORAGE in ${STORAGELIST[*]}
 		do
 			if [ -d /storage/${STORAGE}/${USER} ]; then

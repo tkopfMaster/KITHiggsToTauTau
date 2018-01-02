@@ -59,7 +59,8 @@ if [ "$MODE" = "artus" -o "$MODE" = "both" ]; then
     sed 's/cms2/ikhhed3/g' ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/tauspinner.xml -i
 
     # Grid-Control
-    git clone https://github.com/grid-control/grid-control.git -b r1941
+    git clone https://github.com/janekbechtel/grid-control.git 
+    #git clone https://github.com/grid-control/grid-control.git -b r1941
 
     # source ini script, needs to be done in every new shell
     source HiggsAnalysis/KITHiggsToTauTau/scripts/ini_KITHiggsToTauTauAnalysis.sh

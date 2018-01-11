@@ -53,8 +53,16 @@ def build_config(nickname):
   config["MinNTaus"] = 1
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer..
   if re.search("(Run201|Embedding201|Summer1)", nickname): config["HltPaths"] = [
+          "HLT_IsoMu24",
           "HLT_IsoMu27",
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1",
+          "HLT_Ele32_WPTight_Gsf",
           "HLT_Ele35_WPTight_Gsf",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
+          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg",
+          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
+          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
           "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
@@ -62,7 +70,7 @@ def build_config(nickname):
   
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["ElectronLowerPtCuts"] = ["37.0"]
+  config["ElectronLowerPtCuts"] = ["26.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.1"]
   config["TauLowerPtCuts"] = ["30.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
@@ -70,17 +78,34 @@ def build_config(nickname):
   config["DeltaRTriggerMatchingTaus"] = 0.5
   config["DeltaRTriggerMatchingElectrons"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
+  config["DiTauPairLepton1LowerPtCuts"] = [
+          "HLT_Ele32_WPTight_Gsf_v:34.0",
+          "HLT_Ele35_WPTight_Gsf_v:37.0"
+  ]
+  config["DiTauPairLepton2LowerPtCuts"] = [
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:33.0"
+  ]
   config["DiTauPairNoHLT"] = False
   config["DiTauPairHLTLast"] = True
   config["HLTBranchNames"] = [
+      "trg_singlemuon:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
+      "trg_muontau:HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v",
+      "trg_muontau:HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v",
+      "trg_singleelectron:HLT_Ele32_WPTight_Gsf_v",
       "trg_singleelectron:HLT_Ele35_WPTight_Gsf_v",
+      "trg_electrontau:HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v",
+      "trg_doubletau_lowpt_mediso:HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v",
+      "trg_doubletau_lowpt:HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
+      "trg_doubletau_mediso:HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
       "trg_muonelectron:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
       "trg_muonelectron:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
   ]
   config["DiTauPairHltPathsWithoutCommonMatchRequired"] = [
+      "HLT_IsoMu24_v",
       "HLT_IsoMu27_v",
+      "HLT_Ele32_WPTight_Gsf_v",
       "HLT_Ele35_WPTight_Gsf_v"
   ]
   config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
@@ -112,7 +137,14 @@ def build_config(nickname):
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
   config["ElectronTriggerFilterNames"] = [
-          "HLT_Ele35_WPTight_Gsf_v:hltEle35noerWPTightGsfTrackIsoFilter"
+          "HLT_Ele32_WPTight_Gsf_v:hltEle32WPTightGsfTrackIsoFilter",
+          "HLT_Ele35_WPTight_Gsf_v:hltEle35noerWPTightGsfTrackIsoFilter",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:hltEle24erWPTightGsfTrackIsoFilterForTau",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:hltOverlapFilterIsoEle24WPTightGsfLooseIsoPFTau30"
+    ]
+  config["TauTriggerFilterNames"] = [
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:hltSelectedPFTau30LooseChargedIsolationL1HLTMatched",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:hltOverlapFilterIsoEle24WPTightGsfLooseIsoPFTau30"
     ]
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = True

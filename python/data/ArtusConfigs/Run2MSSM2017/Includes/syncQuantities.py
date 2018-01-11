@@ -257,8 +257,12 @@ def build_list():
     "npartons",
     "genbosonmass",
     "trg_singleelectron",
+    "trg_electrontau",
     "trg_singlemuon",
-    #"trg_muontau",
+    "trg_muontau",
+    "trg_doubletau_lowpt_mediso",
+    "trg_doubletau_lowpt",
+    "trg_doubletau_mediso",
     "trg_doubletau",
     "trg_muonelectron"
   ]

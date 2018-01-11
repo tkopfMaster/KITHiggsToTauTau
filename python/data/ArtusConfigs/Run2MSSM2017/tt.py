@@ -50,8 +50,16 @@ def build_config(nickname):
   config["Channel"] = "TT"
   config["MinNTaus"] = 2
   if re.search("(Run201|Embedding201|Summer1)", nickname): config["HltPaths"] = [
+          "HLT_IsoMu24",
           "HLT_IsoMu27",
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1",
+          "HLT_Ele32_WPTight_Gsf",
           "HLT_Ele35_WPTight_Gsf",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
+          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg",
+          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
+          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
           "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
@@ -59,21 +67,39 @@ def build_config(nickname):
   
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["TauLowerPtCuts"] = ["43.0"]
+  config["TauLowerPtCuts"] = ["38.0"]
   config["TauUpperAbsEtaCuts"] = ["2.1"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DeltaRTriggerMatchingTaus"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
+  config["DiTauPairLepton1LowerPtCuts"] = [
+          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:43.0",
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0"
+  ]
+  config["DiTauPairLepton2LowerPtCuts"] = [
+          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:43.0",
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0"
+  ]
   config["DiTauPairHLTLast"] = True
   config["HLTBranchNames"] = [
+      "trg_singlemuon:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
+      "trg_muontau:HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v",
+      "trg_muontau:HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v",
+      "trg_singleelectron:HLT_Ele32_WPTight_Gsf_v",
       "trg_singleelectron:HLT_Ele35_WPTight_Gsf_v",
+      "trg_electrontau:HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v",
+      "trg_doubletau_lowpt_mediso:HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v",
+      "trg_doubletau_lowpt:HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
+      "trg_doubletau_mediso:HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
       "trg_muonelectron:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
       "trg_muonelectron:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
   ]
   config["DiTauPairHltPathsWithoutCommonMatchRequired"] = [
+      "HLT_IsoMu24_v",
       "HLT_IsoMu27_v",
+      "HLT_Ele32_WPTight_Gsf_v",
       "HLT_Ele35_WPTight_Gsf_v"
   ]
   config["EventWeight"] = "eventWeight"
@@ -99,6 +125,9 @@ def build_config(nickname):
   
   config["TauTauRestFrameReco"] = "collinear_approximation"
   config["TauTriggerFilterNames"] = [
+          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:hltDoublePFTau35TrackPt1MediumChargedIsolationDz02Reg",
+          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:hltDoublePFTau35TrackPt1TightChargedIsolationAndTightOOSCPhotonsDz02Reg",
+          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:hltDoublePFTau40TrackPt1MediumChargedIsolationAndTightOOSCPhotonsDz02Reg",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:hltDoublePFTau40TrackPt1TightChargedIsolationDz02Reg"
     ]
   config["BTagWPs"] = ["medium"]

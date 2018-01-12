@@ -148,7 +148,7 @@ def build_config(nickname):
   ])
   
   config["OSChargeLeptons"] = True
-  config["TopPtReweightingStrategy"] = "Run1"
+  config["TopPtReweightingStrategy"] = "Run2"
   
   config["Processors"] =                                     ["producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
@@ -171,7 +171,7 @@ def build_config(nickname):
   #                                                            "producer:SimpleEleTauFakeRateWeightProducer",
   #                                                            "producer:SimpleMuTauFakeRateWeightProducer",
   #                                                            "producer:TauTauTriggerWeightProducer"))
-  #if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
+  if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
   config["Processors"].extend((                               #"filter:MinimalPlotlevelFilter",
                                                               "producer:TauTauRestFrameSelector",

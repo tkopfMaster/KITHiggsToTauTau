@@ -164,7 +164,7 @@ def build_config(nickname):
   ])
   
   config["OSChargeLeptons"] = True
-  config["TopPtReweightingStrategy"] = "Run1"
+  config["TopPtReweightingStrategy"] = "Run2"
   
   config["Processors"] =                                     []# if (isData or isEmbedded) else ["producer:ElectronCorrectionsProducer"]
   config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
@@ -195,7 +195,7 @@ def build_config(nickname):
                                                               "producer:DiJetQuantitiesProducer"))
   #if not isEmbedded:             config["Processors"].extend(("producer:SimpleEleTauFakeRateWeightProducer",
   #                                                            "producer:SimpleMuTauFakeRateWeightProducer"))
-  #if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
+  if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   #if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")

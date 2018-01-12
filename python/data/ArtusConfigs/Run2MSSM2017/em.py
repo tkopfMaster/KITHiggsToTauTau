@@ -83,19 +83,19 @@ def build_config(nickname):
   config["DiTauPairNoHLT"] = False
   config["DiTauPairHLTLast"] = True
   config["HLTBranchNames"] = [
-      "trg_singlemuon:HLT_IsoMu24_v",
+      "trg_singlemuon_lowpt:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
-      "trg_muontau:HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v",
-      "trg_muontau:HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v",
-      "trg_singleelectron:HLT_Ele32_WPTight_Gsf_v",
+      "trg_muontau_lowptmu:HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v",
+      "trg_muontau_lowpttau:HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v",
+      "trg_singleelectron_lowpt:HLT_Ele32_WPTight_Gsf_v",
       "trg_singleelectron:HLT_Ele35_WPTight_Gsf_v",
       "trg_electrontau:HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v",
       "trg_doubletau_lowpt_mediso:HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v",
       "trg_doubletau_lowpt:HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau_mediso:HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
-      "trg_muonelectron:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
-      "trg_muonelectron:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
+      "trg_muonelectron_lowptmu:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
+      "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
   ]
   config["DiTauPairHltPathsWithoutCommonMatchRequired"] = [
       "HLT_IsoMu24_v",

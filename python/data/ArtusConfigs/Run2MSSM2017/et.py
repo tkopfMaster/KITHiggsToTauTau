@@ -56,7 +56,7 @@ def build_config(nickname):
           "HLT_IsoMu24",
           "HLT_IsoMu27",
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1",
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1",
           "HLT_Ele32_WPTight_Gsf",
           "HLT_Ele35_WPTight_Gsf",
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",

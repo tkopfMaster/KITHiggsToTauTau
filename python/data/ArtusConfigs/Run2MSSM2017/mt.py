@@ -56,7 +56,7 @@ def build_config(nickname):
           "HLT_IsoMu24",
           "HLT_IsoMu27",
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1",
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1",
           "HLT_Ele32_WPTight_Gsf",
           "HLT_Ele35_WPTight_Gsf",
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
@@ -81,7 +81,7 @@ def build_config(nickname):
   config["DiTauPairLepton1LowerPtCuts"] = [
           "HLT_IsoMu24_v:26.0",
           "HLT_IsoMu27_v:29.0",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:26.0"
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:26.0"
   ]
   config["DiTauPairHLTLast"] = True
   config["HLTBranchNames"] = [
@@ -138,14 +138,14 @@ def build_config(nickname):
           "HLT_IsoMu27_v:hltL3crIsoL1sMu22Or25L1f0L2f10QL3f27QL3trkIsoFiltered0p07",
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltL3crIsoL1sMu18erTau24erIorMu20erTau24erL1f0L2f10QL3f20QL3trkIsoFiltered0p07",
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltOverlapFilterIsoMu20LooseChargedIsoPFTau27L1Seeded",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:hltL3crIsoL1sSingleMu22erL1f0L2f10QL3f24QL3trkIsoFiltered0p07",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:hltOverlapFilterIsoMu24LooseChargedIsoPFTau20"
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:hltL3crIsoL1sSingleMu22erL1f0L2f10QL3f24QL3trkIsoFiltered0p07",
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:hltOverlapFilterIsoMu24LooseChargedIsoPFTau20"
     ]
   config["TauTriggerFilterNames"] = [
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltSelectedPFTau27LooseChargedIsolationAgainstMuonL1HLTMatched",
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltOverlapFilterIsoMu20LooseChargedIsoPFTau27L1Seeded",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:hltPFTau20TrackLooseChargedIsoAgainstMuon",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_eta2p1_SingleL1_v:hltOverlapFilterIsoMu24LooseChargedIsoPFTau20"
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:hltPFTau20TrackLooseChargedIsoAgainstMuon",
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:hltOverlapFilterIsoMu24LooseChargedIsoPFTau20"
     ]
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = False

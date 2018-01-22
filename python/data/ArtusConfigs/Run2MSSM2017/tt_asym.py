@@ -187,4 +187,4 @@ def build_config(nickname):
                          "cutflow_histogram"]
   
   # pipelines - systematic shifts
-  return ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.syst_shifts_nom").build_config(nickname))
+  return ACU.apply_uncertainty_shift_configs('tt_asym', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.syst_shifts_nom").build_config(nickname))

@@ -394,4 +394,9 @@ public:
 	
 	// settting for TopPtReweightingProducer
 	IMPL_SETTING(std::string, TopPtReweightingStrategy)
+
+
+        // settings for NLOreweightingWeightProducer
+        IMPL_SETTING(std::string, HiggsBosonMass)
+        IMPL_SETTING(std::string, NLOweightsRooWorkspace)
 };

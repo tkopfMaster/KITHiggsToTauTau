@@ -210,6 +210,10 @@ void HttLambdaNtupleConsumer::Init(setting_type const& settings)
 	{
 		return LambdaNtupleConsumer<KappaTypes>::GetFloatQuantities().count("genBosonMass") >= 1 ? LambdaNtupleConsumer<KappaTypes>::GetFloatQuantities()["genBosonMass"](event, product) : DefaultValues::UndefinedFloat;
 	});
+	LambdaNtupleConsumer<KappaTypes>::AddFloatQuantity("genbosonpt", [](KappaEvent const& event, KappaProduct const& product)
+	{
+		return LambdaNtupleConsumer<KappaTypes>::GetFloatQuantities().count("genBosonPt") >= 1 ? LambdaNtupleConsumer<KappaTypes>::GetFloatQuantities()["genBosonPt"](event, product) : DefaultValues::UndefinedFloat;
+	});
 
 
 	LambdaNtupleConsumer<KappaTypes>::AddIntQuantity("isFake", [](KappaEvent const& event, KappaProduct const& product)

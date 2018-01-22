@@ -23,6 +23,7 @@ def build_config(nickname):
   isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLLM(10to50|50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
+  isSUSYggH = re.search("SUSYGluGluToHToTauTau", nickname)
   
   
   ## fill config:
@@ -41,6 +42,10 @@ def build_config(nickname):
   config["EventCount"] = -1
   config["InputIsData"] = isData
   
+  if isSUSYggH:
+    config["HiggsBosonMass"] = re.search("SUSYGluGluToHToTauTauM(\d+)_", nickname).groups()[0] #extracts generator mass from nickname
+    config["NLOweightsRooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/NLOWeights/higgs_pt_v2_mssm_mode.root"
+
   BosonPdgIds = {
       "DY.?JetsToLL|EWKZ2Jets|Embedding(2016|MC)" : [
         23
@@ -113,6 +118,7 @@ def build_config(nickname):
     if isDY or isEmbedded:             config["Processors"].append( "producer:GenDiLeptonDecayModeProducer")
     config["Processors"].extend((                                   "producer:GenParticleProducer",
                                                                     "producer:GenPartonCounterProducer"))
+    if isSUSYggH:                      config["Processors"].append( "producer:NLOreweightingWeightsProducer")
     if isWjets or isDY or isEmbedded:  config["Processors"].extend(("producer:GenTauDecayProducer",
                                                                     "producer:GenBosonDiLeptonDecayModeProducer"))
     config["Processors"].extend((                                   "producer:GeneratorWeightProducer",

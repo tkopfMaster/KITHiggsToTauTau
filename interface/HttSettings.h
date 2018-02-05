@@ -252,6 +252,7 @@ public:
 	IMPL_SETTING_DEFAULT(bool, DiTauPairNoHLT, false);
 	IMPL_SETTING_DEFAULT(bool, RequireFirstTriggering, false);
 	IMPL_SETTING_STRINGLIST_DEFAULT(HLTBranchNames, {});
+	IMPL_SETTING_STRINGLIST_DEFAULT(UsingOnlyFirstLeptonPerHLTBranchNames, {});
 	IMPL_SETTING_DEFAULT(bool, DiTauPairHLTLast, false);
 
 	IMPL_SETTING(std::string, SvfitIntegrationMethod);

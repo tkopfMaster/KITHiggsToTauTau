@@ -64,6 +64,7 @@ def build_config(nickname):
           "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
           "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1",
           "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
     ]
@@ -94,6 +95,8 @@ def build_config(nickname):
       "trg_doubletau_lowpt:HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau_mediso:HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
+      "trg_singletau_leading:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
+      "trg_singletau_trailing:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
       "trg_muonelectron_lowptmu:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
       "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
   ]
@@ -101,7 +104,12 @@ def build_config(nickname):
       "HLT_IsoMu24_v",
       "HLT_IsoMu27_v",
       "HLT_Ele32_WPTight_Gsf_v",
-      "HLT_Ele35_WPTight_Gsf_v"
+      "HLT_Ele35_WPTight_Gsf_v",
+      "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v"
+  ]
+  config["UsingOnlyFirstLeptonPerHLTBranchNames"] = [
+      "trg_singletau_leading:1",
+      "trg_singletau_trailing:0",
   ]
   
   if re.search("Summer1", nickname):

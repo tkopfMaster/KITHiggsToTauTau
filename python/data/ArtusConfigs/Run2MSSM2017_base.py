@@ -24,6 +24,7 @@ def build_config(nickname):
   isDY = re.search("DY.?JetsToLLM(10to50|50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
   isSUSYggH = re.search("SUSYGluGluToHToTauTau", nickname)
+  isSignal = re.search("HToTauTau",nickname)
   
   
   ## fill config:
@@ -115,7 +116,7 @@ def build_config(nickname):
     config["Processors"].extend((                                   "producer:CrossSectionWeightProducer",
                                                                     "producer:NumberGeneratedEventsWeightProducer"))
     if not isEmbedded:                 config["Processors"].append( "producer:PUWeightProducer")
-    if isWjets or isDY:                config["Processors"].append( "producer:GenBosonFromGenParticlesProducer")
+    if isWjets or isDY or isSignal:    config["Processors"].append( "producer:GenBosonFromGenParticlesProducer")
     if isDY or isEmbedded:             config["Processors"].append( "producer:GenDiLeptonDecayModeProducer")
     config["Processors"].extend((                                   "producer:GenParticleProducer",
                                                                     "producer:GenPartonCounterProducer"))
@@ -172,7 +173,7 @@ def build_config(nickname):
   #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt_asym").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt_asym").build_config(nickname)
   
   
   return config

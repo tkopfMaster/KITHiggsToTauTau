@@ -269,6 +269,8 @@ def build_list():
     "trg_doubletau_lowpt",
     "trg_doubletau_mediso",
     "trg_doubletau",
+    "trg_singletau_leading",
+    "trg_singletau_trailing",
     "trg_muonelectron_lowptmu",
     "trg_muonelectron_lowpte",
 

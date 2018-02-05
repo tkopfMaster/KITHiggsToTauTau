@@ -64,6 +64,7 @@ def build_config(nickname):
           "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
           "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
+          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1",
           "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
   ]
@@ -96,6 +97,8 @@ def build_config(nickname):
       "trg_doubletau_lowpt:HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau_mediso:HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
+      "trg_singletau_leading:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
+      "trg_singletau_trailing:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
       "trg_muonelectron_lowptmu:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
       "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
   ]
@@ -103,7 +106,12 @@ def build_config(nickname):
       "HLT_IsoMu24_v",
       "HLT_IsoMu27_v",
       "HLT_Ele32_WPTight_Gsf_v",
-      "HLT_Ele35_WPTight_Gsf_v"
+      "HLT_Ele35_WPTight_Gsf_v",
+      "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v"
+  ]
+  config["UsingOnlyFirstLeptonPerHLTBranchNames"] = [
+      "trg_singletau_leading:1",
+      "trg_singletau_trailing:0",
   ]
   config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
   config["RooWorkspaceWeightNames"] = [] if isEmbedded else ["0:triggerWeight"]
@@ -145,7 +153,9 @@ def build_config(nickname):
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltSelectedPFTau27LooseChargedIsolationAgainstMuonL1HLTMatched",
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:hltOverlapFilterIsoMu20LooseChargedIsoPFTau27L1Seeded",
           "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:hltPFTau20TrackLooseChargedIsoAgainstMuon",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:hltOverlapFilterIsoMu24LooseChargedIsoPFTau20"
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:hltOverlapFilterIsoMu24LooseChargedIsoPFTau20",
+          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:hltPFTau180TrackPt50LooseAbsOrRelMediumHighPtRelaxedIsoIso",
+          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:hltSelectedPFTau180MediumChargedIsolationL1HLTMatched"
     ]
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = False

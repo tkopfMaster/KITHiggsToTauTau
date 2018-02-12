@@ -18,7 +18,6 @@ def build_list():
     "lumi",
     "evt",
     "pt_t",
-    "pt_t_25eta2p1TightL1",
     "eta_t",
     "phi_t",
     "id_t",
@@ -32,13 +31,12 @@ def build_list():
     "gen_p",
     "genZ_p",
     "m_ll",
-    "trg_t_Ele25eta2p1WPTight",
     "trg_t_Ele27WPTight",
-    "trg_t_Ele27eta2p1WPLoose",
-    "trg_p_Ele25eta2p1WPTight",
     "trg_p_Ele27WPTight",
-    "trg_p_Ele27eta2p1WPLoose",
-    "trg_p_PFTau120"
-    ]
+    "trg_t_Ele32WPTight",
+    "trg_p_Ele32WPTight",
+    "trg_t_Ele35WPTight",
+    "trg_p_Ele35WPTight"
+  ]
 
   return quantities_list

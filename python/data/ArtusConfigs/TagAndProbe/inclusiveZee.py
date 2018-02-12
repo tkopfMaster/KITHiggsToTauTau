@@ -52,10 +52,10 @@ def build_config(nickname):
   config["Channel"] = "EE"
   config["MinNElectrons"] = 2
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer.
-  if re.search("(Run2016|Embedding2016|Summer16|Embedding2017|Run2017|Spring17)", nickname): config["HltPaths"] = [
-      "HLT_Ele25_eta2p1_WPTight_Gsf",
+  if re.search("(Run2016|Embedding2016|Summer16|Embedding2017|Run2017|Spring17|Fall17)", nickname): config["HltPaths"] = [
       "HLT_Ele27_WPTight_Gsf",
-      "HLT_Ele27_eta2p1_WPLoose_Gsf"
+      "HLT_Ele32_WPTight_Gsf",
+      "HLT_Ele35_WPTight_Gsf"
   ]
   #config["ElectronLowerPtCuts"] = ["26.0"]
   config["ElectronLowerPtCuts"] = ["10.0"]
@@ -90,10 +90,10 @@ def build_config(nickname):
   ]
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
-  if re.search("(Run2016|Embedding2016|Summer16|Embedding2017|Run2017|Spring17)", nickname): config["ElectronTriggerFilterNames"] = [
-                    "HLT_Ele25_eta2p1_WPTight_Gsf_v:hltEle25erWPTightGsfTrackIsoFilter",
+  if re.search("(Run2016|Embedding2016|Summer16|Embedding2017|Run2017|Spring17|Fall17)", nickname): config["ElectronTriggerFilterNames"] = [
                     "HLT_Ele27_WPTight_Gsf_v:hltEle27WPTightGsfTrackIsoFilter",
-                    "HLT_Ele27_eta2p1_WPLoose_Gsf_v:hltEle27erWPLooseGsfTrackIsoFilter"
+                    "HLT_Ele32_WPTight_Gsf_v:hltEle32WPTightGsfTrackIsoFilter",
+                    "HLT_Ele35_WPTight_Gsf_v:hltEle35noerWPTightGsfTrackIsoFilter"
     ]
 
   config["InvalidateNonMatchingElectrons"] = True

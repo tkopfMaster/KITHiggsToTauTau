@@ -276,6 +276,14 @@ void HttLambdaNtupleConsumer::Init(setting_type const& settings)
 	{
 		return DefaultValues::UndefinedFloat;
 	});
+	LambdaNtupleConsumer<KappaTypes>::AddFloatQuantity("PVnDOF", [](KappaEvent const& event, KappaProduct const& product)
+        {
+                return event.m_vertexSummary->pv.nDOF;
+        });
+	LambdaNtupleConsumer<KappaTypes>::AddFloatQuantity("PVchi2", [](KappaEvent const& event, KappaProduct const& product)
+        {
+                return event.m_vertexSummary->pv.chi2;
+        });
 
 	// need to be called at last
 	KappaLambdaNtupleConsumer::Init(settings);

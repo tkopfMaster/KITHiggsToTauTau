@@ -382,4 +382,7 @@ public:
 
 	//filled by TTbarGenDecayModeProducer
 	unsigned int m_TTbarGenDecayMode = 0;
+        
+        //filled by ImpactParameterCorrectionsProducer
+	double m_DCAcalib[2][2][2]; //[d0/dZ][abs/rel][0/1]
 };

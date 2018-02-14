@@ -35,18 +35,22 @@ def build_config(nickname):
   # explicit configuration
   if not re.search("Run201|Embedding", nickname):
     config["btagEffUp"] = {
+      "SvfitCacheFileFolder" : "nominal",
       "BTagShift" : 1.0,
       "BMistagShift" : 0.0
     }
     config["btagEffDown"] = {
+      "SvfitCacheFileFolder" : "nominal",
       "BTagShift" : -1.0,
       "BMistagShift" : 0.0
     }
     config["btagMistagUp"] = {
+      "SvfitCacheFileFolder" : "nominal",
       "BTagShift" : 0.0,
       "BMistagShift" : 1.0
     }
     config["btagMistagDown"] = {
+      "SvfitCacheFileFolder" : "nominal",
       "BTagShift" : 0.0,
       "BMistagShift" : -1.0
     }

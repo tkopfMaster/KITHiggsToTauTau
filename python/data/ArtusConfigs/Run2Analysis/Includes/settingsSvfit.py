@@ -27,13 +27,18 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
+  
+  # SvfitConsumer config
+  config["GenerateSvfitInput"] = False			# actually a flag for the SVFit consumer to stage out to a different file specified via the following file name option; the following 4 options are only relevant if True
+  config["SvfitOutFile"] = "SvfitCache.root"		# define different output file name base (which is useful to create inputs for offline SVFit calculations. <channel>_<shift><index> is automatically inserted.
+  config["SvfitInputCutOff"] = 2000			# Files can be subdevided in order to avoid too large jobs in the offline SVFit calculation. Specifies max. number of events per file.
+  config["UpdateSvfitCache"] = True			# True: use existing caches and complete them; False: recalculate complete cache
+  config["UseFirstInputFileNameForSvfit"] = False	# uses kappa nickname instead of filename specified in "SvfitOutFile"
+  
+  # SvfitProducer config
+  config["SvfitCacheMissBehaviour"] = "recalculate" # Action if SVFit cache is not found. Choose between 'assert': job fails 'undefined': neither runs SVFit nor fails (used when filling SVFit Caches offline) 'recalculate': run SVFit regularly
   config["SvfitIntegrationMethod"] = "MarkovChain"
-  config["GenerateSvfitInput"] = False
-  config["UseFirstInputFileNameForSvfit"] = False
-  config["SvfitCacheMissBehaviour"] = "recalculate"
-  config["SvfitInputCutOff"] = 10000
-  config["UpdateSvfitCache"] = True
-  config["SvfitOutFile"] = "SvfitCache.root"
+  
   SvfitCacheFiles = {
       "DY1JetsToLLM50_RunIISummer16MiniAODv2_PUMoriond17_13TeV_MINIAOD_madgraph-pythia8" : "root://grid-vo-cms.physik.rwth-aachen.de:1094//store/user/tmuller/higgs-kit/Svfit/MergedCaches/2017-05-28_20-05/DY1JetsToLLM50_RunIISummer16MiniAODv2_PUMoriond17_13TeV_MINIAOD_madgraph-pythia8.root",
       "DY2JetsToLLM50_RunIISummer16MiniAODv2_PUMoriond17_13TeV_MINIAOD_madgraph-pythia8" : "root://grid-vo-cms.physik.rwth-aachen.de:1094//store/user/tmuller/higgs-kit/Svfit/MergedCaches/2017-05-28_20-05/DY2JetsToLLM50_RunIISummer16MiniAODv2_PUMoriond17_13TeV_MINIAOD_madgraph-pythia8.root",
@@ -163,8 +168,7 @@ def build_config(nickname):
       "ZZTo2L2Q_RunIISummer16MiniAODv2_PUMoriond17_13TeV_MINIAOD_amcatnlo-pythia8" : "root://grid-vo-cms.physik.rwth-aachen.de:1094//store/user/tmuller/higgs-kit/Svfit/MergedCaches/2017-05-28_20-05/ZZTo2L2Q_RunIISummer16MiniAODv2_PUMoriond17_13TeV_MINIAOD_amcatnlo-pythia8.root",
       "ZZTo4L_RunIISummer16MiniAODv2_PUMoriond17_13TeV_MINIAOD_amcatnlo-pythia8_ext1" : "root://grid-vo-cms.physik.rwth-aachen.de:1094//store/user/tmuller/higgs-kit/Svfit/MergedCaches/2017-05-28_20-05/ZZTo4L_RunIISummer16MiniAODv2_PUMoriond17_13TeV_MINIAOD_amcatnlo-pythia8_ext1.root"
   }
-  for key, SvfitCacheFile in SvfitCacheFiles.items():
-    if key == nickname: config["SvfitCacheFile"] = SvfitCacheFile
-
+  #for key, SvfitCacheFile in SvfitCacheFiles.items():
+  #  if key == nickname: config["SvfitCacheFile"] = SvfitCacheFile
 
   return config

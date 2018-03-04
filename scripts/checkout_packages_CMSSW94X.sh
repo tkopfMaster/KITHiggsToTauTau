@@ -51,8 +51,6 @@ sed '/CombineHarvester/d' ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/Build
 # needed for error propagation e.g. in the background estimations
 git clone https://github.com/lebigot/uncertainties.git -b 2.4.6.1 HiggsAnalysis/KITHiggsToTauTau/python/uncertainties
 
-sed 's/cms2/ikhhed3/g' ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/data/tauspinner.xml -i
-
 # TauTriggerSFs2017 tool
 mkdir TauTriggerSFs2017
 cd TauTriggerSFs2017

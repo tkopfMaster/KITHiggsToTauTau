@@ -289,8 +289,6 @@ void RecoTauCPProducer::Produce(event_type const& event, product_type& product, 
 	IPMinus.SetXYZ(-999,-999,-999);
 
 	// reconstructed leptons
-	KLepton* recoParticle1 = product.m_flavourOrderedLeptons.at(0);
-	KLepton* recoParticle2 = product.m_flavourOrderedLeptons.at(1);
 	KLepton* chargedPart1  = product.m_chargeOrderedLeptons.at(0);
 	KLepton* chargedPart2  = product.m_chargeOrderedLeptons.at(1);
 

@@ -54,6 +54,7 @@
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/TTbarGenDecayModeProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/TaggedJetUncertaintyShiftProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/NLOreweightingWeightsProducer.h"
+#include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/TauTrigger2017EfficiencyProducer.h"
 
 // filters
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Filters/LooseObjectsCountFilters.h"
@@ -267,6 +268,8 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new TaggedJetUncertaintyShiftProducer();
 	else if(id == NLOreweightingWeightsProducer().GetProducerId())
 		return new NLOreweightingWeightsProducer();
+	else if(id == TauTrigger2017EfficiencyProducer().GetProducerId())
+		return new TauTrigger2017EfficiencyProducer();
 	else
 		return KappaFactory::createProducer( id );
 }

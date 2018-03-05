@@ -42,6 +42,10 @@ if [ "$MODE" = "artus" -o "$MODE" = "both" ]; then
     # Svfit and HHKinFit
     #git clone https://github.com/CMSAachen3B/SVfit_standalone.git TauAnalysis/SVfitStandalone -b HIG-16-006
     git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit
+    cd TauAnalysis/ClassicSVfit
+    git checkout c78af4dc0f54cdc1c0d4b4fc4879918cfa2527c9
+    cd ../..
+    git clone https://github.com/svfit/SVfitTF TauAnalysis/SVfitTF
     git clone https://github.com/svfit/SVfitTF TauAnalysis/SVfitTF
     git clone https://github.com/artus-analysis/HHKinFit2.git -b artus
 

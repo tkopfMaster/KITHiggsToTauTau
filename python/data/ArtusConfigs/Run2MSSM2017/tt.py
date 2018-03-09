@@ -26,6 +26,7 @@ def build_config(nickname):
   isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
+  isSignal = re.search("HToTauTau",nickname)
   
   
   ## fill config:

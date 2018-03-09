@@ -26,6 +26,7 @@ def build_config(nickname):
   isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLLM(10to50|50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
+  isSignal = re.search("HToTauTau",nickname)
   
   
   ## fill config:
@@ -113,7 +114,7 @@ def build_config(nickname):
       "trg_singletau_leading:1",
       "trg_singletau_trailing:0",
   ]
-  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5_embedding.root" if isEmbedded else "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
+  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
   config["RooWorkspaceWeightNames"] = [] if isEmbedded else ["0:triggerWeight"]
   config["RooWorkspaceWeightNames"].extend((
       "0:isoweight",

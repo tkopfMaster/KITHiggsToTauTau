@@ -27,8 +27,8 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  config["JetID"] = "loose"
-  config["JetIDVersion"] = "2016"
+  config["JetID"] = "tight"
+  config["JetIDVersion"] = "2017"
   config["PuJetIDs"] = []
   config["PuJetIDFullDiscrName"] = "pileupJetIdfullDiscriminant"
   config["JetTaggerLowerCuts"] = []

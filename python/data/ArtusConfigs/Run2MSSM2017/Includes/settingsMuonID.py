@@ -27,12 +27,9 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
+  config["MuonID"] = "medium"
   
-  config["Year"] = 2016 if re.search("(Spring|Summer|Run20|Embedding20)(16|17)", nickname) else 2015
-  
-  config["MuonID"] = "mediumHIPsafe2016" if re.search("(Run|Embedding)2016(B|C|D|E|F)|Spring16", nickname) else "medium"
-  
-  config["MuonIsoTypeUserMode"] = "fromcmsswr04" if re.search("(Spring|Summer|Run20|Embedding20)(16|17)", nickname) else "fromcmssw"
+  config["MuonIsoTypeUserMode"] = "fromcmsswr04"
     
   config["MuonIsoType"] = "user"
   config["MuonIso"] = "none"
@@ -41,5 +38,7 @@ def build_config(nickname):
   config["MuonTrackDxyCut"] = 0.045
   config["MuonTrackDzCut"] = 0.2
 
+  ## further settings taken into account by ValidMuonsProducer:
+  # - Year (should be 2017), written into the 'base' config
 
   return config

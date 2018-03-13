@@ -40,6 +40,8 @@ def build_config(nickname):
   config["DiVetoMuonMinDeltaRCut"] = "0.15"
   config["DiVetoMuonVetoMode"] = "veto_os_keep_ss"
   config["DirectIso"] = True
-  
-  
+
+  ## further settings taken into account by ValidVetoMuonsProducer:
+  # - Year (should be 2017), written into the 'base' config
+
   return config

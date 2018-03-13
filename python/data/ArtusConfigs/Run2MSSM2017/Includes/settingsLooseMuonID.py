@@ -28,10 +28,7 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  
-  config["Year"] = 2016 if re.search("(Spring|Summer|Run20|Embedding20)(16|17)", nickname) else 2015
-  
-  config["LooseMuonID"] = "mediumHIPsafe2016" if re.search("(Run|Embedding)2016(B|C|D|E|F)|Spring16", nickname) else "medium"
+  config["LooseMuonID"] = "medium"
   
   config["LooseMuonIsoType"] = "user"
   config["LooseMuonIso"] = "none"
@@ -44,5 +41,7 @@ def build_config(nickname):
   config["LooseMuonTrackDzCut"] = 0.2
   config["DirectIso"] = True
 
+  ## further settings taken into account by ValidLooseMuonsProducer:
+  # - Year (should be 2017), written into the 'base' config
 
   return config

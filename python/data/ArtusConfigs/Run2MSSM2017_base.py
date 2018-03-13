@@ -40,6 +40,7 @@ def build_config(nickname):
   # explicit configuration
   config["SkipEvents"] = 0
   config["EventCount"] = -1
+  config["Year"] = 2017
   config["InputIsData"] = isData
   
   if isSUSYggH:

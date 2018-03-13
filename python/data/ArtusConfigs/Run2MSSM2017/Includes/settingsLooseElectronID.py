@@ -30,11 +30,11 @@ def build_config(nickname):
   # explicit configuration
   config["LooseElectronReco"] = "mvanontrig"
   config["LooseElectronID"] = "user"
-  config["LooseElectronIDType"] = "mvabased2015andlater"
-  config["LooseElectronIDName"] = "electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"
-  config["LooseElectronMvaIDCutEB1"] = 0.837
-  config["LooseElectronMvaIDCutEB2"] = 0.715
-  config["LooseElectronMvaIDCutEE"] = 0.357
+  config["LooseElectronIDType"] = "cutbased2015andlater" # still MVA, using boolean functionality of IsCutBased()
+  # extra lepton veto electron ID
+  config["LooseElectronIDName"] = "egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp90"
+  #config["LooseElectronIDName"] = "egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp90" # worse fake rejection compared to the 'iso' version
+
   config["LooseElectronIsoType"] = "user"
   config["LooseElectronIso"] = "none"
   config["LooseElectronIsoPtSumOverPtUpperThresholdEB"] = 0.3

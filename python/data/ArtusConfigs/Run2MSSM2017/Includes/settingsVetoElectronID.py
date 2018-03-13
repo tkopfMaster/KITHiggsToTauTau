@@ -31,7 +31,8 @@ def build_config(nickname):
   config["VetoElectronReco"] = "none"
   config["VetoElectronID"] = "user"
   config["VetoElectronIDType"] = "cutbased2015andlater"
-  config["VetoElectronIDName"] = "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"
+  # dilepton veto electron ID
+  config["VetoElectronIDName"] = "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-veto"
   
   config["VetoElectronIsoType"] = "user"
   config["VetoElectronIso"] = "none"

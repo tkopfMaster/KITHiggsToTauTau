@@ -30,22 +30,21 @@ def build_config(nickname):
   config["ElectronID_documentation"] = "https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsToTauTauWorking2015#Electrons"
   config["ElectronReco"] = "mvanontrig"
   config["ElectronID"] = "user"
-  config["ElectronIDType"] = "mvabased2015andlater"
+  config["ElectronIDType"] = "cutbased2015andlater" # still MVA, using boolean functionality of IsCutBased()
   
-  config["ElectronIDName"] = "electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values" if re.search("(Run2015|Fall15MiniAODv2|Spring16)", nickname) else "electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"
-  
-  config["ElectronMvaIDCutEB1"] = 0.967083 if re.search("(Run2015|Fall15MiniAODv2|Spring16)", nickname) else 0.941
-  
-  config["ElectronMvaIDCutEB2"] = 0.929117 if re.search("(Run2015|Fall15MiniAODv2|Spring16)", nickname) else 0.899
-  
-  config["ElectronMvaIDCutEE"] = 0.726311 if re.search("(Run2015|Fall15MiniAODv2|Spring16)", nickname) else 0.758
-  
+  # signal electron ID
+  config["ElectronIDName"] = "egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp80"
+  #config["ElectronIDName"] = "egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp80" # worse fake rejection compared to the 'iso' version
+
   config["ElectronIDList"] = [
-    "electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values",
-    "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto",
-    "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-loose",
-    "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-medium",
-    "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-tight"
+    "egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp80",
+    "egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp90",
+    "egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp80",
+    "egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp90",
+    "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-veto",
+    "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-loose",
+    "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-medium",
+    "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-tight"
   ]
   
   config["ElectronIsoType"] = "user"

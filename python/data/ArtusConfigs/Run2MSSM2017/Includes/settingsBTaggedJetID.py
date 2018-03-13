@@ -30,18 +30,40 @@ def build_config(nickname):
   
   # explicit configuration
   config["BTaggedJetID_documentation"] = "https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsToTauTauWorking2016#b_tagging"
-  config["BTaggedJetCombinedSecondaryVertexName"] = "pfCombinedInclusiveSecondaryVertexV2BJetTags"
+
+  # settings for CSVv2 algorithm 94X recommendation
+  #config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/CSVv2_94XSF_V1_B_F.csv"
+  #config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root"
+  #config["BTaggedJetCombinedSecondaryVertexName"] = "pfCombinedInclusiveSecondaryVertexV2BJetTags"
+  #config["BTaggerWorkingPoints"] = [
+  #  "tight:0.9693",
+  #  "medium:0.8838",
+  #  "loose:0.5803"
+  #]
+
+  # settings for DeepCSV algorithm 94X recommendation (stated to perform better than CSVv2)
+  config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/DeepCSV_94XSF_V1_B_F.csv"
+  config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root"
+  config["BTaggedJetCombinedSecondaryVertexName"] = "pfDeepCSVDiscriminatorsJetTags:BvsAll"
   config["BTaggerWorkingPoints"] = [
-    "tight:0.9535",
-    "medium:0.8484",
-    "loose:0.5426"
+    "tight:0.8001",
+    "medium:0.4941",
+    "loose:0.1522"
   ]
-  config["BTaggedJetAbsEtaCut"] = 2.4
-  config["ApplyBTagSF"] = False
+
+  config["BTaggedJetAbsEtaCut"] = 2.5 # 2017 value
+  config["ApplyBTagSF"] = True
   config["JetTaggerUpperCuts"] = []
   config["BTagSFMethod"] = "PromotionDemotion"
   config["BTagShift"] = 0
   config["BMistagShift"] = 0
+
+  ## further settings taken into account by ValidBTaggedJetsProducer:
+  # - Year (should be 2017), written into the 'base' config
   
+  ## further hard-coded settings in the ValidBTaggedJetsProducer:
+  # lower pt_cut for the Jet: 20 GeV -> valid for 2016 & 2017
+  # upper pt_cut for the Jet: 1000 GeV -> valid for 2016 & 2017
+  # parton flavour definition: hadron-based
 
   return config

@@ -146,7 +146,7 @@ def build_config(nickname):
   config["MetCorrectionMethod"] = "meanResolution"
   
   if isData or isEmbedded:
-    if   re.search("Run2017|Embedding2017", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt"]
+    if   re.search("Run2017|Embedding2017", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt"]
     elif re.search("Run2016|Embedding2016", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"]
     elif re.search("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"]
     elif re.search("Run2015B", nickname):                   config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"]

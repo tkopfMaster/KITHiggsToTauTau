@@ -133,6 +133,7 @@ def build_config(nickname):
     #if isTTbar:                        config["Processors"].append( "producer:TTbarGenDecayModeProducer")
 
   if isData or isEmbedded:                config["PileupWeightFile"] = "not needed"
+  elif re.search(".*Fall17", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2017_294927-306462_13TeVFall17_17Nov2017ReReco_69p2mbMinBiasXS/%s.root"%nickname
   elif re.search(".*Summer17", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2017_294927-306462_13TeVSummer17_PromptReco_69p2mbMinBiasXS.root"
   #elif re.search(".*Summer17", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2017_294927-306462_13TeVSummer17_PromptReco_80p0mbMinBiasXS.root"
   elif re.search(".*Summer16", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2016_271036-284044_13TeVMoriond17_23Sep2016ReReco_69p2mbMinBiasXS.root"

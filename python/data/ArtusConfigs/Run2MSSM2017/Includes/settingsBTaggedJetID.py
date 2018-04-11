@@ -44,7 +44,7 @@ def build_config(nickname):
   # settings for DeepCSV algorithm 94X recommendation (stated to perform better than CSVv2)
   #config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/DeepCSV_94XSF_V1_B_F.csv"
   #config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root"
-  #config["BTaggedJetCombinedSecondaryVertexName"] = "pfDeepCSVDiscriminatorsJetTags:BvsAll"
+  #config["BTaggedJetCombinedSecondaryVertexName"] = "pfDeepCSVJetTagsprobbb+pfDeepCSVJetTagsprobb"
   #config["BTaggerWorkingPoints"] = [
   #  "tight:0.8001",
   #  "medium:0.4941",

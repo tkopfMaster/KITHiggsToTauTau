@@ -592,6 +592,14 @@ void DecayChannelProducer::Init(setting_type const& settings)
 	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1Tight");
 	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1VTight");
 	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1VVTight");
+	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1raw2017");
+	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1VVLoose2017");
+	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1VLoose2017");
+	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1Loose2017");
+	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1Medium2017");
+	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1Tight2017");
+	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1VTight2017");
+	tauDiscriminators.push_back("rerunDiscriminationByIsolationMVAOldDMrun2v1VVTight2017");
 	tauDiscriminators.push_back("chargedIsoPtSum");
 	tauDiscriminators.push_back("decayModeFinding");
 	tauDiscriminators.push_back("decayModeFindingNewDMs");

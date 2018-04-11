@@ -28,7 +28,9 @@ def build_config(nickname):
   
   # explicit configuration
   #config["TauID_documentation"] = []
-  config["TauDiscriminatorIsolationName"] = "byIsolationMVArun2v1DBoldDMwLTraw"
+  #config["TauDiscriminatorIsolationName"] = "byIsolationMVArun2v1DBoldDMwLTraw"
+  #config["TauDiscriminatorIsolationName"] = "rerunDiscriminationByIsolationMVAOldDMrun2v1raw"
+  config["TauDiscriminatorIsolationName"] = "rerunDiscriminationByIsolationMVAOldDMrun2v1raw2017"
   config["TauElectronLowerDeltaRCut"] = -1.0
   config["TauMuonLowerDeltaRCut"] = -1.0
 

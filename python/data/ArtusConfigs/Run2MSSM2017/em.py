@@ -52,7 +52,7 @@ def build_config(nickname):
   config["MaxNLooseElectrons"] = 1
   config["MaxNLooseMuons"] = 1
   # HltPaths_comment: The first path must be one with the higher pt cut on the electron. The second and last path must be one with the higher pt cut on the muon. Corresponding Pt cuts are implemented in the Run2DecayChannelProducer..
-  if re.search("(Run201|Embedding201|Summer1)", nickname): config["HltPaths"] = [
+  if re.search("(Run201|Embedding201|Summer1|Fall1)", nickname): config["HltPaths"] = [
           "HLT_IsoMu24",
           "HLT_IsoMu27",
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",

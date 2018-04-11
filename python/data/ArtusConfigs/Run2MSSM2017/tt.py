@@ -50,7 +50,7 @@ def build_config(nickname):
   # explicit configuration
   config["Channel"] = "TT"
   config["MinNTaus"] = 2
-  if re.search("(Run201|Embedding201|Summer1)", nickname): config["HltPaths"] = [
+  if re.search("(Run201|Embedding201|Summer1|Fall1)", nickname): config["HltPaths"] = [
           "HLT_IsoMu24",
           "HLT_IsoMu27",
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",

@@ -72,7 +72,7 @@ def build_config(nickname):
   
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["MuonLowerPtCuts"] = ["22.0"]
+  config["MuonLowerPtCuts"] = ["10.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.1"]
   config["TauLowerPtCuts"] = ["30.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
@@ -84,6 +84,7 @@ def build_config(nickname):
           "HLT_IsoMu24_v:26.0",
           "HLT_IsoMu27_v:29.0",
           "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:26.0"
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:22.0"
   ]
   config["DiTauPairHLTLast"] = True
   config["HLTBranchNames"] = [

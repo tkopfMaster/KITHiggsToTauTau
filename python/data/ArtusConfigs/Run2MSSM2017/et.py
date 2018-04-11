@@ -72,7 +72,7 @@ def build_config(nickname):
   
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["ElectronLowerPtCuts"] = ["26.0"]
+  config["ElectronLowerPtCuts"] = ["10.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.1"]
   config["TauLowerPtCuts"] = ["30.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
@@ -82,6 +82,7 @@ def build_config(nickname):
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairLepton1LowerPtCuts"] = [
           "HLT_Ele32_WPTight_Gsf_v:34.0",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:26.0",
           "HLT_Ele35_WPTight_Gsf_v:37.0"
   ]
   config["DiTauPairLepton2LowerPtCuts"] = [

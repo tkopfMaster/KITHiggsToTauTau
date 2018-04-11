@@ -69,16 +69,20 @@ def build_config(nickname):
   
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["TauLowerPtCuts"] = ["38.0"]
+  config["TauLowerPtCuts"] = ["20.0"]
   config["TauUpperAbsEtaCuts"] = ["2.1"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DeltaRTriggerMatchingTaus"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairLepton1LowerPtCuts"] = [
+          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:38.0",
+          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:38.0",
           "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:43.0",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0"
   ]
   config["DiTauPairLepton2LowerPtCuts"] = [
+          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:38.0",
+          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:38.0",
           "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:43.0",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0"
   ]

@@ -74,7 +74,7 @@ def build_config(nickname):
   config["TauUseOldDMs"] = True
   config["ElectronLowerPtCuts"] = ["10.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.1"]
-  config["TauLowerPtCuts"] = ["30.0"]
+  config["TauLowerPtCuts"] = ["20.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DeltaRTriggerMatchingTaus"] = 0.5
@@ -85,8 +85,45 @@ def build_config(nickname):
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:26.0",
           "HLT_Ele35_WPTight_Gsf_v:37.0"
   ]
+  config["DiTauPairLepton1UpperEtaCuts"] = [
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:2.0",
+  ]
   config["DiTauPairLepton2LowerPtCuts"] = [
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:33.0"
+  ]
+  config["DiTauPairLepton2UpperEtaCuts"] = [
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:2.0",
+          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:2.0",
+  ]
+  config["CheckLepton1TriggerMatch"] = [
+      "trg_singlemuon_lowpt",
+      "trg_singlemuon",
+      "trg_singletau_leading",
+      "trg_singleelectron_lowpt",
+      "trg_singleelectron",
+
+      "trg_muontau_lowptmu",
+      "trg_muontau_lowpttau",
+      "trg_electrontau",
+      "trg_doubletau_lowpt_mediso",
+      "trg_doubletau_lowpt",
+      "trg_doubletau_mediso",
+      "trg_doubletau",
+      "trg_muonelectron_lowptmu",
+      "trg_muonelectron_lowpte"
+  ]
+  config["CheckLepton2TriggerMatch"] = [
+      "trg_singletau_trailing",
+
+      "trg_muontau_lowptmu",
+      "trg_muontau_lowpttau",
+      "trg_electrontau",
+      "trg_doubletau_lowpt_mediso",
+      "trg_doubletau_lowpt",
+      "trg_doubletau_mediso",
+      "trg_doubletau",
+      "trg_muonelectron_lowptmu",
+      "trg_muonelectron_lowpte"
   ]
   config["DiTauPairNoHLT"] = False
   config["DiTauPairHLTLast"] = True
@@ -194,7 +231,8 @@ def build_config(nickname):
                                                               "filter:ValidTausFilter",
                                                               "producer:TauTriggerMatchingProducer",
                                                               "filter:MinTausCountFilter",
-                                                              "producer:ValidETPairCandidatesProducer",
+                                                              "producer:NewValidETPairCandidatesProducer",
+                                                              #"producer:ValidETPairCandidatesProducer",
                                                               "filter:ValidDiTauPairCandidatesFilter",
                                                               "producer:Run2DecayChannelProducer",
                                                               "producer:DiVetoElectronVetoProducer",
@@ -211,7 +249,7 @@ def build_config(nickname):
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
-  if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
+  #if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   

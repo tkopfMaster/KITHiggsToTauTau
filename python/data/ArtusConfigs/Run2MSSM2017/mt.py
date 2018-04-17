@@ -74,7 +74,7 @@ def build_config(nickname):
   config["TauUseOldDMs"] = True
   config["MuonLowerPtCuts"] = ["10.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.1"]
-  config["TauLowerPtCuts"] = ["30.0"]
+  config["TauLowerPtCuts"] = ["20.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DeltaRTriggerMatchingTaus"] = 0.5
@@ -86,7 +86,50 @@ def build_config(nickname):
           "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:26.0"
           "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:22.0"
   ]
+  config["DiTauPairLepton1UpperEtaCuts"] = [
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:2.0"
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:2.0"
+  ]
+  config["DiTauPairLepton2LowerPtCuts"] = [
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:23.0"
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:30.0"
+  ]
+  config["DiTauPairLepton2UpperEtaCuts"] = [
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:2.0"
+          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:2.0",
+  ]
   config["DiTauPairHLTLast"] = True
+  config["CheckLepton1TriggerMatch"] = [
+      "trg_singlemuon_lowpt",
+      "trg_singlemuon",
+      "trg_singletau_leading",
+      "trg_singleelectron_lowpt",
+      "trg_singleelectron_lowpt_fallback",
+      "trg_singleelectron",
+
+      "trg_muontau_lowptmu",
+      "trg_muontau_lowpttau",
+      "trg_electrontau",
+      "trg_doubletau_lowpt_mediso",
+      "trg_doubletau_lowpt",
+      "trg_doubletau_mediso",
+      "trg_doubletau",
+      "trg_muonelectron_lowptmu",
+      "trg_muonelectron_lowpte"
+  ]
+  config["CheckLepton2TriggerMatch"] = [
+      "trg_singletau_trailing",
+
+      "trg_muontau_lowptmu",
+      "trg_muontau_lowpttau",
+      "trg_electrontau",
+      "trg_doubletau_lowpt_mediso",
+      "trg_doubletau_lowpt",
+      "trg_doubletau_mediso",
+      "trg_doubletau",
+      "trg_muonelectron_lowptmu",
+      "trg_muonelectron_lowpte"
+  ]
   config["HLTBranchNames"] = [
       "trg_singlemuon_lowpt:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
@@ -195,7 +238,8 @@ def build_config(nickname):
                                                               "filter:ValidTausFilter",
                                                               "producer:TauTriggerMatchingProducer",
                                                               "filter:MinTausCountFilter",
-                                                              "producer:ValidMTPairCandidatesProducer",
+                                                              #"producer:ValidMTPairCandidatesProducer",
+                                                              "producer:NewValidMTPairCandidatesProducer",
                                                               "filter:ValidDiTauPairCandidatesFilter",
                                                               "producer:Run2DecayChannelProducer",
                                                               "producer:DiVetoMuonVetoProducer",

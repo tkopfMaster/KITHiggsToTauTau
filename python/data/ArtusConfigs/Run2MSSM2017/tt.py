@@ -87,6 +87,37 @@ def build_config(nickname):
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0"
   ]
   config["DiTauPairHLTLast"] = True
+  config["CheckLepton1TriggerMatch"] = [
+      "trg_singlemuon_lowpt",
+      "trg_singlemuon",
+      "trg_singletau_leading",
+      "trg_singleelectron_lowpt",
+      "trg_singleelectron_lowpt_fallback",
+      "trg_singleelectron",
+
+      "trg_muontau_lowptmu",
+      "trg_muontau_lowpttau",
+      "trg_electrontau",
+      "trg_doubletau_lowpt_mediso",
+      "trg_doubletau_lowpt",
+      "trg_doubletau_mediso",
+      "trg_doubletau",
+      "trg_muonelectron_lowptmu",
+      "trg_muonelectron_lowpte"
+  ]
+  config["CheckLepton2TriggerMatch"] = [
+      "trg_singletau_trailing",
+
+      "trg_muontau_lowptmu",
+      "trg_muontau_lowpttau",
+      "trg_electrontau",
+      "trg_doubletau_lowpt_mediso",
+      "trg_doubletau_lowpt",
+      "trg_doubletau_mediso",
+      "trg_doubletau",
+      "trg_muonelectron_lowptmu",
+      "trg_muonelectron_lowpte"
+  ]
   config["HLTBranchNames"] = [
       "trg_singlemuon_lowpt:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
@@ -176,7 +207,8 @@ def build_config(nickname):
                                                               "filter:MinTausCountFilter",
                                                               "producer:ValidElectronsProducer",
                                                               "producer:ValidMuonsProducer",
-                                                              "producer:ValidTTPairCandidatesProducer",
+                                                              #"producer:ValidTTPairCandidatesProducer",
+                                                              "producer:NewValidTTPairCandidatesProducer",
                                                               "filter:ValidDiTauPairCandidatesFilter",
                                                               "producer:Run2DecayChannelProducer",
   #                                                            "producer:TaggedJetCorrectionsProducer",

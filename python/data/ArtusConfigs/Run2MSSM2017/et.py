@@ -249,7 +249,7 @@ def build_config(nickname):
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
-  #if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
+  if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   

@@ -146,6 +146,14 @@ def build_config(nickname):
       "trg_singletau_leading:1",
       "trg_singletau_trailing:0",
   ]
+  config["TauTrigger2017Input"] = "$CMSSW_BASE/src/TauTriggerSFs2017/TauTriggerSFs2017/data/tauTriggerEfficiencies2017.root"
+  config["TauTrigger2017WorkingPoint"] = "tight"
+  config["TauTrigger2017EfficiencyWeightNames"] = [
+      "0:crossTriggerMCEfficiencyWeight",
+      "0:crossTriggerDataEfficiencyWeight",
+      "1:crossTriggerMCEfficiencyWeight",
+      "1:crossTriggerDataEfficiencyWeight",
+  ]
   config["EventWeight"] = "eventWeight"
   config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
   config["TauTauTriggerWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
@@ -223,9 +231,11 @@ def build_config(nickname):
   config["Processors"].extend((                               #"filter:MinimalPlotlevelFilter",
                                                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
-                                                              "producer:DiJetQuantitiesProducer",
-  #                                                            "producer:JetToTauFakesProducer",
-                                                              "producer:EventWeightProducer"))
+                                                              "producer:DiJetQuantitiesProducer"))#,
+                                                              # "producer:JetToTauFakesProducer"))
+  if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
+  config["Processors"].append(                                "producer:EventWeightProducer")
+
   config["AddGenMatchedTaus"] = True
   config["AddGenMatchedTauJets"] = True
   config["BranchGenMatchedTaus"] = True

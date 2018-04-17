@@ -158,6 +158,12 @@ def build_config(nickname):
       "trg_singletau_leading:1",
       "trg_singletau_trailing:0",
   ]
+  config["TauTrigger2017Input"] = "$CMSSW_BASE/src/TauTriggerSFs2017/TauTriggerSFs2017/data/tauTriggerEfficiencies2017.root"
+  config["TauTrigger2017WorkingPoint"] = "tight"
+  config["TauTrigger2017EfficiencyWeightNames"] = [
+      "1:crossTriggerMCEfficiencyWeight",
+      "1:crossTriggerDataEfficiencyWeight",
+  ]
   config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
   config["RooWorkspaceWeightNames"] = [] if isEmbedded else ["0:triggerWeight"]
   config["RooWorkspaceWeightNames"].extend((
@@ -256,6 +262,7 @@ def build_config(nickname):
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   #if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   

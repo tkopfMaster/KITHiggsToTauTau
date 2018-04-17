@@ -247,8 +247,12 @@ public:
 	IMPL_SETTING_DEFAULT(float, DiTauPairMinDeltaRCut, -1.0);
 	IMPL_SETTING_STRINGLIST_DEFAULT(DiTauPairLepton1LowerPtCuts, {});
 	IMPL_SETTING_STRINGLIST_DEFAULT(DiTauPairLepton2LowerPtCuts, {});
+	IMPL_SETTING_STRINGLIST_DEFAULT(DiTauPairLepton1UpperEtaCuts, {});
+	IMPL_SETTING_STRINGLIST_DEFAULT(DiTauPairLepton2UpperEtaCuts, {});
 	IMPL_SETTING_SORTED_STRINGLIST_DEFAULT(DiTauPairHltPathsWithoutCommonMatchRequired, {});
 	IMPL_SETTING_DEFAULT(bool, DiTauPairIsTauIsoMVA, false);
+	IMPL_SETTING_STRINGLIST_DEFAULT(CheckLepton1TriggerMatch, {});
+	IMPL_SETTING_STRINGLIST_DEFAULT(CheckLepton2TriggerMatch, {});
 	IMPL_SETTING_DEFAULT(bool, DiTauPairNoHLT, false);
 	IMPL_SETTING_DEFAULT(bool, RequireFirstTriggering, false);
 	IMPL_SETTING_STRINGLIST_DEFAULT(HLTBranchNames, {});

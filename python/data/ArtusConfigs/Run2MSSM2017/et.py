@@ -165,12 +165,18 @@ def build_config(nickname):
   config["RooWorkspaceWeightNames"] = [
       "0:crossTriggerMCEfficiencyWeight",
       "0:crossTriggerDataEfficiencyWeight",
+      "0:singleTriggerMCEfficiencyWeight",
+      "0:singleTriggerDataEfficiencyWeight",
   ]
   config["RooWorkspaceObjectNames"] = [
       "0:e_trg_EleTau_Ele24Leg_desy_mc",
       "0:e_trg_EleTau_Ele24Leg_desy_data",
+      "0:e_trg_SingleEle_Ele32OREle35_desy_mc",
+      "0:e_trg_SingleEle_Ele32OREle35_desy_data",
   ]
   config["RooWorkspaceObjectArguments"] = [
+      "0:e_pt,e_eta",
+      "0:e_pt,e_eta",
       "0:e_pt,e_eta",
       "0:e_pt,e_eta",
   ]

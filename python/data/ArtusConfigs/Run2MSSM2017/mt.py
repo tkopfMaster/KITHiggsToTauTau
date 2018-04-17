@@ -165,24 +165,24 @@ def build_config(nickname):
       "1:crossTriggerDataEfficiencyWeight",
   ]
   config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
-  config["RooWorkspaceWeightNames"] = [] if isEmbedded else ["0:triggerWeight"]
-  config["RooWorkspaceWeightNames"].extend((
-      "0:isoweight",
-      "0:idweight",
-      "0:trackWeight"
-  ))
-  config["RooWorkspaceObjectNames"] = [] if isEmbedded else ["0:m_trgOR4_binned_ratio"]
-  config["RooWorkspaceObjectNames"].extend((
-      "0:m_iso_binned_ratio",
-      "0:m_id_ratio",
-      "0:m_trk_ratio"
-  ))
-  config["RooWorkspaceObjectArguments"] = [] if isEmbedded else ["0:m_pt,m_eta,m_iso"]
-  config["RooWorkspaceObjectArguments"].extend((
-      "0:m_pt,m_eta,m_iso",
+  config["RooWorkspaceWeightNames"] = [
+      "0:crossTriggerMCEfficiencyWeight",
+      "0:crossTriggerDataEfficiencyWeight",
+      "0:singleTriggerMCEfficiencyWeight",
+      "0:singleTriggerDataEfficiencyWeight",
+  ]
+  config["RooWorkspaceObjectNames"] = [
+      "0:m_trg_MuTau_Mu20Leg_desy_mc",
+      "0:m_trg_MuTau_Mu20Leg_desy_data",
+      "0:m_trg_SingleMu_Mu24ORMu27_desy_mc",
+      "0:m_trg_SingleMu_Mu24ORMu27_desy_data",
+  ]
+  config["RooWorkspaceObjectArguments"] = [
       "0:m_pt,m_eta",
-      "0:m_eta"
-  ))
+      "0:m_pt,m_eta",
+      "0:m_pt,m_eta",
+      "0:m_pt,m_eta",
+  ]
   config["FakeFaktorFiles"] = [
       "inclusive:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/inclusive/fakeFactors_20170628_tight.root",
       "nobtag_tight:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/mt/nobtag_tight/fakeFactors_20170628_tight.root",
@@ -261,7 +261,7 @@ def build_config(nickname):
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
-  #if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
   if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")

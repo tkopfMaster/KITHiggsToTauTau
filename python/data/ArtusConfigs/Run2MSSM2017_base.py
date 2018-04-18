@@ -92,8 +92,9 @@ def build_config(nickname):
         "Flag_HBHENoiseIsoFilter",
         "Flag_EcalDeadCellTriggerPrimitiveFilter",
         "Flag_goodVertices",
-        "Flag_globalSuperTightHalo2016Filter",
+        "Flag_globalTightHalo2016Filter",
         "Flag_BadPFMuonFilter",
+        "Flag_ecalBadCalibFilter",
         "Flag_BadChargedCandidateFilter"
   ]
   if isData:

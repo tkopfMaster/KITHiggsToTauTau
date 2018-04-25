@@ -15,13 +15,6 @@ std::string NewValidTTPairCandidatesProducer::GetProducerId() const
 	return "NewValidTTPairCandidatesProducer";
 }
 
-bool NewValidTTPairCandidatesProducer::AdditionalCriteria(DiTauPair const& diTauPair, event_type const& event,
-	                                product_type& product, setting_type const& settings) const
-	{
-		bool validDiTauPair = true;
-                if(!(diTauPair.first->p4.Pt() >= diTauPair.second->p4.Pt() && static_cast<DiTauPair>(diTauPair).GetDeltaR() != 0.0)) validDiTauPair = false;
-		return validDiTauPair;
-	}
 
 NewValidMTPairCandidatesProducer::NewValidMTPairCandidatesProducer() :
 	NewValidDiTauPairCandidatesProducerBase<KMuon, KTau>(
@@ -78,13 +71,6 @@ std::string NewValidMMPairCandidatesProducer::GetProducerId() const
 	return "NewValidMMPairCandidatesProducer";
 }
 
-bool NewValidMMPairCandidatesProducer::AdditionalCriteria(DiTauPair const& diTauPair, event_type const& event,
-	                                product_type& product, setting_type const& settings) const
-	{
-		bool validDiTauPair = true;
-                if(!(diTauPair.first->p4.Pt() >= diTauPair.second->p4.Pt() && static_cast<DiTauPair>(diTauPair).GetDeltaR() != 0.0)) validDiTauPair = false;
-		return validDiTauPair;
-	}
 
 NewValidEEPairCandidatesProducer::NewValidEEPairCandidatesProducer() :
 	NewValidDiTauPairCandidatesProducerBase<KElectron, KElectron>(
@@ -99,11 +85,4 @@ std::string NewValidEEPairCandidatesProducer::GetProducerId() const
 	return "NewValidEEPairCandidatesProducer";
 }
 
-bool NewValidEEPairCandidatesProducer::AdditionalCriteria(DiTauPair const& diTauPair, event_type const& event,
-	                                product_type& product, setting_type const& settings) const
-	{
-		bool validDiTauPair = true;
-                if(!(diTauPair.first->p4.Pt() >= diTauPair.second->p4.Pt() && static_cast<DiTauPair>(diTauPair).GetDeltaR() != 0.0)) validDiTauPair = false;
-		return validDiTauPair;
-	}
 

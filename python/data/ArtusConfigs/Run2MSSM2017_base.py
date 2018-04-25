@@ -92,9 +92,7 @@ def build_config(nickname):
         "Flag_HBHENoiseIsoFilter",
         "Flag_EcalDeadCellTriggerPrimitiveFilter",
         "Flag_goodVertices",
-        "Flag_globalTightHalo2016Filter",
         "Flag_BadPFMuonFilter",
-        "Flag_ecalBadCalibFilter",
         "Flag_BadChargedCandidateFilter"
   ]
   if isData:
@@ -103,6 +101,15 @@ def build_config(nickname):
     ))
   else:
     config["MetFilter"].extend((
+    ))
+  if re.search(".*Summer17.*",nickname):
+    config["MetFilter"].extend((
+        "Flag_globalSuperTightHalo2016Filter",
+    ))
+  else:
+    config["MetFilter"].extend((
+        "Flag_ecalBadCalibFilter",
+        "Flag_globalTightHalo2016Filter",
     ))
   
   config["OutputPath"] = "output.root"

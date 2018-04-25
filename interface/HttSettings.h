@@ -249,6 +249,8 @@ public:
 	IMPL_SETTING_STRINGLIST_DEFAULT(DiTauPairLepton2LowerPtCuts, {});
 	IMPL_SETTING_STRINGLIST_DEFAULT(DiTauPairLepton1UpperEtaCuts, {});
 	IMPL_SETTING_STRINGLIST_DEFAULT(DiTauPairLepton2UpperEtaCuts, {});
+	IMPL_SETTING_DEFAULT(bool, CheckL1MatchForDiTauPairLepton1, false);
+	IMPL_SETTING_DEFAULT(bool, CheckL1MatchForDiTauPairLepton2, false);
 	IMPL_SETTING_SORTED_STRINGLIST_DEFAULT(DiTauPairHltPathsWithoutCommonMatchRequired, {});
 	IMPL_SETTING_DEFAULT(bool, DiTauPairIsTauIsoMVA, false);
 	IMPL_SETTING_STRINGLIST_DEFAULT(CheckLepton1TriggerMatch, {});

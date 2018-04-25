@@ -90,7 +90,9 @@ public:
 			std::map<std::string, std::vector<float>> lepton2LowerPtCutsByHltName = m_lepton2LowerPtCutsByHltName;
 			std::map<std::string, std::vector<float>> lepton1UpperEtaCutsByHltName = m_lepton1UpperEtaCutsByHltName;
 			std::map<std::string, std::vector<float>> lepton2UpperEtaCutsByHltName = m_lepton2UpperEtaCutsByHltName;
-			LambdaNtupleConsumer<HttTypes>::AddBoolQuantity(hltNames.first, [lepton1CheckTriggerMatchByHltName, lepton2CheckTriggerMatchByHltName, hltNames, lepton1LowerPtCutsByHltName, lepton2LowerPtCutsByHltName, lepton1UpperEtaCutsByHltName, lepton2UpperEtaCutsByHltName](event_type const& event, product_type const& product)
+			bool lepton1CheckL1Match = settings.GetCheckL1MatchForDiTauPairLepton1();
+			bool lepton2CheckL1Match = settings.GetCheckL1MatchForDiTauPairLepton2();
+			LambdaNtupleConsumer<HttTypes>::AddBoolQuantity(hltNames.first, [lepton1CheckL1Match, lepton2CheckL1Match, lepton1CheckTriggerMatchByHltName, lepton2CheckTriggerMatchByHltName, hltNames, lepton1LowerPtCutsByHltName, lepton2LowerPtCutsByHltName, lepton1UpperEtaCutsByHltName, lepton2UpperEtaCutsByHltName](event_type const& event, product_type const& product)
 			{
 				bool diTauPairFiredTrigger = false;
 				LOG(DEBUG) << "Beginning of lambda function for " << hltNames.first;
@@ -131,6 +133,21 @@ public:
                                                                 LOG(DEBUG) << "lepton 1 |Eta|: " << std::abs(product.m_validDiTauPairCandidates.at(0).first->p4.Eta()) << " threshold: " << *std::min_element(lepton1UpperEtaCutsByHltName.at(hltName).begin(), lepton1UpperEtaCutsByHltName.at(hltName).end());
                                                         }
                                                         LOG(DEBUG) << "lepton 1 passes also kinematic cuts? " << hltFired1;
+                                                        if(lepton1CheckL1Match)
+                                                        {
+                                                                if(product.m_detailedL1MatchedLeptons.find(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).first)) !=  product.m_detailedL1MatchedLeptons.end())
+                                                                {
+                                                                        auto l1_1 = product.m_detailedL1MatchedLeptons.at(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).first));
+                                                                        for (auto hlts: l1_1)
+                                                                        {
+                                                                                if (boost::regex_search(hlts.first, boost::regex(hltName, boost::regex::icase | boost::regex::extended)))
+                                                                                {
+                                                                                        hltFired1 = hltFired1 && hlts.second;
+                                                                                }
+                                                                        }
+                                                                }
+                                                                LOG(DEBUG) << "lepton 1 passes also l1 matching? " << hltFired1;
+                                                        }
                                                 }
                                         }
                                         else hltFired1 = true;
@@ -165,11 +182,25 @@ public:
                                                                 LOG(DEBUG) << "lepton 2 |Eta|: " << std::abs(product.m_validDiTauPairCandidates.at(0).second->p4.Eta()) << " threshold: " << *std::min_element(lepton2UpperEtaCutsByHltName.at(hltName).begin(), lepton2UpperEtaCutsByHltName.at(hltName).end());
                                                         }
                                                         LOG(DEBUG) << "lepton 2 passes also kinematic cuts? " << hltFired2;
+                                                        if(lepton2CheckL1Match)
+                                                        {
+                                                                if(product.m_detailedL1MatchedLeptons.find(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).second)) !=  product.m_detailedL1MatchedLeptons.end())
+                                                                {
+                                                                        auto l1_2 = product.m_detailedL1MatchedLeptons.at(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).second));
+                                                                        for (auto hlts: l1_2)
+                                                                        {
+                                                                                if (boost::regex_search(hlts.first, boost::regex(hltName, boost::regex::icase | boost::regex::extended)))
+                                                                                {
+                                                                                        hltFired2 = hltFired2 && hlts.second;
+                                                                                }
+                                                                        }
+                                                                }
+                                                                LOG(DEBUG) << "lepton 2 passes also l1 matching? " << hltFired2;
+                                                        }
                                                 }
                                         }
                                         else hltFired2 = true;
                                         bool hltFired = hltFired1 && hltFired2;
-                                        LOG(DEBUG) << "Both leptons passed kinematic cuts? " << hltFired ;
                                         diTauPairFiredTrigger = diTauPairFiredTrigger || hltFired;
 				}
 				LOG(DEBUG) << "Tau pair with valid trigger match? " << diTauPairFiredTrigger;

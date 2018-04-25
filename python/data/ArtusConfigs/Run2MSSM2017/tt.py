@@ -87,6 +87,8 @@ def build_config(nickname):
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0"
   ]
   config["DiTauPairHLTLast"] = True
+  config["CheckL1MatchForDiTauPairLepton1"] = True
+  config["CheckL1MatchForDiTauPairLepton2"] = True
   config["CheckLepton1TriggerMatch"] = [
       "trg_singlemuon_lowpt",
       "trg_singlemuon",
@@ -183,6 +185,12 @@ def build_config(nickname):
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:hltDoublePFTau40TrackPt1TightChargedIsolationDz02Reg",
           "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:hltPFTau180TrackPt50LooseAbsOrRelMediumHighPtRelaxedIsoIso",
           "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:hltSelectedPFTau180MediumChargedIsolationL1HLTMatched"
+    ]
+  config["TauTriggerCheckL1Match"] = [
+          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v",
+          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
+          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v"
     ]
   config["BTagWPs"] = ["medium"]
   config["InvalidateNonMatchingElectrons"] = False

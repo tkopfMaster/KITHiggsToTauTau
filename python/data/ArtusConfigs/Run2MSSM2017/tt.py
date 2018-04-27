@@ -78,13 +78,13 @@ def build_config(nickname):
           "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:38.0",
           "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:38.0",
           "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:43.0",
-          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0"
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0",
   ]
   config["DiTauPairLepton2LowerPtCuts"] = [
           "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:38.0",
           "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:38.0",
           "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:43.0",
-          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0"
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0",
   ]
   config["DiTauPairHLTLast"] = True
   config["CheckL1MatchForDiTauPairLepton1"] = True

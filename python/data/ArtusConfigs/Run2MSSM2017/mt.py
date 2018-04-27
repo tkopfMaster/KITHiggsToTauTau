@@ -83,19 +83,19 @@ def build_config(nickname):
   config["DiTauPairLepton1LowerPtCuts"] = [
           "HLT_IsoMu24_v:26.0",
           "HLT_IsoMu27_v:29.0",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:26.0"
-          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:22.0"
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:26.0",
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:22.0",
   ]
   config["DiTauPairLepton1UpperEtaCuts"] = [
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:2.0"
-          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:2.0"
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:2.0",
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:2.0",
   ]
   config["DiTauPairLepton2LowerPtCuts"] = [
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:23.0"
-          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:30.0"
+          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v:23.0",
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:30.0",
   ]
   config["DiTauPairLepton2UpperEtaCuts"] = [
-          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:2.0"
+          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v:2.0",
           "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:2.0",
   ]
   config["DiTauPairHLTLast"] = True

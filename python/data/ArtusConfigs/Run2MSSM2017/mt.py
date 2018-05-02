@@ -24,7 +24,7 @@ def build_config(nickname):
   isEmbedded = datasetsHelper.isEmbedded(nickname)
   isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   isTTbar = re.search("TT(To|_|Jets)", nickname)
-  isDY = re.search("DY.?JetsToLLM(10to50|50|150)", nickname)
+  isDY = re.search("DY.?JetsToLLM(10to50|50)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
   isSignal = re.search("HToTauTau",nickname)
   

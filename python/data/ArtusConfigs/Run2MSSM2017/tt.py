@@ -94,7 +94,6 @@ def build_config(nickname):
       "trg_singlemuon",
       "trg_singletau_leading",
       "trg_singleelectron_lowpt",
-      "trg_singleelectron_lowpt_fallback",
       "trg_singleelectron",
 
       "trg_muontau_lowptmu",
@@ -231,8 +230,8 @@ def build_config(nickname):
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
   #if not isData:                 config["Processors"].extend((#"producer:MetCorrector",
-  #                                                            "producer:SimpleEleTauFakeRateWeightProducer",
-  #                                                            "producer:SimpleMuTauFakeRateWeightProducer",
+  config["Processors"].extend((                               "producer:SimpleEleTauFakeRateWeightProducer",
+                                                              "producer:SimpleMuTauFakeRateWeightProducer"))
   #                                                            "producer:TauTauTriggerWeightProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")

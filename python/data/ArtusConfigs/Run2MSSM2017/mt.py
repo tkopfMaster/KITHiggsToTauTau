@@ -100,7 +100,6 @@ def build_config(nickname):
       "trg_singlemuon",
       "trg_singletau_leading",
       "trg_singleelectron_lowpt",
-      "trg_singleelectron_lowpt_fallback",
       "trg_singleelectron",
 
       "trg_muontau_lowptmu",
@@ -252,8 +251,8 @@ def build_config(nickname):
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))
-  #if not isEmbedded:             config["Processors"].extend(("producer:SimpleEleTauFakeRateWeightProducer",
-  #                                                            "producer:SimpleMuTauFakeRateWeightProducer"))
+  if not isEmbedded:             config["Processors"].extend(("producer:SimpleEleTauFakeRateWeightProducer",
+                                                              "producer:SimpleMuTauFakeRateWeightProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")

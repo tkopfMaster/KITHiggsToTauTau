@@ -161,16 +161,10 @@ def build_config(nickname):
     elif re.search("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"]
     elif re.search("Run2015B", nickname):                   config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"]
     
-  if re.search("Fall15MiniAODv2", nickname):
-    config["SimpleMuTauFakeRateWeightLoose"] = [1.0, 1.0, 1.0, 1.0, 1.0]
-    config["SimpleMuTauFakeRateWeightTight"] = [1.0, 1.0, 1.0, 1.0, 1.0]
-    config["SimpleEleTauFakeRateWeightVLoose"] = [1.02, 1.11]
-    config["SimpleEleTauFakeRateWeightTight"] = [1.80, 1.30]
-  else:
-    config["SimpleMuTauFakeRateWeightLoose"] = [1.22, 1.12, 1.26, 1.22, 2.39]
-    config["SimpleMuTauFakeRateWeightTight"] = [1.47, 1.55, 1.33, 1.72, 2.50]
-    config["SimpleEleTauFakeRateWeightVLoose"] = [1.21, 1.38]
-    config["SimpleEleTauFakeRateWeightTight"] = [1.40, 1.90]
+  config["SimpleMuTauFakeRateWeightLoose"] = [1.06, 1.02, 1.10, 1.03, 1.94]
+  config["SimpleMuTauFakeRateWeightTight"] = [1.17, 1.29, 1.14, 0.93, 1.61]
+  config["SimpleEleTauFakeRateWeightVLoose"] = [1.09, 1.19]
+  config["SimpleEleTauFakeRateWeightTight"] = [1.80, 1.53]
 
   
   # pipelines - channels including systematic shifts

@@ -85,15 +85,12 @@ def build_config(nickname):
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:26.0",
           "HLT_Ele35_WPTight_Gsf_v:37.0",
   ]
-  config["DiTauPairLepton1UpperEtaCuts"] = [
-          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:2.0",
-  ]
   config["DiTauPairLepton2LowerPtCuts"] = [
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:33.0",
   ]
   config["DiTauPairLepton2UpperEtaCuts"] = [
-          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:2.0",
-          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:2.0",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:2.1",
+          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:2.1",
   ]
   config["CheckLepton1TriggerMatch"] = [
       "trg_singlemuon_lowpt",

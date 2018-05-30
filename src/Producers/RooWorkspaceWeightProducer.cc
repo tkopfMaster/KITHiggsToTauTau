@@ -331,7 +331,6 @@ void TauTauTriggerWeightProducer::Produce( event_type const& event, product_type
 	for(auto weightNames:m_weightNames)
 	{
 		KLepton* lepton = product.m_flavourOrderedLeptons[weightNames.first];
-		KGenParticle* genTau = product.m_flavourOrderedGenTaus[weightNames.first];
 		KLepton* originalLepton = const_cast<KLepton*>(SafeMap::GetWithDefault(product.m_originalLeptons, const_cast<const KLepton*>(lepton), const_cast<const KLepton*>(lepton)));
 		KappaEnumTypes::GenMatchingCode genMatchingCode = KappaEnumTypes::GenMatchingCode::NONE;
 		if (settings.GetUseUWGenMatching())
@@ -373,32 +372,6 @@ void TauTauTriggerWeightProducer::Produce( event_type const& event, product_type
 					KTau* tau = static_cast<KTau*>(lepton);
 					args.push_back(tau->decayMode);
 				}
-				if(arg=="gt_pt") {
-					args.push_back(genTau->p4.Pt());
-				}					
-				if(arg=="gt_eta") {
-					args.push_back(genTau->p4.Eta());
-				}				
-				if(arg=="gt1_eta")
-				{
-					KGenParticle* genTau1Tmp = product.m_flavourOrderedGenTaus[0];
-					args.push_back(genTau1Tmp->p4.Eta());
-				}
-				if(arg=="gt2_eta")
-				{
-					KGenParticle* genTau2Tmp = product.m_flavourOrderedGenTaus[1];
-					args.push_back(genTau2Tmp->p4.Eta());
-				}
-				if(arg=="gt1_pt")
-				{
-					KGenParticle* genTau1 = product.m_flavourOrderedGenTaus[0];
-					args.push_back(genTau1->p4.Pt());
-				}
-				if(arg=="gt2_pt")
-				{
-					KGenParticle* genTau2 = product.m_flavourOrderedGenTaus[1];
-					args.push_back(genTau2->p4.Pt());
-				}
 			}
 			if(genMatchingCode == KappaEnumTypes::GenMatchingCode::IS_TAU_HAD_DECAY)
 			{
@@ -408,10 +381,6 @@ void TauTauTriggerWeightProducer::Produce( event_type const& event, product_type
 			{
 				tauTrigWeight = m_functors.at(weightNames.first).at(index+1)->eval(args.data());
 			}
-			if(weightNames.second.at(index).find("muonEffTrgWeight") != std::string::npos){
-				product.m_weights[weightNames.second.at(index)] = m_functors.at(weightNames.first).at(index)->eval(args.data());
-			}
-			else{	
 			if(m_saveTriggerWeightAsOptionalOnly)
 			{
 				product.m_optionalWeights[weightNames.second.at(index)+"_"+std::to_string(weightNames.first+1)] = tauTrigWeight;
@@ -419,7 +388,6 @@ void TauTauTriggerWeightProducer::Produce( event_type const& event, product_type
 			else{
 				product.m_weights[weightNames.second.at(index)+"_"+std::to_string(weightNames.first+1)] = tauTrigWeight;
 			}
-		}
 		}
 	}
 }

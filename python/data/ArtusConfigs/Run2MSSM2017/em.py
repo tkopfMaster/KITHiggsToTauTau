@@ -143,7 +143,36 @@ def build_config(nickname):
       "trg_singletau_leading:1",
       "trg_singletau_trailing:0",
   ]
-  
+  if isEmbedded:
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
+    config["EmbeddedWeightWorkspaceWeightNames"]=[
+	  "0:muonEffTrgWeight",
+          "1:isoWeight",
+          "1:idWeight",
+          "1:triggerWeight",
+          "0:isoWeight",
+          "0:idWeight",
+          "0:triggerWeight"
+	  ] 
+    config["EmbeddedWeightWorkspaceObjectNames"]=[
+	  "0:m_sel_trg_ratio",
+          "1:m_looseiso_ratio",
+          "1:m_id_ratio",
+          "1:m_trg_ratio",
+          "0:e_looseiso_ratio",
+          "0:e_id_ratio",
+          "0:e_trg_ratio"
+          ]
+    config["EmbeddedWeightWorkspaceObjectArguments"] = [
+	  "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
+          "1:m_pt,m_eta",
+          "1:m_pt,m_eta",
+          "1:m_pt,m_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta"
+          ]   
   if re.search("Summer1", nickname):
     config["TriggerEfficiencyData"] = [
       "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_Run2016_Electron_Ele12leg_eff.root",
@@ -206,6 +235,10 @@ def build_config(nickname):
       "had_gen_match_pT_1",
       "had_gen_match_pT_2"
   ])
+  if isEmbedded:
+    config["Quantities"].extend([
+          "muonEffTrgWeight"
+          ])
   
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run2"
@@ -230,6 +263,8 @@ def build_config(nickname):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"]
+  if not isData:               config["Processors"].append(   "producer:HttValidGenTausProducer")                                                          
+
   #if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
@@ -239,7 +274,7 @@ def build_config(nickname):
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   #if not (isData or isEmbedded): config["Processors"].extend(("producer:TriggerWeightProducer",
   #                                                            "producer:IdentificationWeightProducer"))
-  #if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   #config["Processors"].extend((                               "producer:EmuQcdWeightProducer",
   config["Processors"].append(
                                                               "producer:EventWeightProducer")#)

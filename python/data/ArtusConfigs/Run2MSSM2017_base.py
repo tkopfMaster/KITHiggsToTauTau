@@ -49,7 +49,7 @@ def build_config(nickname):
     config["NLOweightsRooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/NLOWeights/higgs_pt_v2_mssm_mode.root"
 
   BosonPdgIds = {
-      "DY.?JetsToLL|EWKZ2Jets|Embedding(2016|MC)" : [
+      "DY.?JetsToLL|EWKZ2Jets|Embedding" : [
         23
       ],
       "^(GluGlu|GluGluTo|VBF|Wminus|Wplus|Z)(HToTauTau|H2JetsToTauTau)" : [
@@ -121,9 +121,11 @@ def build_config(nickname):
   #if isDY or isTTbar:                  config["Processors"].append( "producer:ScaleVariationProducer")
   config["Processors"].append(                                      "producer:NicknameProducer")
   if not isData:
-    config["Processors"].extend((                                   "producer:CrossSectionWeightProducer",
+
+    if not isEmbedded:                 
+      config["Processors"].append( "producer:PUWeightProducer")
+      config["Processors"].extend((                                   "producer:CrossSectionWeightProducer",
                                                                     "producer:NumberGeneratedEventsWeightProducer"))
-    if not isEmbedded:                 config["Processors"].append( "producer:PUWeightProducer")
     if isWjets or isDY or isSignal:    config["Processors"].append( "producer:GenBosonFromGenParticlesProducer")
     if isDY or isEmbedded:             config["Processors"].append( "producer:GenDiLeptonDecayModeProducer")
     config["Processors"].extend((                                   "producer:GenParticleProducer",

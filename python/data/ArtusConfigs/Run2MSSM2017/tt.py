@@ -156,20 +156,28 @@ def build_config(nickname):
       "1:crossTriggerDataEfficiencyWeight",
   ]
   config["EventWeight"] = "eventWeight"
-  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
-  config["TauTauTriggerWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
-  config["TauTauTriggerWeightWorkspaceWeightNames"] = [
-      "0:triggerWeight",
-      "1:triggerWeight"
-  ]
-  config["TauTauTriggerWeightWorkspaceObjectNames"] = [
-      "0:t_genuine_MediumIso_tt_ratio,t_fake_MediumIso_tt_ratio",
-      "1:t_genuine_MediumIso_tt_ratio,t_fake_MediumIso_tt_ratio"
-  ]
-  config["TauTauTriggerWeightWorkspaceObjectArguments"] = [
-      "0:t_pt,t_dm",
-      "1:t_pt,t_dm"
-  ]
+  if isEmbedded:
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
+    config["EmbeddedWeightWorkspaceWeightNames"]=["0:muonEffTrgWeight"] 
+    config["EmbeddedWeightWorkspaceObjectNames"]=["0:m_sel_trg_ratio"]
+    config["EmbeddedWeightWorkspaceObjectArguments"] = ["0:gt1_pt,gt1_eta,gt2_pt,gt2_eta"]
+
+  else:
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
+    config["TauTauTriggerWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
+    config["TauTauTriggerWeightWorkspaceWeightNames"] = [
+        "0:triggerWeight",
+        "1:triggerWeight"
+    ]
+    config["TauTauTriggerWeightWorkspaceObjectNames"] = [
+        "0:t_genuine_MediumIso_tt_ratio,t_fake_MediumIso_tt_ratio",
+        "1:t_genuine_MediumIso_tt_ratio,t_fake_MediumIso_tt_ratio"
+    ]
+    config["TauTauTriggerWeightWorkspaceObjectArguments"] = [
+        "0:t_pt,t_dm",
+        "1:t_pt,t_dm"
+    ]
   config["FakeFaktorFiles"] = [
       "inclusive:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/inclusive/fakeFactors_20170628_medium.root",
       "nobtag:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/nobtag/fakeFactors_20170628_medium.root",
@@ -207,7 +215,10 @@ def build_config(nickname):
       "had_gen_match_pT_1",
       "had_gen_match_pT_2"
   ])
-  
+  if isEmbedded:
+    config["Quantities"].extend([
+          "muonEffTrgWeight"
+          ])   
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run2"
   
@@ -216,6 +227,7 @@ def build_config(nickname):
                                                               "producer:HltProducer",
                                                               "producer:MetSelector"]
   #if not isData:                 config["Processors"].append( "producer:TauCorrectionsProducer")
+  if not isData:               config["Processors"].append(   "producer:HttValidGenTausProducer")                                                          
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "filter:ValidTausFilter",
                                                               "producer:TauTriggerMatchingProducer",
@@ -240,6 +252,7 @@ def build_config(nickname):
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))#,
                                                               # "producer:JetToTauFakesProducer"))
+  if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
 

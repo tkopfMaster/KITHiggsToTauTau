@@ -977,7 +977,7 @@ void Run2DecayChannelProducer::Produce(event_type const& event, product_type& pr
 		product.m_flavourOrderedLeptons.push_back(lepton2);
 		product.m_flavourOrderedLeptons.push_back(lepton1);
 	}
-	else if (m_decayChannel == HttEnumTypes::DecayChannel::TT || m_decayChannel == HttEnumTypes::DecayChannel::MM)
+	else if (m_decayChannel == HttEnumTypes::DecayChannel::TT || m_decayChannel == HttEnumTypes::DecayChannel::MM || m_decayChannel == HttEnumTypes::DecayChannel::EE)
 	{
 		if (lepton1->p4.Pt() >= lepton2->p4.Pt())
 		{

@@ -85,7 +85,8 @@ def build_config(nickname):
   config["MatchAllElectronsGenTau"] = "true"
   config["MatchAllMuonsGenTau"] = "true"
   config["MatchAllTausGenTau"] = "true"
-  config["UpdateMetWithCorrectedLeptons"] = "true"
+  config["UpdateMetWithCorrectedLeptons"] = True
+  config["UpdateMetWithCorrectedLeptonsFromSignalOnly"] = True
   
   config["MetFilter"] = [
         "Flag_HBHENoiseFilter",
@@ -102,7 +103,7 @@ def build_config(nickname):
   else:
     config["MetFilter"].extend((
     ))
-  if re.search(".*Summer17.*",nickname):
+  if re.search(".*Prompt.*|.*Summer17.*",nickname):
     config["MetFilter"].extend((
         "Flag_globalSuperTightHalo2016Filter",
     ))
@@ -155,10 +156,10 @@ def build_config(nickname):
   config["MetRecoilCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/TypeI-PFMet_Run2016BtoH.root"
   config["MetShiftCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/PFMEtSys_2016.root"
   config["MvaMetRecoilCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/MvaMET_2016BCD.root"
-  config["MetCorrectionMethod"] = "meanResolution"
+  config["MetCorrectionMethod"] = "none"
   
   if isData or isEmbedded:
-    if   re.search("Run2017|Embedding2017", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt"]
+    if   re.search("Run2017|Embedding2017", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt"]
     elif re.search("Run2016|Embedding2016", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"]
     elif re.search("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"]
     elif re.search("Run2015B", nickname):                   config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"]

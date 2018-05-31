@@ -241,7 +241,7 @@ def build_config(nickname):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
-  #if not isData:                 config["Processors"].extend((#"producer:MetCorrector",
+  #if not isData:                 config["Processors"].append("producer:MetCorrector")
   config["Processors"].extend((                               "producer:SimpleEleTauFakeRateWeightProducer",
                                                               "producer:SimpleMuTauFakeRateWeightProducer"))
   #                                                            "producer:TauTauTriggerWeightProducer"))

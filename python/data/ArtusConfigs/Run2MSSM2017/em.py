@@ -40,7 +40,7 @@ def build_config(nickname):
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsJEC",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsJetID",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsBTaggedJetID",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsMinimalPlotlevelFilter_em"
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsMinimalPlotlevelFilter_em"
   ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
@@ -205,6 +205,32 @@ def build_config(nickname):
   config["TriggerEfficiencyMode"] = "correlate_triggers"
   config["IdentificationEfficiencyMode"] = "multiply_weights"
   config["EventWeight"] = "eventWeight"
+
+  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
+  config["RooWorkspaceWeightNames"] = [
+      "0:idWeight",
+      "0:isoWeight",
+      "0:trackWeight",
+      "1:isoWeight",
+      "1:idWeight",
+      "1:trackWeight",
+  ]
+  config["RooWorkspaceObjectNames"] = [
+      "0:e_iso_ratio",
+      "0:e_id_ratio",
+      "0:e_reco_ratio",
+      "1:m_iso_ratio",
+      "1:m_id_ratio",
+      "1:m_trk_ratio",
+  ]
+  config["RooWorkspaceObjectArguments"] = [
+      "0:e_pt,e_eta",
+      "0:e_pt,e_eta",
+      "0:e_pt,e_eta",
+      "1:m_pt,m_eta",
+      "1:m_pt,m_eta",
+      "1:m_eta",
+  ]
   config["TauTauRestFrameReco"] = "collinear_approximation"
   
   config["ElectronTriggerFilterNames"] = [
@@ -275,6 +301,7 @@ def build_config(nickname):
   #if not (isData or isEmbedded): config["Processors"].extend(("producer:TriggerWeightProducer",
   #                                                            "producer:IdentificationWeightProducer"))
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
+  if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
   #config["Processors"].extend((                               "producer:EmuQcdWeightProducer",
   config["Processors"].append(
                                                               "producer:EventWeightProducer")#)

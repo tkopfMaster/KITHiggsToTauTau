@@ -189,19 +189,38 @@ def build_config(nickname):
         "0:crossTriggerDataEfficiencyWeight",
         "0:singleTriggerMCEfficiencyWeight",
         "0:singleTriggerDataEfficiencyWeight",
+        "0:singleTriggerMCEfficiencyWeightKIT",
+        "0:singleTriggerDataEfficiencyWeightKIT",
+    
+        "0:idWeight",
+        "0:isoWeight",
+        "0:trackWeight",
     ]
     config["RooWorkspaceObjectNames"] = [
         "0:e_trg_EleTau_Ele24Leg_desy_mc",
         "0:e_trg_EleTau_Ele24Leg_desy_data",
         "0:e_trg_SingleEle_Ele32OREle35_desy_mc",
         "0:e_trg_SingleEle_Ele32OREle35_desy_data",
+        "0:e_trg32or35_mc",
+        "0:e_trg32or35_data",
+
+        "0:e_iso_ratio",
+        "0:e_id_ratio",
+        "0:e_reco_ratio",
     ]
     config["RooWorkspaceObjectArguments"] = [
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+    
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
     ]
+
   config["FakeFaktorFiles"] = [
       "inclusive:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/et/inclusive/fakeFactors_20170628_tight.root",
       "nobtag_tight:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/tight/et/nobtag_tight/fakeFactors_20170628_tight.root",

@@ -247,8 +247,8 @@ def build_config(nickname):
       ]
   
   config["BTagWPs"] = ["medium"]
-  config["InvalidateNonMatchingElectrons"] = True
-  config["InvalidateNonMatchingMuons"] = True
+  config["InvalidateNonMatchingElectrons"] = False
+  config["InvalidateNonMatchingMuons"] = False
   config["InvalidateNonMatchingTaus"] = False
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True

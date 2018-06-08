@@ -214,6 +214,8 @@ public:
 	{
 		product.m_validDiTauPairCandidates.clear();
 		LOG(DEBUG) << "NewValidDiTauPairCandidatesProducer processing run:lumi:event " << event.m_eventInfo->nRun << ":" << event.m_eventInfo->nLumi << ":" << event.m_eventInfo->nEvent; 
+                LOG(DEBUG) << "Size of valid candidates for lepton 1: " << (product.*m_validLeptonsMember1).size();
+                LOG(DEBUG) << "Size of valid candidates for lepton 2: " << (product.*m_validLeptonsMember2).size();
 		
 		// build pairs for all combinations
 		for (typename std::vector<TLepton1*>::iterator lepton1 = (product.*m_validLeptonsMember1).begin();

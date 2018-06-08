@@ -33,18 +33,18 @@ def build_config(nickname):
   config["ElectronIDType"] = "cutbased2015andlater" # still MVA, using boolean functionality of IsCutBased()
   
   # signal electron ID
-  config["ElectronIDName"] = "egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp80"
-  #config["ElectronIDName"] = "egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp80" # worse fake rejection compared to the 'iso' version
+  config["ElectronIDName"] = "mvaEleID-Fall17-iso-V1-wp80:"
+  #config["ElectronIDName"] = "mvaEleID-Fall17-noIso-V1-wp80:" # worse fake rejection compared to the 'iso' version
 
   config["ElectronIDList"] = [
-    "egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp80",
-    "egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp90",
-    "egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp80",
-    "egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp90",
-    "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-veto",
-    "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-loose",
-    "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-medium",
-    "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-tight"
+    "mvaEleID-Fall17-iso-V1-wp80:",
+    "mvaEleID-Fall17-iso-V1-wp90:",
+    "mvaEleID-Fall17-noIso-V1-wp80:",
+    "mvaEleID-Fall17-noIso-V1-wp90:",
+    "cutBasedElectronID-Fall17-94X-V1-veto:",
+    "cutBasedElectronID-Fall17-94X-V1-loose:",
+    "cutBasedElectronID-Fall17-94X-V1-medium:",
+    "cutBasedElectronID-Fall17-94X-V1-tight:",
   ]
   
   config["ElectronIsoType"] = "user"

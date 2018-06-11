@@ -226,7 +226,7 @@ def build_config(nickname):
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
                                                               "producer:MetSelector"]
-  #if not isData:                 config["Processors"].append( "producer:TauCorrectionsProducer")
+  if not isData:                 config["Processors"].append( "producer:TauCorrectionsProducer")
   if not isData:               config["Processors"].append(   "producer:HttValidGenTausProducer")                                                          
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "filter:ValidTausFilter",
@@ -241,7 +241,7 @@ def build_config(nickname):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
-  #if not isData:                 config["Processors"].append("producer:MetCorrector")
+  if not isData:                 config["Processors"].append("producer:MetCorrector")
   config["Processors"].extend((                               "producer:SimpleEleTauFakeRateWeightProducer",
                                                               "producer:SimpleMuTauFakeRateWeightProducer"))
   #                                                            "producer:TauTauTriggerWeightProducer"))

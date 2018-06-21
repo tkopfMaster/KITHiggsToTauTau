@@ -54,18 +54,6 @@ def build_config(nickname):
   config["MaxNLooseMuons"] = 1
   # HltPaths_comment: The first path must be one with the higher pt cut on the electron. The second and last path must be one with the higher pt cut on the muon. Corresponding Pt cuts are implemented in the Run2DecayChannelProducer..
   if re.search("(Run201|Embedding201|Summer1|Fall1)", nickname): config["HltPaths"] = [
-          "HLT_IsoMu24",
-          "HLT_IsoMu27",
-          "HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1",
-          "HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1",
-          "HLT_Ele32_WPTight_Gsf",
-          "HLT_Ele35_WPTight_Gsf",
-          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
-          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg",
-          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg",
-          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg",
-          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
-          "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1",
           "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
     ]

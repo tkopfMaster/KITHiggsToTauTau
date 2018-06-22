@@ -28,7 +28,6 @@ def build_config(nickname):
   isWjets = re.search("W.?JetsToLNu", nickname)
   isSignal = re.search("HToTauTau",nickname)
   
-  
   ## fill config:
   # includes
   includes = [
@@ -122,16 +121,16 @@ def build_config(nickname):
     config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
     config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
     config["EmbeddedWeightWorkspaceWeightNames"]=[
-	  "0:muonEffTrgWeight",
+          "0:muonEffTrgWeight",
           "1:isoWeight",
           "1:idWeight",
           "1:triggerWeight",
           "0:isoWeight",
           "0:idWeight",
           "0:triggerWeight"
-	  ] 
+          ] 
     config["EmbeddedWeightWorkspaceObjectNames"]=[
-	  "0:m_sel_trg_ratio",
+          "0:m_sel_trg_ratio",
           "1:m_looseiso_ratio",
           "1:m_id_ratio",
           "1:m_trg_ratio",
@@ -140,14 +139,40 @@ def build_config(nickname):
           "0:e_trg_ratio"
           ]
     config["EmbeddedWeightWorkspaceObjectArguments"] = [
-	  "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
+          "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
           "1:m_pt,m_eta",
           "1:m_pt,m_eta",
           "1:m_pt,m_eta",
           "0:e_pt,e_eta",
           "0:e_pt,e_eta",
           "0:e_pt,e_eta"
-          ]   
+          ]
+  else:
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
+    config["RooWorkspaceWeightNames"] = [
+        "0:idWeight",
+        "0:isoWeight",
+        "0:trackWeight",
+        "1:isoWeight",
+        "1:idWeight",
+        "1:trackWeight",
+    ]
+    config["RooWorkspaceObjectNames"] = [
+        "0:e_iso_ratio",
+        "0:e_id_ratio",
+        "0:e_reco_ratio",
+        "1:m_iso_ratio",
+        "1:m_id_ratio",
+        "1:m_trk_ratio",
+    ]
+    config["RooWorkspaceObjectArguments"] = [
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "1:m_pt,m_eta",
+        "1:m_pt,m_eta",
+        "1:m_eta",
+    ]
   if re.search("Summer1", nickname):
     config["TriggerEfficiencyData"] = [
       "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_Run2016_Electron_Ele12leg_eff.root",
@@ -181,31 +206,7 @@ def build_config(nickname):
   config["IdentificationEfficiencyMode"] = "multiply_weights"
   config["EventWeight"] = "eventWeight"
 
-  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
-  config["RooWorkspaceWeightNames"] = [
-      "0:idWeight",
-      "0:isoWeight",
-      "0:trackWeight",
-      "1:isoWeight",
-      "1:idWeight",
-      "1:trackWeight",
-  ]
-  config["RooWorkspaceObjectNames"] = [
-      "0:e_iso_ratio",
-      "0:e_id_ratio",
-      "0:e_reco_ratio",
-      "1:m_iso_ratio",
-      "1:m_id_ratio",
-      "1:m_trk_ratio",
-  ]
-  config["RooWorkspaceObjectArguments"] = [
-      "0:e_pt,e_eta",
-      "0:e_pt,e_eta",
-      "0:e_pt,e_eta",
-      "1:m_pt,m_eta",
-      "1:m_pt,m_eta",
-      "1:m_eta",
-  ]
+
   config["TauTauRestFrameReco"] = "collinear_approximation"
   
   config["ElectronTriggerFilterNames"] = [

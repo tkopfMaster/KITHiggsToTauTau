@@ -28,7 +28,6 @@ def build_config(nickname):
   isWjets = re.search("W.?JetsToLNu", nickname)
   isSignal = re.search("HToTauTau",nickname)
   
-  
   ## fill config:
   # includes
   includes = [
@@ -253,7 +252,7 @@ def build_config(nickname):
                                                               "filter:MinElectronsCountFilter",
                                                               "producer:HttValidVetoElectronsProducer",
                                                               "producer:ValidMuonsProducer"))
-  if not isData:                 config["Processors"].append( "producer:TauCorrectionsProducer")
+  if not (isData or isEmbedded):                 config["Processors"].append( "producer:TauCorrectionsProducer")
   if not isData:               config["Processors"].append(   "producer:HttValidGenTausProducer")                                                          
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "filter:ValidTausFilter",

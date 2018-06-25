@@ -29,7 +29,7 @@ def build_config(nickname):
   # explicit configuration
   config["TauEnergyCorrection"] = "mssmhtt2016"
   
-  if re.search("Run201", nickname):
+  if re.search("Run201|Embedding", nickname):
     config["TauEnergyCorrectionOneProng"] = 1.0
     config["TauEnergyCorrectionOneProngPiZeros"] = 1.0
     config["TauEnergyCorrectionThreeProng"] = 1.0

@@ -382,6 +382,7 @@ public:
 
 	// settings for MetFilter
 	IMPL_SETTING_STRINGLIST_DEFAULT(MetFilter, {});
+        IMPL_SETTING_STRINGLIST_DEFAULT(MetFilterToFlag, {});
 
 	// settings for ZPtReweightProducer
 	IMPL_SETTING(std::string, ZptReweightProducerWeights);

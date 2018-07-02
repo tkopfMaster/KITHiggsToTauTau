@@ -75,6 +75,9 @@ public:
 	IMPL_SETTING_DEFAULT(float, ElectronMvaIDCutEB2, -1.0);
 	IMPL_SETTING_DEFAULT(float, ElectronMvaIDCutEE, -1.0);
 
+	IMPL_SETTING_FLOATLIST_DEFAULT(ElectronEtaBinnedEAValues, {});
+	IMPL_SETTING_FLOATLIST_DEFAULT(ElectronEtaBinsForEA, {});
+
 	IMPL_SETTING_DEFAULT(float, ElectronChargedIsoVetoConeSizeEB, 0.0);
 	IMPL_SETTING_DEFAULT(float, ElectronChargedIsoVetoConeSizeEE, 0.0);
 	IMPL_SETTING_DEFAULT(float, ElectronNeutralIsoVetoConeSize, 0.0);

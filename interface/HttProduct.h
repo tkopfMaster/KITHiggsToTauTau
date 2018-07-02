@@ -385,4 +385,7 @@ public:
         
         //filled by ImpactParameterCorrectionsProducer
 	double m_DCAcalib[2][2][2]; //[d0/dZ][abs/rel][0/1]
+	
+	//filled by MetFilterFlagProducer
+	bool m_MetFilter = true;
 };

@@ -45,5 +45,10 @@ def build_config(nickname):
   config["LooseElectronTrackDzCut"] = 0.2
   config["DirectIso"] = True
 
+  config["ElectronIDList"] = [
+  ]
+  config["ElectronEtaBinnedEAValues"] = []
+  config["ElectronEtaBinsForEA"] = []
+
 
   return config

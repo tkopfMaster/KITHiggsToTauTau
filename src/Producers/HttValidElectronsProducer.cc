@@ -276,8 +276,7 @@ bool HttValidElectronsProducer::AdditionalCriteria(KElectron* electron,
                         if (abseta > etaBins[i] && abseta < etaBins[i+1])
                         {
                             eA = eaValues[i];
-                            float radius = std::sqrt(eA/3.14159);// needed because of syntax used in Kappa, where the radius is taken as input
-                            isolationPtSum = electron->pfIsoRho(event.m_pileupDensity->rho, radius);
+                            isolationPtSum = electron->pfIsoRho(event.m_pileupDensity->rho, eA);
                             LOG(DEBUG) << "Computed rho corrected iso: " << isolationPtSum << " delta beta corrected iso: " << electron->pfIso();
                             break;
                         }

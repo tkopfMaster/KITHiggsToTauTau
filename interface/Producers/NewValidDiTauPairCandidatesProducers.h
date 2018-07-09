@@ -213,7 +213,8 @@ public:
 	                     setting_type const& settings) const override
 	{
 		product.m_validDiTauPairCandidates.clear();
-		LOG(DEBUG) << "NewValidDiTauPairCandidatesProducer processing run:lumi:event " << event.m_eventInfo->nRun << ":" << event.m_eventInfo->nLumi << ":" << event.m_eventInfo->nEvent; 
+		LOG(DEBUG) << this->GetProducerId() << " -----START-----"; 
+		LOG(DEBUG) << "Processing run:lumi:event " << event.m_eventInfo->nRun << ":" << event.m_eventInfo->nLumi << ":" << event.m_eventInfo->nEvent; 
                 LOG(DEBUG) << "Size of valid candidates for lepton 1: " << (product.*m_validLeptonsMember1).size();
                 LOG(DEBUG) << "Size of valid candidates for lepton 2: " << (product.*m_validLeptonsMember2).size();
 		
@@ -260,10 +261,10 @@ public:
 		}
 		if(product.m_validDiTauPairCandidates.size()>0)
 		{
-			LOG(DEBUG) << "Pt of first Tau Candidate in first pair: " << product.m_validDiTauPairCandidates.at(0).first->p4.Pt();
-			LOG(DEBUG) << "Pt of second Tau Candidate in first pair: " << product.m_validDiTauPairCandidates.at(0).second->p4.Pt();
+			LOG(DEBUG) << "First Tau Candidate in first pair: " << product.m_validDiTauPairCandidates.at(0).first->p4;
+			LOG(DEBUG) << "Second Tau Candidate in first pair: " << product.m_validDiTauPairCandidates.at(0).second->p4;
 		}
-		
+		LOG(DEBUG) << this->GetProducerId() << " -----END-----"; 
 	}
 
 

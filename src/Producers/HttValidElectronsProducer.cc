@@ -123,6 +123,7 @@ bool HttValidElectronsProducer::AdditionalCriteria(KElectron* electron,
                                                    event_type const& event, product_type& product,
                                                    setting_type const& settings) const
 {
+        LOG(DEBUG) << "\t\tChecking additional analysis criteria";
 	assert(event.m_vertexSummary);
 	
 	bool validElectron = ValidElectronsProducer<HttTypes>::AdditionalCriteria(electron, event, product, settings);
@@ -266,7 +267,7 @@ bool HttValidElectronsProducer::AdditionalCriteria(KElectron* electron,
 		}
                 else if ( etaBins.size() > 0 && eaValues.size() > 0 && etaBins.size() == eaValues.size() +1)
                 {
-                    LOG(DEBUG) << "Falling in case of rho corrected Isolation";
+                    LOG(DEBUG) << "\t\tFalling in case of rho corrected Isolation";
                     // event.m_pileupDensity->rho
                     float abseta = std::abs(electron->superclusterPosition.Eta());
                     float eA = 0.0;
@@ -277,7 +278,7 @@ bool HttValidElectronsProducer::AdditionalCriteria(KElectron* electron,
                         {
                             eA = eaValues[i];
                             isolationPtSum = electron->pfIsoRho(event.m_pileupDensity->rho, eA);
-                            LOG(DEBUG) << "Computed rho corrected iso: " << isolationPtSum << " delta beta corrected iso: " << electron->pfIso();
+                            LOG(DEBUG) << "\t\tComputed rho corrected iso: " << isolationPtSum << " delta beta corrected iso: " << electron->pfIso();
                             break;
                         }
                     }

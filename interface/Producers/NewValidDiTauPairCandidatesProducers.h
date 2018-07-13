@@ -105,17 +105,14 @@ public:
                                         if (checkLep1)
                                         {
                                                 LOG(DEBUG) << "Checking trigger object matching for lepton 1";
-                                                if (product.m_detailedTriggerMatchedLeptons.find(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).first)) != product.m_detailedTriggerMatchedLeptons.end())
+                                                if (product.m_leptonTriggerMatch.find(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).first)) != product.m_leptonTriggerMatch.end())
                                                 {
-                                                        auto trigger1 = product.m_detailedTriggerMatchedLeptons.at(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).first));
+                                                        auto trigger1 = product.m_leptonTriggerMatch.at(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).first));
                                                         for (auto hlts: (*trigger1))
                                                         {
                                                                 if (boost::regex_search(hlts.first, boost::regex(hltName, boost::regex::icase | boost::regex::extended)))
                                                                 {
-                                                                        for (auto matchedObjects: hlts.second)
-                                                                        {
-                                                                                if (matchedObjects.second.size() > 0) hltFired1 = true;
-                                                                        }
+                                                                        hltFired1 = hlts.second;
                                                                 }
                                                         }
                                                         LOG(DEBUG) << "Found trigger for the lepton 1? " << hltFired1;
@@ -154,17 +151,14 @@ public:
                                         if (checkLep2)
                                         {
                                                 LOG(DEBUG) << "Checking trigger object matching for lepton 2";
-                                                if (product.m_detailedTriggerMatchedLeptons.find(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).second)) != product.m_detailedTriggerMatchedLeptons.end())
+                                                if (product.m_leptonTriggerMatch.find(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).second)) != product.m_leptonTriggerMatch.end())
                                                 {
-                                                        auto trigger2 = product.m_detailedTriggerMatchedLeptons.at(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).second));
+                                                        auto trigger2 = product.m_leptonTriggerMatch.at(static_cast<KLepton*>(product.m_validDiTauPairCandidates.at(0).second));
                                                         for (auto hlts: (*trigger2))
                                                         {
                                                                 if (boost::regex_search(hlts.first, boost::regex(hltName, boost::regex::icase | boost::regex::extended)))
                                                                 {
-                                                                        for (auto matchedObjects: hlts.second)
-                                                                        {
-                                                                                if (matchedObjects.second.size() > 0) hltFired2 = true;
-                                                                        }
+                                                                        hltFired2 = hlts.second;
                                                                 }
                                                         }
                                                         LOG(DEBUG) << "Found trigger for the lepton 2? " << hltFired2;

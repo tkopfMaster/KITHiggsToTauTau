@@ -57,6 +57,7 @@
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/TauTrigger2017EfficiencyProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/ImpactParameterCorrectionsProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/MetFilterFlagProducer.h"
+#include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/SMggHNNLOProducer.h"
 
 // filters
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Filters/LooseObjectsCountFilters.h"
@@ -276,6 +277,8 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new ImpactParameterCorrectionsProducer();
         else if(id == MetFilterFlagProducer().GetProducerId())
                 return new MetFilterFlagProducer();
+        else if(id == SMggHNNLOProducer().GetProducerId())
+                return new SMggHNNLOProducer();
 	else
 		return KappaFactory::createProducer( id );
 }

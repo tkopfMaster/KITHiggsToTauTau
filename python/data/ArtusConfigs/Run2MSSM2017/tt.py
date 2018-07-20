@@ -64,16 +64,16 @@ def build_config(nickname):
   config["DeltaRTriggerMatchingTaus"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairLepton1LowerPtCuts"] = [
-          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:38.0",
-          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:38.0",
-          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:43.0",
-          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0",
+          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:40.0",
+          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:40.0",
+          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:45.0",
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:45.0",
   ]
   config["DiTauPairLepton2LowerPtCuts"] = [
-          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:38.0",
-          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:38.0",
-          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:43.0",
-          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:43.0",
+          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:40.0",
+          "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:40.0",
+          "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:45.0",
+          "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:45.0",
   ]
   config["CheckL1MatchForDiTauPairLepton1"] = True
   config["CheckL1MatchForDiTauPairLepton2"] = True
@@ -81,48 +81,49 @@ def build_config(nickname):
       "trg_singlemuon_lowpt",
       "trg_singlemuon",
       "trg_singletau_leading",
+      "trg_singleelectron_27",
       "trg_singleelectron_lowpt",
+      "trg_singleelectron_lowpt_fallback",
       "trg_singleelectron",
 
       "trg_muontau_lowptmu",
-      "trg_muontau_lowpttau",
       "trg_electrontau",
-      "trg_doubletau_lowpt_mediso",
       "trg_doubletau_lowpt",
       "trg_doubletau_mediso",
       "trg_doubletau",
       "trg_muonelectron_lowptmu",
-      "trg_muonelectron_lowpte"
+      "trg_muonelectron_lowpte",
+      "trg_muonelectron_mu8ele23",
   ]
   config["CheckLepton2TriggerMatch"] = [
       "trg_singletau_trailing",
 
       "trg_muontau_lowptmu",
-      "trg_muontau_lowpttau",
       "trg_electrontau",
-      "trg_doubletau_lowpt_mediso",
       "trg_doubletau_lowpt",
       "trg_doubletau_mediso",
       "trg_doubletau",
       "trg_muonelectron_lowptmu",
-      "trg_muonelectron_lowpte"
+      "trg_muonelectron_lowpte",
+      "trg_muonelectron_mu8ele23",
   ]
   config["HLTBranchNames"] = [
       "trg_singlemuon_lowpt:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
       "trg_muontau_lowptmu:HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v",
-      "trg_muontau_lowpttau:HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v",
+      "trg_singleelectron_27:HLT_Ele27_WPTight_Gsf_v",
       "trg_singleelectron_lowpt:HLT_Ele32_WPTight_Gsf_v",
+      "trg_singleelectron_lowpt_fallback:HLT_Ele32_WPTight_Gsf_DoubleL1EG_v",
       "trg_singleelectron:HLT_Ele35_WPTight_Gsf_v",
       "trg_electrontau:HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v",
-      "trg_doubletau_lowpt_mediso:HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v",
       "trg_doubletau_lowpt:HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau_mediso:HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
       "trg_singletau_leading:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
       "trg_singletau_trailing:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
       "trg_muonelectron_lowptmu:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
-      "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
+      "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v",
+      "trg_muonelectron_mu8ele23:HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
   ]
   config["TauTrigger2017Input"] = "$CMSSW_BASE/src/TauTriggerSFs2017/TauTriggerSFs2017/data/tauTriggerEfficiencies2017.root"
   config["TauTrigger2017WorkingPoint"] = "tight"
@@ -163,7 +164,6 @@ def build_config(nickname):
   
   config["TauTauRestFrameReco"] = "collinear_approximation"
   config["TauTriggerFilterNames"] = [
-          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v:hltDoublePFTau35TrackPt1MediumChargedIsolationDz02Reg",
           "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:hltDoublePFTau35TrackPt1TightChargedIsolationAndTightOOSCPhotonsDz02Reg",
           "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v:hltDoublePFTau40TrackPt1MediumChargedIsolationAndTightOOSCPhotonsDz02Reg",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v:hltDoublePFTau40TrackPt1TightChargedIsolationDz02Reg",
@@ -171,7 +171,6 @@ def build_config(nickname):
           "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:hltSelectedPFTau180MediumChargedIsolationL1HLTMatched"
     ]
   config["TauTriggerCheckL1Match"] = [
-          "HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v",
           "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
           "HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v"

@@ -292,7 +292,9 @@ def build_list():
     "genbosonmass",
     "genbosonpt",
 
+    "trg_singleelectron_27",
     "trg_singleelectron_lowpt",
+    "trg_singleelectron_lowpt_fallback",
     "trg_singleelectron",
     "trg_electrontau",
     "trg_singlemuon_lowpt",
@@ -305,6 +307,7 @@ def build_list():
     "trg_doubletau",
     "trg_singletau_leading",
     "trg_singletau_trailing",
+    "trg_muonelectron_mu8ele23",
     "trg_muonelectron_lowptmu",
     "trg_muonelectron_lowpte",
 

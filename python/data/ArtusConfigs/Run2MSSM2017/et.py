@@ -53,7 +53,9 @@ def build_config(nickname):
   config["MinNTaus"] = 1
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer..
   if re.search("(Run201|Embedding201|Summer1|Fall1)", nickname): config["HltPaths"] = [
+          "HLT_Ele27_WPTight_Gsf",
           "HLT_Ele32_WPTight_Gsf",
+          "HLT_Ele32_WPTight_Gsf_DoubleL1EG",
           "HLT_Ele35_WPTight_Gsf",
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1",
           "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1",
@@ -70,12 +72,14 @@ def build_config(nickname):
   config["DeltaRTriggerMatchingElectrons"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairLepton1LowerPtCuts"] = [
-          "HLT_Ele32_WPTight_Gsf_v:34.0",
-          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:26.0",
-          "HLT_Ele35_WPTight_Gsf_v:37.0",
+          "HLT_Ele27_WPTight_Gsf_v:28.0",
+          "HLT_Ele32_WPTight_Gsf_v:33.0",
+          "HLT_Ele32_WPTight_Gsf_DoubleL1EG_v:33.0",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:25.0",
+          "HLT_Ele35_WPTight_Gsf_v:36.0",
   ]
   config["DiTauPairLepton2LowerPtCuts"] = [
-          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:33.0",
+          "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:35.0",
   ]
   config["DiTauPairLepton2UpperEtaCuts"] = [
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:2.1",
@@ -85,48 +89,49 @@ def build_config(nickname):
       "trg_singlemuon_lowpt",
       "trg_singlemuon",
       "trg_singletau_leading",
+      "trg_singleelectron_27",
       "trg_singleelectron_lowpt",
+      "trg_singleelectron_lowpt_fallback",
       "trg_singleelectron",
 
       "trg_muontau_lowptmu",
-      "trg_muontau_lowpttau",
       "trg_electrontau",
-      "trg_doubletau_lowpt_mediso",
       "trg_doubletau_lowpt",
       "trg_doubletau_mediso",
       "trg_doubletau",
       "trg_muonelectron_lowptmu",
-      "trg_muonelectron_lowpte"
+      "trg_muonelectron_lowpte",
+      "trg_muonelectron_mu8ele23",
   ]
   config["CheckLepton2TriggerMatch"] = [
       "trg_singletau_trailing",
 
       "trg_muontau_lowptmu",
-      "trg_muontau_lowpttau",
       "trg_electrontau",
-      "trg_doubletau_lowpt_mediso",
       "trg_doubletau_lowpt",
       "trg_doubletau_mediso",
       "trg_doubletau",
       "trg_muonelectron_lowptmu",
-      "trg_muonelectron_lowpte"
+      "trg_muonelectron_lowpte",
+      "trg_muonelectron_mu8ele23",
   ]
   config["HLTBranchNames"] = [
       "trg_singlemuon_lowpt:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
       "trg_muontau_lowptmu:HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v",
-      "trg_muontau_lowpttau:HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v",
+      "trg_singleelectron_27:HLT_Ele27_WPTight_Gsf_v",
       "trg_singleelectron_lowpt:HLT_Ele32_WPTight_Gsf_v",
+      "trg_singleelectron_lowpt_fallback:HLT_Ele32_WPTight_Gsf_DoubleL1EG_v",
       "trg_singleelectron:HLT_Ele35_WPTight_Gsf_v",
       "trg_electrontau:HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v",
-      "trg_doubletau_lowpt_mediso:HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v",
       "trg_doubletau_lowpt:HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau_mediso:HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
       "trg_singletau_leading:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
       "trg_singletau_trailing:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
       "trg_muonelectron_lowptmu:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
-      "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
+      "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v",
+      "trg_muonelectron_mu8ele23:HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
   ]
   config["TauTrigger2017Input"] = "$CMSSW_BASE/src/TauTriggerSFs2017/TauTriggerSFs2017/data/tauTriggerEfficiencies2017.root"
   config["TauTrigger2017WorkingPoint"] = "tight"
@@ -207,7 +212,10 @@ def build_config(nickname):
   config["EventWeight"] = "eventWeight"
   config["TauTauRestFrameReco"] = "collinear_approximation"
   config["ElectronTriggerFilterNames"] = [
+          "HLT_Ele27_WPTight_Gsf_v:hltEle27WPTightGsfTrackIsoFilter",
           "HLT_Ele32_WPTight_Gsf_v:hltEle32WPTightGsfTrackIsoFilter",
+          "HLT_Ele32_WPTight_Gsf_DoubleL1EG_v:hltEle32L1DoubleEGWPTightGsfTrackIsoFilter",
+          "HLT_Ele32_WPTight_Gsf_DoubleL1EG_v:hltEGL1SingleEGOrFilter",
           "HLT_Ele35_WPTight_Gsf_v:hltEle35noerWPTightGsfTrackIsoFilter",
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:hltEle24erWPTightGsfTrackIsoFilterForTau",
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:hltOverlapFilterIsoEle24WPTightGsfLooseIsoPFTau30"

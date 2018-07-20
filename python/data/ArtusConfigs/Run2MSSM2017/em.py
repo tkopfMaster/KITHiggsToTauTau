@@ -53,69 +53,72 @@ def build_config(nickname):
   config["MaxNLooseMuons"] = 1
   # HltPaths_comment: The first path must be one with the higher pt cut on the electron. The second and last path must be one with the higher pt cut on the muon. Corresponding Pt cuts are implemented in the Run2DecayChannelProducer..
   if re.search("(Run201|Embedding201|Summer1|Fall1)", nickname): config["HltPaths"] = [
+          "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
           "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ",
-          "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"
+          "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ",
     ]
 
   config["ElectronLowerPtCuts"] = ["13.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.5"]
-  config["MuonLowerPtCuts"] = ["13.0"]
+  config["MuonLowerPtCuts"] = ["9.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.4"]
   config["DiTauPairMinDeltaRCut"] = 0.3
   config["DeltaRTriggerMatchingMuons"] = 0.3
   config["DeltaRTriggerMatchingElectrons"] = 0.3
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairLepton1LowerPtCuts"] = [
-          "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:24.0"]
+          "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:24.0",
+          "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:13.0"]
   config["DiTauPairLepton2LowerPtCuts"] = [
+          "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:24.0",
           "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:24.0"]
   config["CheckLepton1TriggerMatch"] = [
       "trg_singlemuon_lowpt",
       "trg_singlemuon",
       "trg_singletau_leading",
+      "trg_singleelectron_27",
       "trg_singleelectron_lowpt",
       "trg_singleelectron_lowpt_fallback",
       "trg_singleelectron",
 
       "trg_muontau_lowptmu",
-      "trg_muontau_lowpttau",
       "trg_electrontau",
-      "trg_doubletau_lowpt_mediso",
       "trg_doubletau_lowpt",
       "trg_doubletau_mediso",
       "trg_doubletau",
       "trg_muonelectron_lowptmu",
-      "trg_muonelectron_lowpte"
+      "trg_muonelectron_lowpte",
+      "trg_muonelectron_mu8ele23",
   ]
   config["CheckLepton2TriggerMatch"] = [
       "trg_singletau_trailing",
 
       "trg_muontau_lowptmu",
-      "trg_muontau_lowpttau",
       "trg_electrontau",
-      "trg_doubletau_lowpt_mediso",
       "trg_doubletau_lowpt",
       "trg_doubletau_mediso",
       "trg_doubletau",
       "trg_muonelectron_lowptmu",
-      "trg_muonelectron_lowpte"
+      "trg_muonelectron_lowpte",
+      "trg_muonelectron_mu8ele23",
   ]
   config["HLTBranchNames"] = [
       "trg_singlemuon_lowpt:HLT_IsoMu24_v",
       "trg_singlemuon:HLT_IsoMu27_v",
       "trg_muontau_lowptmu:HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v",
-      "trg_muontau_lowpttau:HLT_IsoMu24_eta2p1_LooseChargedIsoPFTau20_SingleL1_v",
+      "trg_singleelectron_27:HLT_Ele27_WPTight_Gsf_v",
       "trg_singleelectron_lowpt:HLT_Ele32_WPTight_Gsf_v",
+      "trg_singleelectron_lowpt_fallback:HLT_Ele32_WPTight_Gsf_DoubleL1EG_v",
       "trg_singleelectron:HLT_Ele35_WPTight_Gsf_v",
       "trg_electrontau:HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v",
-      "trg_doubletau_lowpt_mediso:HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg_v",
       "trg_doubletau_lowpt:HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau_mediso:HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg_v",
       "trg_doubletau:HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg_v",
       "trg_singletau_leading:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
       "trg_singletau_trailing:HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v",
       "trg_muonelectron_lowptmu:HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
-      "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v"
+      "trg_muonelectron_lowpte:HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v",
+      "trg_muonelectron_mu8ele23:HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
   ]
   if isEmbedded:
     config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
@@ -210,12 +213,16 @@ def build_config(nickname):
   config["TauTauRestFrameReco"] = "collinear_approximation"
   
   config["ElectronTriggerFilterNames"] = [
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu8TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter",
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu8TrkIsoVVLEle23CaloIdLTrackIdLIsoVLDZFilter",
         "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter",
         "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLDZFilter",
         "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter",
         "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLDZFilter"
       ]
   config["MuonTriggerFilterNames"] = [
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMuon8Ele23RelTrkIsoFiltered0p4MuonLeg,hltMu8TrkIsoVVLEle23CaloIdLTrackIdLIsoVLMuonlegL3IsoFiltered8",
+        "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu8TrkIsoVVLEle23CaloIdLTrackIdLIsoVLDZFilter",
         "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLMuonlegL3IsoFiltered12",
         "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu12TrkIsoVVLEle23CaloIdLTrackIdLIsoVLDZFilter",
         "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegL3IsoFiltered23",

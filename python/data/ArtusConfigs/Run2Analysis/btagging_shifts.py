@@ -33,26 +33,27 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  config["nominal"] = {
-    "ElectronEnergyCorrectionShiftEB" : 1.0, 
-    "ElectronEnergyCorrectionShiftEE" : 1.0, 
-    "JetEnergyCorrectionUncertaintyShift" : 0.0, 
-    "MetUncertaintyShift" : False, 
-    "MetUncertaintyType" : "", 
-    "SvfitCacheFileFolder" : "nominal",
-    "TauElectronFakeEnergyCorrection" : 1.0, 
-    "TauElectronFakeEnergyCorrectionOneProngPiZerosShift" : 1.0, 
-    "TauElectronFakeEnergyCorrectionOneProngShift" : 1.0, 
-    "TauEnergyCorrectionOneProngPiZerosShift" : 1.0, 
-    "TauEnergyCorrectionOneProngShift" : 1.0, 
-    "TauEnergyCorrectionShift" : 1.0, 
-    "TauEnergyCorrectionThreeProngShift" : 1.0, 
-    "TauJetFakeEnergyCorrection" : 0.0,
-    "TauMuonFakeEnergyCorrection" : 1.0, 
-    "TauMuonFakeEnergyCorrectionOneProngPiZerosShift" : 1.0, 
-    "TauMuonFakeEnergyCorrectionOneProngShift" : 1.0,
-    "BTagShift" : 0.0,
-    "BMistagShift" : 0.0
-  }
+  if not re.search("Run201|Embedding", nickname):
+    config["btagEffUp"] = {
+      "SvfitCacheFileFolder" : "nominal",
+      "BTagShift" : 1.0,
+      "BMistagShift" : 0.0
+    }
+    config["btagEffDown"] = {
+      "SvfitCacheFileFolder" : "nominal",
+      "BTagShift" : -1.0,
+      "BMistagShift" : 0.0
+    }
+    config["btagMistagUp"] = {
+      "SvfitCacheFileFolder" : "nominal",
+      "BTagShift" : 0.0,
+      "BMistagShift" : 1.0
+    }
+    config["btagMistagDown"] = {
+      "SvfitCacheFileFolder" : "nominal",
+      "BTagShift" : 0.0,
+      "BMistagShift" : -1.0
+    }
+  
   
   return config

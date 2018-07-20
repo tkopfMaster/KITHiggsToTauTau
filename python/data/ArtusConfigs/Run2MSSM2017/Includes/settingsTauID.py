@@ -29,7 +29,7 @@ def build_config(nickname):
   # explicit configuration
   #config["TauID_documentation"] = []
   config["TauDiscriminatorIsolationName"] = "byIsolationMVArun2017v2DBoldDMwLTraw2017" # Fall17 trainings
-  #config["TauDiscriminators"] = ["byVVLooseIsolationMVArun2017v2DBoldDMwLT2017"]
+  config["TauDiscriminators"] = ["byVVLooseIsolationMVArun2017v2DBoldDMwLT2017"]
   config["TauElectronLowerDeltaRCut"] = -1.0
   config["TauMuonLowerDeltaRCut"] = -1.0
 

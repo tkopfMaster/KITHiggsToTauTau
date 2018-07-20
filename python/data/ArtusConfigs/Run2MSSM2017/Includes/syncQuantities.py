@@ -300,8 +300,6 @@ def build_list():
     "trg_singlemuon_lowpt",
     "trg_singlemuon",
     "trg_muontau_lowptmu",
-    "trg_muontau_lowpttau",
-    "trg_doubletau_lowpt_mediso",
     "trg_doubletau_lowpt",
     "trg_doubletau_mediso",
     "trg_doubletau",

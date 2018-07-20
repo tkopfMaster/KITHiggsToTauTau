@@ -70,21 +70,7 @@ def build_config(nickname):
   
   config["BosonStatuses"] = [62]
   config["ChooseMvaMet"] = False
-  config["DeltaRMatchingRecoElectronGenParticle"] = 0.2
-  config["DeltaRMatchingRecoElectronGenTau"] = 0.2
-  config["DeltaRMatchingRecoMuonGenParticle"] = 0.2
-  config["DeltaRMatchingRecoMuonGenTau"] = 0.2
-  config["DeltaRMatchingRecoTauGenParticle"] = 0.2
-  config["DeltaRMatchingRecoTauGenTau"] = 0.2
-  config["RecoElectronMatchingGenParticlePdgIds"] = [11,13]
-  config["RecoMuonMatchingGenParticlePdgIds"] = [11,13]
-  config["RecoTauMatchingGenParticlePdgIds"] = [11,13]
-  config["RecoElectronMatchingGenParticleMatchAllElectrons"] = "true"
-  config["RecoMuonMatchingGenParticleMatchAllMuons"] = "true"
-  config["RecoTauMatchingGenParticleMatchAllTaus"] = "true"
-  config["MatchAllElectronsGenTau"] = "true"
-  config["MatchAllMuonsGenTau"] = "true"
-  config["MatchAllTausGenTau"] = "true"
+  config["UseUWGenMatching"] = True
   config["UpdateMetWithCorrectedLeptons"] = True
   config["UpdateMetWithCorrectedLeptonsFromSignalOnly"] = True
   
@@ -134,14 +120,6 @@ def build_config(nickname):
     if isSUSYggH:                      config["Processors"].append( "producer:NLOreweightingWeightsProducer")
     if isWjets or isDY or isEmbedded:  config["Processors"].extend(("producer:GenTauDecayProducer",
                                                                     "producer:GenBosonDiLeptonDecayModeProducer"))
-    config["Processors"].extend((                                   "producer:GeneratorWeightProducer",
-                                                                    "producer:RecoMuonGenParticleMatchingProducer",
-                                                                    "producer:RecoMuonGenTauMatchingProducer",
-                                                                    "producer:RecoElectronGenParticleMatchingProducer",
-                                                                    "producer:RecoElectronGenTauMatchingProducer",
-                                                                    "producer:RecoTauGenParticleMatchingProducer",
-                                                                    "producer:RecoTauGenTauMatchingProducer",
-                                                                    "producer:MatchedLeptonsProducer"))
     #if isTTbar:                        config["Processors"].append( "producer:TTbarGenDecayModeProducer")
 
   if isData or isEmbedded:                config["PileupWeightFile"] = "not needed"

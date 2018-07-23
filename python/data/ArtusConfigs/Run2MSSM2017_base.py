@@ -74,7 +74,7 @@ def build_config(nickname):
   config["UpdateMetWithCorrectedLeptons"] = True
   config["UpdateMetWithCorrectedLeptonsFromSignalOnly"] = True
   
-  config["MetFilter"] = [
+  config["MetFilterToFlag"] = [
         "Flag_HBHENoiseFilter",
         "Flag_HBHENoiseIsoFilter",
         "Flag_EcalDeadCellTriggerPrimitiveFilter",
@@ -83,18 +83,18 @@ def build_config(nickname):
         "Flag_BadChargedCandidateFilter"
   ]
   if isData:
-    config["MetFilter"].extend((
+    config["MetFilterToFlag"].extend((
         "Flag_eeBadScFilter",
     ))
   else:
-    config["MetFilter"].extend((
+    config["MetFilterToFlag"].extend((
     ))
   if re.search(".*Prompt.*|.*Summer17.*",nickname):
-    config["MetFilter"].extend((
+    config["MetFilterToFlag"].extend((
         "Flag_globalSuperTightHalo2016Filter",
     ))
   else:
-    config["MetFilter"].extend((
+    config["MetFilterToFlag"].extend((
         "Flag_ecalBadCalibFilter",
         "Flag_globalTightHalo2016Filter",
     ))
@@ -104,9 +104,9 @@ def build_config(nickname):
   config["Processors"] = []
   #config["Processors"].append("filter:RunLumiEventFilter")
   if isData or isEmbedded:             config["Processors"].append( "filter:JsonFilter")
-  if not isEmbedded:                   config["Processors"].append( "filter:MetFilter")
   #if isDY or isTTbar:                  config["Processors"].append( "producer:ScaleVariationProducer")
   config["Processors"].append(                                      "producer:NicknameProducer")
+  config["Processors"].append(                                      "producer:MetFilterFlagProducer")
   if not isData:
 
     if not isEmbedded:                 

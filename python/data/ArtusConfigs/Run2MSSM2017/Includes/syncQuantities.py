@@ -12,6 +12,16 @@ import Artus.Utility.jsonTools as jsonTools
 
 def build_list():
   quantities_list = [
+#    "Flag_HBHENoiseFilter",
+#    "Flag_HBHENoiseIsoFilter",
+#    "Flag_EcalDeadCellTriggerPrimitiveFilter",
+#    "Flag_goodVertices",
+#    "Flag_BadPFMuonFilter",
+#    "Flag_BadChargedCandidateFilter",
+#    "Flag_eeBadScFilter",
+#    "Flag_ecalBadCalibFilter",
+#    "Flag_globalTightHalo2016Filter",
+    "flagMETFilter",
     "nickname",
     "input",
     "run",

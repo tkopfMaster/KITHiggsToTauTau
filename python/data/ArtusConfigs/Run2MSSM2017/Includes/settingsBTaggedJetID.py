@@ -65,5 +65,6 @@ def build_config(nickname):
   # lower pt_cut for the Jet: 20 GeV -> valid for 2016 & 2017
   # upper pt_cut for the Jet: 1000 GeV -> valid for 2016 & 2017
   # parton flavour definition: hadron-based
+  # b- and c- jets: combined measurement type, light jets: inclusive measurement type
 
   return config

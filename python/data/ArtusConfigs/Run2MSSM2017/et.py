@@ -134,7 +134,11 @@ def build_config(nickname):
       "trg_muonelectron_mu8ele23:HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
   ]
   config["TauTrigger2017Input"] = "$CMSSW_BASE/src/TauTriggerSFs2017/TauTriggerSFs2017/data/tauTriggerEfficiencies2017.root"
-  config["TauTrigger2017WorkingPoint"] = "tight"
+  config["TauTrigger2017WorkingPoints"] = [
+       "medium",
+       "tight",
+       "vtight",
+  ]
   config["TauTrigger2017EfficiencyWeightNames"] = [
       "1:crossTriggerMCEfficiencyWeight",
       "1:crossTriggerDataEfficiencyWeight",

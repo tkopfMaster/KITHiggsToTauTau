@@ -2,6 +2,7 @@
 
 #include "../HttTypes.h"
 #include "TGraph.h"
+#include "TSystem.h"
 
 
 class SMggHNNLOProducer: public ProducerBase<HttTypes> {

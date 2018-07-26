@@ -157,6 +157,8 @@ public:
 	virtual void Produce(event_type const& event, product_type & product, 
 	                     setting_type const& settings) const override
 	{
+		LOG(DEBUG) << this->GetProducerId() << " -----START-----";
+		LOG(DEBUG) << "Processing run:lumi:event " << event.m_eventInfo->nRun << ":" << event.m_eventInfo->nLumi << ":" << event.m_eventInfo->nEvent;
 		assert(m_metMemberUncorrected != nullptr);
 
 		// Retrieve the needed informations from the event content
@@ -369,6 +371,7 @@ public:
 				product.m_met = product.*m_metMemberCorrected;
 			}
 		}
+                LOG(DEBUG) << this->GetProducerId() << " -----END-----";
 	}
 
 protected:

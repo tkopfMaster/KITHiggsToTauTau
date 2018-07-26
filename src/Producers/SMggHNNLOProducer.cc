@@ -4,7 +4,6 @@
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/SMggHNNLOProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Utility/ggF_qcd_uncertainty_2017.cxx"
 #include <assert.h>
-#include "Artus/Utility/interface/RootFileHelper.h"
 
 void SMggHNNLOProducer::Init(setting_type const& settings)
 {
@@ -13,8 +12,11 @@ void SMggHNNLOProducer::Init(setting_type const& settings)
         // set variables
 	std::string filename = settings.GetggHNNLOweightsRootfile();
 	std::string generator = settings.GetGenerator();
+        TDirectory *savedir(gDirectory);
+        TFile *savefile(gFile);
         TFile rootFile(filename.c_str(), "READ");
-	if (generator == "powheg"){
+        gSystem->AddIncludePath("-I$ROOFITSYS/include");
+        if (generator == "powheg"){
 		WeightsGraphs[0] = (TGraphErrors*)rootFile.Get("gr_NNLOPSratio_pt_powheg_0jet");
 		WeightsGraphs[1] = (TGraphErrors*)rootFile.Get("gr_NNLOPSratio_pt_powheg_1jet");
 		WeightsGraphs[2] = (TGraphErrors*)rootFile.Get("gr_NNLOPSratio_pt_powheg_2jet");
@@ -28,6 +30,8 @@ void SMggHNNLOProducer::Init(setting_type const& settings)
         }
         else std::cout << "WARNING: Invalid option <Generator> for ggH NNLO reweighting. Weights are set to 1.0, ggH qcd uncertainties are however calculated!"<< std::endl;
         rootFile.Close();
+        gDirectory = savedir;
+        gFile = savefile;
         
         
         LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("ggh_NNLO_weight", [](event_type const& event, product_type const& product) {

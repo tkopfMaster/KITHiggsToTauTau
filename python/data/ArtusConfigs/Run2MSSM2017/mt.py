@@ -266,9 +266,8 @@ def build_config(nickname):
                                                               "filter:MinMuonsCountFilter",
                                                               "producer:HttValidVetoMuonsProducer",
                                                               "producer:ValidElectronsProducer"))
-  if not isData:               config["Processors"].append(   "producer:HttValidGenTausProducer")                                                          
-                                                        
-  #if not (isData or isEmbedded):                 config["Processors"].append( "producer:TauCorrectionsProducer")
+  if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
+  if not (isData or isEmbedded): config["Processors"].append( "producer:TauCorrectionsProducer")
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "filter:ValidTausFilter",
                                                               "producer:TauTriggerMatchingProducer",
@@ -281,7 +280,7 @@ def build_config(nickname):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
-  #if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
+  if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))

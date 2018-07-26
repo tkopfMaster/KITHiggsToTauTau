@@ -63,6 +63,7 @@ def build_config(nickname):
   
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
+  config["ElectronScaleAndSmearUsed"] = True
   config["ElectronLowerPtCuts"] = ["10.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.1"]
   config["TauLowerPtCuts"] = ["20.0"]
@@ -257,15 +258,16 @@ def build_config(nickname):
   config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
-                                                              "producer:MetSelector",
-                                                              "producer:ValidElectronsProducer",
+                                                              "producer:MetSelector"))
+  if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+  config["Processors"].extend((                               "producer:ValidElectronsProducer",
                                                               "filter:ValidElectronsFilter",
                                                               "producer:ElectronTriggerMatchingProducer",
                                                               "filter:MinElectronsCountFilter",
                                                               "producer:HttValidVetoElectronsProducer",
                                                               "producer:ValidMuonsProducer"))
-  #if not (isData or isEmbedded):                 config["Processors"].append( "producer:TauCorrectionsProducer")
-  if not isData:               config["Processors"].append(   "producer:HttValidGenTausProducer")                                                          
+  if not (isData or isEmbedded): config["Processors"].append( "producer:TauCorrectionsProducer")
+  if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "filter:ValidTausFilter",
                                                               "producer:TauTriggerMatchingProducer",
@@ -278,7 +280,7 @@ def build_config(nickname):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
-  #if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
+  if not (isEmbedded):           config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))

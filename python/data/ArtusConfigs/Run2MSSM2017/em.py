@@ -58,6 +58,7 @@ def build_config(nickname):
           "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ",
     ]
 
+  config["ElectronScaleAndSmearUsed"] = True
   config["ElectronLowerPtCuts"] = ["13.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.5"]
   config["MuonLowerPtCuts"] = ["9.0"]
@@ -255,8 +256,9 @@ def build_config(nickname):
   config["Processors"] = [                                    "producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
-                                                              "producer:MetSelector",
-                                                              "producer:ValidElectronsProducer",
+                                                              "producer:MetSelector"]
+  if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+  config["Processors"].extend((                               "producer:ValidElectronsProducer",
                                                               "filter:ValidElectronsFilter",
                                                               "producer:ElectronTriggerMatchingProducer",
                                                               "filter:MinElectronsCountFilter",
@@ -271,10 +273,9 @@ def build_config(nickname):
                                                               "producer:Run2DecayChannelProducer",
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
-                                                              "producer:ValidBTaggedJetsProducer"]
-  if not isData:               config["Processors"].append(   "producer:HttValidGenTausProducer")                                                          
-
-  #if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
+                                                              "producer:ValidBTaggedJetsProducer"))
+  if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
+  if not (isEmbedded):           config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))

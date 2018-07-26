@@ -404,4 +404,6 @@ public:
         double m_ggh_NNLO_weight = 1.0;
         std::vector<double> m_THU_ggH;
         
+        //filled by GroupedJetUncertaintyShiftProducer
+        KLV m_MET_shift;
 };

@@ -4,13 +4,12 @@ if [ "$1" == "" ]; then
   echo "$0: Please provide the analysis branch you want to use"
   exit 1
 fi
-if [ "$2" == "" ]; then
-  echo "$0: Please provide a number of cores for compilation"
-  exit 1
-fi
-
 BRANCH=$1
-CORES=$2
+
+CORES=`grep -c ^processor /proc/cpuinfo`
+if [ ! "$2" == "" ]; then
+  CORES=$2
+fi
 
 export SCRAM_ARCH=slc6_amd64_gcc630
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch

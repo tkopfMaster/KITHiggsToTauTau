@@ -313,6 +313,8 @@ def build_list():
     "npartons",
     "genbosonmass",
     "genbosonpt",
+    "genbosoneta",
+    "genbosonphi",
 
     "trg_singlemuon_24",
     "trg_singlemuon_27",

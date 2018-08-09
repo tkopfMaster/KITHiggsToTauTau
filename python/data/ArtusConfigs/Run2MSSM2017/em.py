@@ -276,7 +276,7 @@ def build_config(nickname):
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
   if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
-  if not (isEmbedded):           config["Processors"].append( "producer:MetCorrector")
+  if not (isData or isEmbedded):           config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))

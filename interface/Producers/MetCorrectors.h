@@ -191,7 +191,7 @@ public:
 
 				float eX = electron->get()->p4.Px() - const_cast<KLepton*>(product.m_originalLeptons[electron->get()])->p4.Px();
 				float eY = electron->get()->p4.Py() - const_cast<KLepton*>(product.m_originalLeptons[electron->get()])->p4.Py();
-                                LOG(DEBUG) << "Correcting met with " << eX << "," << eY << " for electron: " << electron->get()->p4;
+                                LOG(DEBUG) << "Correcting met with (px,py) " << eX << "," << eY << " for electron: " << electron->get()->p4;
 
 				metX -= eX;
 				metY -= eY;
@@ -210,7 +210,7 @@ public:
 
 				float eX = muon->get()->p4.Px() - const_cast<KLepton*>(product.m_originalLeptons[muon->get()])->p4.Px();
 				float eY = muon->get()->p4.Py() - const_cast<KLepton*>(product.m_originalLeptons[muon->get()])->p4.Py();
-                                LOG(DEBUG) << "Correcting met with " << eX << "," << eY << " for muon: " << muon->get()->p4;
+                                LOG(DEBUG) << "Correcting met with (px,py) " << eX << "," << eY << " for muon: " << muon->get()->p4;
 
 				metX -= eX;
 				metY -= eY;
@@ -229,7 +229,7 @@ public:
 
 				float eX = tau->get()->p4.Px() - const_cast<KLepton*>(product.m_originalLeptons[tau->get()])->p4.Px();
 				float eY = tau->get()->p4.Py() - const_cast<KLepton*>(product.m_originalLeptons[tau->get()])->p4.Py();
-                                LOG(DEBUG) << "Correcting met with " << eX << "," << eY << " for tau: " << tau->get()->p4;
+                                LOG(DEBUG) << "Correcting met with (px,py) " << eX << "," << eY << " for tau: " << tau->get()->p4;
 
 				metX -= eX;
 				metY -= eY;
@@ -251,24 +251,25 @@ public:
 		float visPx = 0.;  // visible (generator) Z(W) px
 		float visPy = 0.;  // visible (generator) Z(W) py
 		
-		for (KGenParticles::const_iterator genParticle = event.m_genParticles->begin();
-		 genParticle != event.m_genParticles->end(); ++genParticle)
-		{
-			int pdgId = std::abs(genParticle->pdgId);
-			
-			if ( (pdgId >= DefaultValues::pdgIdElectron && pdgId <= DefaultValues::pdgIdNuTau && genParticle->fromHardProcessFinalState()) ||
-			     (genParticle->isDirectHardProcessTauDecayProduct()) )
-			{
-				genPx += genParticle->p4.Px();
-				genPy += genParticle->p4.Py();
-				
-				if ( !(pdgId == DefaultValues::pdgIdNuE || pdgId == DefaultValues::pdgIdNuMu || pdgId == DefaultValues::pdgIdNuTau) )
-				{
-					visPx += genParticle->p4.Px();
-					visPy += genParticle->p4.Py();
-				}
-			}
-		}
+		if(m_correctionMethod != MetCorrectorBase::CorrectionMethod::NONE)
+                {
+                        for (KGenParticles::const_iterator genParticle = event.m_genParticles->begin();
+                         genParticle != event.m_genParticles->end(); ++genParticle)
+                        {
+                                int pdgId = std::abs(genParticle->pdgId);
+                                if ( (pdgId >= DefaultValues::pdgIdElectron && pdgId <= DefaultValues::pdgIdNuTau && genParticle->fromHardProcessFinalState()) ||
+                                     (genParticle->isDirectHardProcessTauDecayProduct()) )
+                                {
+                                        genPx += genParticle->p4.Px();
+                                        genPy += genParticle->p4.Py();
+                                        if ( !(pdgId == DefaultValues::pdgIdNuE || pdgId == DefaultValues::pdgIdNuMu || pdgId == DefaultValues::pdgIdNuTau) )
+                                        {
+                                                visPx += genParticle->p4.Px();
+                                                visPy += genParticle->p4.Py();
+                                        }
+                                }
+                        }
+                }
 		
 		// Save the ingredients for the correction
 		(product.*m_metCorrections).push_back(genPx);
@@ -277,6 +278,8 @@ public:
 		(product.*m_metCorrections).push_back(visPy);
 		
 		float correctedMetX, correctedMetY;
+                correctedMetX = metX;
+                correctedMetY = metY;
 		
 		if(m_correctionMethod == MetCorrectorBase::CorrectionMethod::QUANTILE_MAPPING)
 			m_recoilCorrector->Correct(
@@ -330,7 +333,7 @@ public:
 				product.m_met = product.*m_metMemberCorrected;
 			}
 		}
-		else if (settings.GetMetUncertaintyShift()) // If no other corrections are applied, use MET shifted by uncertainty if required by configuration
+		else if (settings.GetMetUncertaintyShift()) // If no other corrections are applied, use MET shifted by uncertainty if required by configuration TODO: if lepton corrections are applied, this is not accounted for ---> new Producer?
 		{
 			(product.*m_metMemberCorrected).p4.SetPxPyPzE(
 				(product.*m_metMemberUncorrected)->p4_shiftedByUncertainties[m_metUncertaintyType].Px(),
@@ -342,7 +345,7 @@ public:
 				product.m_met = product.*m_metMemberCorrected;
 			}
 		}
-                LOG(DEBUG) << "Original MET: " << (product.*m_metMemberUncorrected)->p4 << " corrected MET: " << (product.*m_metMemberCorrected).p4;
+                LOG(DEBUG) << "Original MET (px,py): " << (product.*m_metMemberUncorrected)->p4.Px() << "," << (product.*m_metMemberUncorrected)->p4.Py() << " corrected MET (px,py): " << (product.*m_metMemberCorrected).p4.Px() << "," << (product.*m_metMemberCorrected).p4.Py();
 		
 		// Apply the correction to the MET object, if required (done for all the samples)
 		if (m_doMetSys)

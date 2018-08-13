@@ -621,6 +621,10 @@ void DecayChannelProducer::Init(setting_type const& settings)
 	tauDiscriminators.push_back("eRatio");
 	
 	
+	std::vector<std::string> electronDiscriminators;
+        electronDiscriminators.push_back("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values");
+        electronDiscriminators.push_back("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values");
+        electronDiscriminators.push_back("electronCorrection:ecalTrkEnergyPostCorr");
 
 	for (size_t leptonIndex = 0; leptonIndex < 2; ++leptonIndex)
 	{
@@ -633,6 +637,25 @@ void DecayChannelProducer::Init(setting_type const& settings)
 				if (lepton->flavour() == KLeptonFlavour::TAU)
 				{
 					return static_cast<KTau*>(lepton)->getDiscriminator(tauDiscriminator, event.m_tauMetadata);
+				}
+				else
+				{
+					return DefaultValues::UndefinedFloat;
+				}
+			});
+		}
+
+		for (std::string electronDiscriminator : electronDiscriminators)
+		{
+                        std::vector<std::string> split;
+                        boost::split(split, electronDiscriminator, [](char c){return c == ':';});
+			std::string quantity = split[1] + "_" + std::to_string(leptonIndex+1);
+			LambdaNtupleConsumer<HttTypes>::AddFloatQuantity(quantity, [electronDiscriminator, leptonIndex](event_type const& event, product_type const& product)
+			{
+				KLepton* lepton = product.m_flavourOrderedLeptons.at(leptonIndex);
+				if (lepton->flavour() == KLeptonFlavour::ELECTRON)
+				{
+					return static_cast<KElectron*>(lepton)->getId(electronDiscriminator, event.m_electronMetadata);
 				}
 				else
 				{

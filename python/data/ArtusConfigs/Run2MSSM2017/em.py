@@ -254,11 +254,12 @@ def build_config(nickname):
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run2"
   
-  config["Processors"] = [                                    "producer:HttValidLooseElectronsProducer",
+  config["Processors"] = []
+  if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+  config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
-                                                              "producer:MetSelector"]
-  if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+                                                              "producer:MetSelector"))
   config["Processors"].extend((                               "producer:ValidElectronsProducer",
                                                               "filter:ValidElectronsFilter",
                                                               "producer:ElectronTriggerMatchingProducer",

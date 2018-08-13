@@ -202,11 +202,13 @@ def build_config(nickname):
           ])   
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run2"
-  
-  config["Processors"] =                                     ["producer:HttValidLooseElectronsProducer",
+
+  config["Processors"] = []
+  if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+  config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
-                                                              "producer:MetSelector"]
+                                                              "producer:MetSelector"))
   if not (isData or isEmbedded): config["Processors"].append( "producer:TauCorrectionsProducer")
   if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
   config["Processors"].extend((                               "producer:ValidTausProducer",

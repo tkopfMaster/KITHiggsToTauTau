@@ -288,9 +288,7 @@ def build_config(nickname):
 
     config["Processors"].extend((
         "producer:ValidTausProducer",
-        # ?"filter:ValidTausFilter",
         "producer:TauTriggerMatchingProducer",
-        # ?"filter:MinTausCountFilter",
         "producer:NewValidMMPairCandidatesProducer",
         "filter:ValidDiTauPairCandidatesFilter",
         "producer:Run2DecayChannelProducer",
@@ -327,11 +325,11 @@ def build_config(nickname):
     )
 
     if not isData:
-        config["Processors"].append(
+        config["Processors"].extend((
             # "producer:TriggerWeightProducer",
             # "producer:IdentificationWeightProducer"
-            "producer:RooWorkspaceWeightProducer",
-        )
+            # ?"producer:RooWorkspaceWeightProducer",
+        ))
 
     config["Processors"].append("producer:EventWeightProducer")
 

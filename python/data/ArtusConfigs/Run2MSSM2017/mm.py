@@ -266,7 +266,12 @@ def build_config(nickname):
         config["MuonEnergyCorrection"] = "rochcorr2016"
         config["MuonRochesterCorrectionsFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/rochcorr2016"
 
-    config["Processors"] = [
+    config["Processors"] = []
+
+    if not (isEmbedded):
+        config["Processors"].append( "producer:ElectronCorrectionsProducer")
+
+    config["Processors"].extend((
         "producer:HttValidLooseElectronsProducer",
         "producer:HttValidLooseMuonsProducer",
         "producer:HltProducer",
@@ -278,7 +283,7 @@ def build_config(nickname):
         "filter:MinMuonsCountFilter",
         "producer:HttValidVetoMuonsProducer",
         "producer:ValidElectronsProducer",
-    ]
+    ))
 
     if not isData:
         config["Processors"].append("producer:HttValidGenTausProducer")

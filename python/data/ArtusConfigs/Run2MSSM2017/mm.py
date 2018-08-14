@@ -115,11 +115,11 @@ def build_config(nickname):
         "1:m_trg24or27_mc",
         "1:m_trg24or27_data",
 
-        "0:m_trgOR4_binned_ratio",
-        "0:m_iso_binned_ratio",
+        "0:m_trg_ratio",  # "0:m_trgOR4_binned_ratio",
+        "0:m_iso_ratio",  # "0:m_iso_binned_ratio",
         "0:m_id_ratio",
         "0:m_trk_ratio",
-        "1:m_iso_binned_ratio",
+        "1:m_iso_ratio",  # "1:m_iso_binned_ratio",
         "1:m_id_ratio",
         "1:m_trk_ratio"
     ]
@@ -137,11 +137,11 @@ def build_config(nickname):
         "1:m_pt,m_eta",
         "1:m_pt,m_eta",
 
-        "0:m_pt,m_eta,m_iso",
-        "0:m_pt,m_eta,m_iso",
+        "0:m_pt,m_eta",  # ,m_iso
+        "0:m_pt,m_eta",  # ,m_iso
         "0:m_pt,m_eta",
         "0:m_eta",
-        "1:m_pt,m_eta,m_iso",
+        "1:m_pt,m_eta",  # ,m_iso
         "1:m_pt,m_eta",
         "1:m_eta"
     ]
@@ -269,7 +269,7 @@ def build_config(nickname):
     config["Processors"] = []
 
     if not (isEmbedded):
-        config["Processors"].append( "producer:ElectronCorrectionsProducer")
+        config["Processors"].append("producer:ElectronCorrectionsProducer")
 
     config["Processors"].extend((
         "producer:HttValidLooseElectronsProducer",
@@ -333,7 +333,7 @@ def build_config(nickname):
         config["Processors"].extend((
             # "producer:TriggerWeightProducer",
             # "producer:IdentificationWeightProducer"
-            # ?"producer:RooWorkspaceWeightProducer",
+            "producer:RooWorkspaceWeightProducer",
         ))
 
     config["Processors"].append("producer:EventWeightProducer")

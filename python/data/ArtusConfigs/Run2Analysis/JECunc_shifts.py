@@ -47,6 +47,7 @@ def build_config(nickname):
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
       "JetEnergyCorrectionUncertaintyShift" : 1.0,
       "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "SinglePionECAL",
             "SinglePionHCAL",
@@ -67,6 +68,7 @@ def build_config(nickname):
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
       "JetEnergyCorrectionUncertaintyShift" : -1.0,
       "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "SinglePionECAL",
             "SinglePionHCAL",
@@ -87,6 +89,7 @@ def build_config(nickname):
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
       "JetEnergyCorrectionUncertaintyShift" : 1.0,
       "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "PileUpPtEC1",
             "PileUpPtEC2",
@@ -103,6 +106,7 @@ def build_config(nickname):
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
       "JetEnergyCorrectionUncertaintyShift" : -1.0,
       "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "PileUpPtEC1",
             "PileUpPtEC2",
@@ -119,6 +123,7 @@ def build_config(nickname):
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
       "JetEnergyCorrectionUncertaintyShift" : 1.0,
       "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "RelativeStatHF",
             "RelativePtHF",
@@ -130,6 +135,7 @@ def build_config(nickname):
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
       "JetEnergyCorrectionUncertaintyShift" : -1.0,
       "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "RelativeStatHF",
             "RelativePtHF",
@@ -141,6 +147,7 @@ def build_config(nickname):
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
       "JetEnergyCorrectionUncertaintyShift" : 1.0,
       "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "RelativeBal"
         ]
@@ -149,6 +156,7 @@ def build_config(nickname):
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
       "JetEnergyCorrectionUncertaintyShift" : -1.0,
       "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "RelativeBal"
         ]

@@ -50,7 +50,8 @@ void GroupedJetUncertaintyShiftProducer::Init(setting_type const& settings)
 		&& settings.GetUseJECShiftsForBJets())
 	{
 		m_bTagSf = BTagSF(settings.GetBTagScaleFactorFile(), settings.GetBTagEfficiencyFile());
-		m_bTagWorkingPoint = bTagWorkingPointsTmp.begin()->second.at(0);
+		//m_bTagWorkingPoint = bTagWorkingPointsTmp.begin()->second.at(0);
+		m_bTagWorkingPoint = SafeMap::Get(bTagWorkingPointsTmp, settings.GetBTagWPs().at(0)).at(0);
 		if (settings.GetApplyBTagSF() && !settings.GetInputIsData())
 		{
 			m_bTagSFMethod = KappaEnumTypes::ToBTagScaleFactorMethod(boost::algorithm::to_lower_copy(boost::algorithm::trim_copy(settings.GetBTagSFMethod())));

@@ -160,7 +160,7 @@ def build_config(nickname):
         "0:trackWeight",
         "1:isoWeight",
         "1:idWeight",
-        "1:trackWeight",
+#        "1:trackWeight", # new recommendation for 2017 data/MC is to remove it (will result in SF = 1.0).
     ]
     config["RooWorkspaceObjectNames"] = [
         "0:e_iso_ratio",
@@ -168,7 +168,7 @@ def build_config(nickname):
         "0:e_reco_ratio",
         "1:m_iso_ratio",
         "1:m_id_ratio",
-        "1:m_trk_ratio",
+#        "1:m_trk_ratio",
     ]
     config["RooWorkspaceObjectArguments"] = [
         "0:e_pt,e_eta",
@@ -176,7 +176,7 @@ def build_config(nickname):
         "0:e_pt,e_eta",
         "1:m_pt,m_eta",
         "1:m_pt,m_eta",
-        "1:m_eta",
+#        "1:m_eta",
     ]
   if re.search("Summer1", nickname):
     config["TriggerEfficiencyData"] = [

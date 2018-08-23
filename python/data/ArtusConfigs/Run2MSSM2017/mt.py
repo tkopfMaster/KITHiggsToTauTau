@@ -173,7 +173,7 @@ def build_config(nickname):
   
         "0:isoWeight",
         "0:idWeight",
-        "0:trackWeight",
+#        "0:trackWeight", # new recommendation for 2017 data/MC is to remove it (will result in SF = 1.0).
     ]
     config["RooWorkspaceObjectNames"] = [
         "0:m_trg_MuTau_Mu20Leg_desy_mc",
@@ -185,7 +185,7 @@ def build_config(nickname):
   
         "0:m_iso_ratio",
         "0:m_id_ratio",
-        "0:m_trk_ratio",
+#        "0:m_trk_ratio",
     ]
     config["RooWorkspaceObjectArguments"] = [
         "0:m_pt,m_eta",
@@ -197,7 +197,7 @@ def build_config(nickname):
   
         "0:m_pt,m_eta",
         "0:m_pt,m_eta",
-        "0:m_eta",
+#        "0:m_eta",
     ]
 
   config["FakeFaktorFiles"] = [

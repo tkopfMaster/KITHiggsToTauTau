@@ -27,9 +27,13 @@ public:
 	{
 		ProducerBase<HttTypes>::Init(settings);
                 std::string input = settings.GetTauTrigger2017Input();
+                std::string inputold = settings.GetTauTrigger2017InputOld();
                 for(auto wp: settings.GetTauTrigger2017WorkingPoints())
                 {
-                        TauSFs[wp] = new TauTriggerSFs2017(input,wp);
+                        for(auto t: settings.GetTauTrigger2017IDTypes())
+                        {
+                                TauSFs[wp][t] = new TauTriggerSFs2017(input, inputold, wp, t);
+                        }
                 }
                 m_weightNames = Utility::ParseMapTypes<int,std::string>(Utility::ParseVectorToMap(settings.GetTauTrigger2017EfficiencyWeightNames()));
                 for(auto weightNames: m_weightNames)
@@ -45,7 +49,7 @@ public:
 	virtual void Produce(event_type const& event, product_type & product, 
 	                     setting_type const& settings) const override;
 private:
-        std::map<std::string,TauTriggerSFs2017*> TauSFs;
+        std::map<std::string,std::map<std::string,TauTriggerSFs2017*>> TauSFs;
         std::map<int,std::vector<std::string>> m_weightNames;
         std::map<int,std::vector<bool>> MCWeight;
 };

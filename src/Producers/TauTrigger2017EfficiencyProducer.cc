@@ -12,45 +12,48 @@ void TauTrigger2017EfficiencyProducer::Produce( event_type const& event, product
 {
         for (auto wp: settings.GetTauTrigger2017WorkingPoints())
         {
-                for(auto weightNames: m_weightNames)
+                for (auto t: settings.GetTauTrigger2017IDTypes())
                 {
-                        KLepton* lepton = product.m_flavourOrderedLeptons[weightNames.first];
-                        for(size_t index = 0; index < weightNames.second.size(); index++)
+                        for(auto weightNames: m_weightNames)
                         {
-                            bool mc_weight = MCWeight.at(weightNames.first).at(index);
-                            if(product.m_decayChannel ==  HttEnumTypes::DecayChannel::ET)
-                            {
-                                if(mc_weight)
+                                KLepton* lepton = product.m_flavourOrderedLeptons[weightNames.first];
+                                for(size_t index = 0; index < weightNames.second.size(); index++)
                                 {
-                                        product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp)->getETauEfficiencyMC(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
+                                    bool mc_weight = MCWeight.at(weightNames.first).at(index);
+                                    if(product.m_decayChannel ==  HttEnumTypes::DecayChannel::ET)
+                                    {
+                                        if(mc_weight)
+                                        {
+                                                product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+t+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp).at(t)->getETauEfficiencyMC(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
+                                        }
+                                        else
+                                        {
+                                                product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+t+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp).at(t)->getETauEfficiencyData(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
+                                        }
+                                    }
+                                    else if(product.m_decayChannel ==  HttEnumTypes::DecayChannel::MT)
+                                    {
+                                        if(mc_weight)
+                                        {
+                                                product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+t+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp).at(t)->getMuTauEfficiencyMC(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
+                                        }
+                                        else
+                                        {
+                                                product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+t+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp).at(t)->getMuTauEfficiencyData(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
+                                        }
+                                    }
+                                    if(product.m_decayChannel ==  HttEnumTypes::DecayChannel::TT)
+                                    {
+                                        if(mc_weight)
+                                        {
+                                                product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+t+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp).at(t)->getDiTauEfficiencyMC(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
+                                        }
+                                        else
+                                        {
+                                                product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+t+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp).at(t)->getDiTauEfficiencyData(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
+                                        }
+                                    }
                                 }
-                                else
-                                {
-                                        product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp)->getETauEfficiencyData(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
-                                }
-                            }
-                            else if(product.m_decayChannel ==  HttEnumTypes::DecayChannel::MT)
-                            {
-                                if(mc_weight)
-                                {
-                                        product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp)->getMuTauEfficiencyMC(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
-                                }
-                                else
-                                {
-                                        product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp)->getMuTauEfficiencyData(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
-                                }
-                            }
-                            if(product.m_decayChannel ==  HttEnumTypes::DecayChannel::TT)
-                            {
-                                if(mc_weight)
-                                {
-                                        product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp)->getDiTauEfficiencyMC(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
-                                }
-                                else
-                                {
-                                        product.m_weights[weightNames.second.at(index)+"_"+wp+"_"+std::to_string(weightNames.first+1)] = TauSFs.at(wp)->getDiTauEfficiencyData(lepton->p4.Pt(),lepton->p4.Eta(),lepton->p4.Phi());
-                                }
-                            }
                         }
                 }
         }

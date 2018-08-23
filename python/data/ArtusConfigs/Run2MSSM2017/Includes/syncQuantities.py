@@ -350,6 +350,7 @@ def build_list():
     "isDoubleEG",
     "isDoubleMuon",
     "isMC",
+    "isEmbedded",
 
     "ggh_t_weight",
     "ggh_b_weight",

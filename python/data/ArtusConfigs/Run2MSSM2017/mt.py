@@ -141,34 +141,22 @@ def build_config(nickname):
       "1:crossTriggerDataEfficiencyWeight",
   ]
   if isEmbedded:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
-    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
     config["EmbeddedWeightWorkspaceWeightNames"]=[
           "0:muonEffTrgWeight",
-          #~ "0:muonEffVVLIsoWeight",
-          #~ "1:muonEffVVLIsoWeight",
-          #~ "0:muonEffEmbeddedIDWeight",
-          #~ "1:muonEffEmbeddedIDWeight",
           "0:isoWeight",
           "0:idWeight",
           "0:triggerWeight"
           ]
     config["EmbeddedWeightWorkspaceObjectNames"]=[
           "0:m_sel_trg_ratio",
-          #~ "0:m_sel_vvliso_ratio",
-          #~ "1:m_sel_vvliso_ratio",
-          #~ "0:m_sel_idEmb_ratio",
-          #~ "1:m_sel_idEmb_ratio",
           "0:m_iso_ratio",
           "0:m_id_ratio",
           "0:m_trg_ratio"
           ]
     config["EmbeddedWeightWorkspaceObjectArguments"] = [
           "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
-          #~ "0:gt_eta,gt_pt",
-          #~ "1:gt_eta,gt_pt",
-          #~ "0:gt_eta,gt_pt",
-          #~ "1:gt_eta,gt_pt",
           "0:m_pt,m_eta",
           "0:m_pt,m_eta",
           "0:m_pt,m_eta"
@@ -250,6 +238,7 @@ def build_config(nickname):
       "had_gen_match_pT_2"
   ])
   if isEmbedded:
+    config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.embeddedDecayModeWeightQuantities").build_list())
     config["Quantities"].extend([
           "muonEffTrgWeight"
           ])   
@@ -294,6 +283,7 @@ def build_config(nickname):
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   if not isData and not isEmbedded:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
+  if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")
 
   if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")

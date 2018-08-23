@@ -140,8 +140,8 @@ def build_config(nickname):
   ]
   config["EventWeight"] = "eventWeight"
   if isEmbedded:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
-    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_3_embedded.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
     config["EmbeddedWeightWorkspaceWeightNames"]=["0:muonEffTrgWeight"] 
     config["EmbeddedWeightWorkspaceObjectNames"]=["0:m_sel_trg_ratio"]
     config["EmbeddedWeightWorkspaceObjectArguments"] = ["0:gt1_pt,gt1_eta,gt2_pt,gt2_eta"]
@@ -197,6 +197,7 @@ def build_config(nickname):
       "had_gen_match_pT_2"
   ])
   if isEmbedded:
+    config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.embeddedDecayModeWeightQuantities").build_list())
     config["Quantities"].extend([
           "muonEffTrgWeight"
           ])   
@@ -237,6 +238,7 @@ def build_config(nickname):
   config["Processors"].append(                                "producer:SvfitProducer")
                                                               # "producer:JetToTauFakesProducer"))
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
+  if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")
   if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
 

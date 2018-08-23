@@ -79,23 +79,13 @@ def build_config(nickname):
         "Flag_EcalDeadCellTriggerPrimitiveFilter",
         "Flag_goodVertices",
         "Flag_BadPFMuonFilter",
-        "Flag_BadChargedCandidateFilter"
+        "Flag_ecalBadCalibFilter",
+        "Flag_globalSuperTightHalo2016Filter",
+        "Flag_BadChargedCandidateFilter",
   ]
   if isData:
     config["MetFilterToFlag"].extend((
         "Flag_eeBadScFilter",
-    ))
-  else:
-    config["MetFilterToFlag"].extend((
-    ))
-  if re.search(".*Prompt.*|.*Summer17.*",nickname):
-    config["MetFilterToFlag"].extend((
-        "Flag_globalSuperTightHalo2016Filter",
-    ))
-  else:
-    config["MetFilterToFlag"].extend((
-        "Flag_ecalBadCalibFilter",
-        "Flag_globalTightHalo2016Filter",
     ))
   
   config["OutputPath"] = "output.root"

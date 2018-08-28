@@ -182,7 +182,7 @@ class ColorsDict(colors.ColorsDict):
 			self.colors_dict["ewk"]  = "#000000 #E1F5A9"
 			self.colors_dict["ewkz"] = self.colors_dict["wj"]
 			self.colors_dict["qcd"] = "#000000 #FFCCFF"
-			self.colors_dict["fakes"] = self.colors_dict["qcd"]
+			self.colors_dict["fakes"] = "#000000 #008763"
 			self.colors_dict["qcdwj"] = self.colors_dict["qcd"]
 			self.colors_dict["htt"] = "#0000FF"
 			self.colors_dict["ggh"] = self.colors_dict["kit_rot_1"]

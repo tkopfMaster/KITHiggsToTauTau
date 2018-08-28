@@ -1169,7 +1169,7 @@ class LabelsDict(labels.LabelsDict):
 		self.labels_dict["wjets"]  = self.labels_dict["wj"]
 		self.labels_dict["w"]  = self.labels_dict["wj"]
 		self.labels_dict["dibosons"]  = self.labels_dict["vv"]
-		self.labels_dict["fakes"] = self.labels_dict["qcd"]
+		self.labels_dict["fakes"] = "jet#rightarrow#tau_{h}"
 		self.labels_dict["qcdwj"] = self.labels_dict["qcd"]
 		self.labels_dict["totalsig"] = self.labels_dict["htt"]
 

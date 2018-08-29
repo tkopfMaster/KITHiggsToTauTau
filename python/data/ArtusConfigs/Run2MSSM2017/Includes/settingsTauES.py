@@ -36,9 +36,9 @@ def build_config(nickname):
     config["TauElectronFakeEnergyCorrectionOneProng"] = 1.0
     config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.0
   else:
-    config["TauEnergyCorrectionOneProng"] = 0.97
-    config["TauEnergyCorrectionOneProngPiZeros"] = 0.98
-    config["TauEnergyCorrectionThreeProng"] = 0.99
+    config["TauEnergyCorrectionOneProng"] = 1.008
+    config["TauEnergyCorrectionOneProngPiZeros"] = 0.992
+    config["TauEnergyCorrectionThreeProng"] = 0.990
     config["TauElectronFakeEnergyCorrectionOneProng"] = 1.0
     config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.0
   

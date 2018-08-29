@@ -283,7 +283,7 @@ def build_config(nickname):
                                                               "producer:DiJetQuantitiesProducer"))
   config["Processors"].append(                                "producer:SvfitProducer")
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
-  #if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
+  if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   #if not (isData or isEmbedded): config["Processors"].extend(("producer:TriggerWeightProducer",
   #                                                            "producer:IdentificationWeightProducer"))

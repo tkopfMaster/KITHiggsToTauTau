@@ -238,7 +238,7 @@ def build_config(nickname):
                                                               "producer:SimpleMuTauFakeRateWeightProducer"))
   #                                                            "producer:TauTauTriggerWeightProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
-  #if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
+  if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
   config["Processors"].extend((                               #"filter:MinimalPlotlevelFilter",
                                                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",

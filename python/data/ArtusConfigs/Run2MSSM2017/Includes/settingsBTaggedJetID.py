@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 import Artus.Utility.jsonTools as jsonTools
 
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
     config = jsonTools.JsonDict()
 
     # explicit configuration

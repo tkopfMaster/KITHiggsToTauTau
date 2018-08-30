@@ -35,6 +35,7 @@ class TaggedJetUncertaintyShiftProducer: public ProducerBase<HttTypes>
 
 		std::map<HttEnumTypes::JetEnergyUncertaintyShiftName, JetCorrectorParameters const*> JetCorParMap;
 		std::map<HttEnumTypes::JetEnergyUncertaintyShiftName, JetCorrectionUncertainty *> JetUncMap;
+		bool jec_shifts_applied;
 
 		KappaEnumTypes::JetIDVersion jetIDVersion;
 		KappaEnumTypes::JetID jetID;

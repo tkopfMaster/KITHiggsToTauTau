@@ -25,6 +25,7 @@ void TaggedJetUncertaintyShiftProducer::Init(setting_type const& settings)
 	individualUncertainties = settings.GetJetEnergyCorrectionSplitUncertaintyParameterNames();
 	assert(uncertaintyFile != "");
 	assert(individualUncertainties.size() > 0);
+	jec_shifts_applied = settings.GetJetEnergyCorrectionSplitUncertainty() && settings.GetJetEnergyCorrectionUncertaintyShift() != 0.0;
 
 	// Settings Jet ID
 	jetIDVersion = KappaEnumTypes::ToJetIDVersion(boost::algorithm::to_lower_copy(boost::algorithm::trim_copy(settings.GetJetIDVersion())));
@@ -36,20 +37,20 @@ void TaggedJetUncertaintyShiftProducer::Init(setting_type const& settings)
 		LOG(FATAL) << "TaggedJetUncertaintyShiftProducer: lowerPtCuts.size() = " << lowerPtCuts.size() << ". Current implementation requires it to be <= 1.";
 
 	if (upperAbsEtaCuts.size() > 1)
-               LOG(FATAL) << "TaggedJetUncertaintyShiftProducer: upperAbsEtaCuts.size() = " << upperAbsEtaCuts.size() << ". Current implementation requires it to be <= 1.";
+		LOG(FATAL) << "TaggedJetUncertaintyShiftProducer: upperAbsEtaCuts.size() = " << upperAbsEtaCuts.size() << ". Current implementation requires it to be <= 1.";
 
-	// Settings BTagged Jet ID
-	// some inputs needed for b-tagging
-	std::map<std::string, std::vector<float> > bTagWorkingPointsTmp = Utility::ParseMapTypes<std::string, float>(
-			Utility::ParseVectorToMap(settings.GetBTaggerWorkingPoints())
-	);
+	// Settings BTagged Jet ID : some inputs needed for b-tagging
+	std::map<std::string, std::vector<float> > bTagWorkingPointsTmp = Utility::ParseMapTypes<std::string, float>(Utility::ParseVectorToMap(settings.GetBTaggerWorkingPoints()));
 
-	// initialize b-tag scale factor class only if shifts are to be applied
-	if (settings.GetJetEnergyCorrectionSplitUncertainty()
-		&& settings.GetJetEnergyCorrectionUncertaintyShift() != 0.0
-		&& settings.GetUseJECShiftsForBJets())
+	// Initialize b-tag scale factor class only if shifts are to be applied
+	if (jec_shifts_applied && settings.GetUseJECShiftsForBJets())
 	{
-		m_bTagSf = BTagSF(settings.GetBTagScaleFactorFile(), settings.GetBTagEfficiencyFile());
+		std::string f_btag_sf = settings.GetBTagScaleFactorFile();
+		std::string f_btag_efff = settings.GetBTagEfficiencyFile();
+		assert(!f_btag_sf.empty() && "BTagScaleFactorFile config is not set");
+		assert(!f_btag_efff.empty() && "BTagEfficiencyFile config is not set");
+
+		m_bTagSf = BTagSF(f_btag_sf, f_btag_efff);
 		m_bTagWorkingPoint = bTagWorkingPointsTmp.begin()->second.at(0);
 
 		if (settings.GetApplyBTagSF() && !settings.GetInputIsData())
@@ -66,10 +67,8 @@ void TaggedJetUncertaintyShiftProducer::Init(setting_type const& settings)
 		if (individualUncertainty == HttEnumTypes::JetEnergyUncertaintyShiftName::NONE) continue;
 		individualUncertaintyEnums.push_back(individualUncertainty);
 
-               // Create uncertainty map (only if shifts are to be applied)
-		if (settings.GetJetEnergyCorrectionSplitUncertainty()
-			&& settings.GetJetEnergyCorrectionUncertaintyShift() != 0.0
-			&& individualUncertainty != HttEnumTypes::JetEnergyUncertaintyShiftName::Closure)
+		// Create uncertainty map (only if shifts are to be applied)
+		if (jec_shifts_applied && individualUncertainty != HttEnumTypes::JetEnergyUncertaintyShiftName::Closure)
 		{
 			JetCorrectorParameters const * jetCorPar = new JetCorrectorParameters(uncertaintyFile, uncertainty);
 			JetCorParMap[individualUncertainty] = jetCorPar;
@@ -129,23 +128,20 @@ void TaggedJetUncertaintyShiftProducer::Init(setting_type const& settings)
 void TaggedJetUncertaintyShiftProducer::Produce(event_type const& event, product_type& product,
 		setting_type const& settings) const
 {
-       // Only do all of this if uncertainty shifts should be applied
-	if (settings.GetJetEnergyCorrectionSplitUncertainty() && settings.GetJetEnergyCorrectionUncertaintyShift() != 0.0)
+	// Only do all of this if uncertainty shifts should be applied
+	if (jec_shifts_applied)
 	{
 		// Shifting copies of previously corrected jets
 		std::vector<double> closureUncertainty((product.m_correctedTaggedJets).size(), 0.);
 		for (auto const& uncertainty : individualUncertaintyEnums)
 		{
-                       // Construct copies of jets in order not to modify actual (corrected) jets by the uncertainty
-			std::vector<KJet*> copiedJets;
-			for (typename std::vector<std::shared_ptr<KJet> >::iterator jet = (product.m_correctedTaggedJets).begin();
-				 jet != (product.m_correctedTaggedJets).end(); ++jet)
-			{
-				copiedJets.push_back(new KJet(*(jet->get())));
-			}
+			// Construct copies of jets in order not to modify actual (corrected) jets by the uncertainty
+			std::vector<KJet*> shifted_copied_jets;
+			for (typename std::vector<std::shared_ptr<KJet> >::iterator jet = (product.m_correctedTaggedJets).begin(); jet != (product.m_correctedTaggedJets).end(); ++jet)
+				shifted_copied_jets.push_back(new KJet(*(jet->get())));
 
 			unsigned iJet = 0;
-			for (std::vector<KJet*>::iterator jet = copiedJets.begin(); jet != copiedJets.end(); ++jet, ++iJet)
+			for (std::vector<KJet*>::iterator jet = shifted_copied_jets.begin(); jet != shifted_copied_jets.end(); ++jet, ++iJet)
 			{
 				double unc = 0;
 				if (std::abs((*jet)->p4.Eta()) < 5.2 && (*jet)->p4.Pt() > 9. && uncertainty != HttEnumTypes::JetEnergyUncertaintyShiftName::Closure)
@@ -163,8 +159,9 @@ void TaggedJetUncertaintyShiftProducer::Produce(event_type const& event, product
 				// Varying just the 4-momenta by uncertainty
 				(*jet)->p4 = (*jet)->p4 * (1 + unc * settings.GetJetEnergyCorrectionUncertaintyShift());
 			}
-                       // Sort vectors of shifted jets (shifted_copied_jets holds jets varied maximum by one uncertainty) by pt
-			std::sort(copiedJets.begin(), copiedJets.end(),
+
+			// Sort vectors of shifted jets (shifted_copied_jets holds jets varied maximum by one uncertainty) by pt
+			std::sort(shifted_copied_jets.begin(), shifted_copied_jets.end(),
 					  [](KJet* jet1, KJet* jet2) -> bool
 					  { return jet1->p4.Pt() > jet2->p4.Pt(); }
 			);
@@ -172,7 +169,7 @@ void TaggedJetUncertaintyShiftProducer::Produce(event_type const& event, product
 			// Create new vector from shifted jets that pass ID as in ValidJetsProducer
 			std::vector<KJet*> shiftedJets;
 			std::vector<KJet*> shiftedBTaggedJets;
-			for (std::vector<KJet*>::iterator jet = copiedJets.begin(); jet != copiedJets.end(); ++jet)
+			for (std::vector<KJet*>::iterator jet = shifted_copied_jets.begin(); jet != shifted_copied_jets.end(); ++jet)
 			{
 				bool validJet = true;
 

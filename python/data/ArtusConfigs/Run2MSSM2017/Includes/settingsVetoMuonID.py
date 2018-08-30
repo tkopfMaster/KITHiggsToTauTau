@@ -16,8 +16,8 @@ import importlib
 def build_config(nickname, **kwargs):
   config = jsonTools.JsonDict()
   #datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
-  
-  
+
+
   ## fill config:
   # includes
   includes = [
@@ -26,15 +26,15 @@ def build_config(nickname, **kwargs):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["VetoMuonID"] = "loose"
-  
+
   config["VetoMuonIsoType"] = "user"
   config["VetoMuonIso"] = "none"
   config["VetoMuonIsoPtSumOverPtUpperThresholdEB"] = 0.3
   config["VetoMuonIsoPtSumOverPtUpperThresholdEE"] = 0.3
-  
+
   config["VetoMuonLowerPtCuts"] = ["15.0"]
   config["VetoMuonUpperAbsEtaCuts"] = ["2.4"]
   config["DiVetoMuonMinDeltaRCut"] = "0.15"

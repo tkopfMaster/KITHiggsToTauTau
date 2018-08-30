@@ -16,8 +16,8 @@ import importlib
 def build_config(nickname, **kwargs):
   config = jsonTools.JsonDict()
   #datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
-  
-  
+
+
   ## fill config:
   # includes
   includes = [
@@ -25,13 +25,13 @@ def build_config(nickname, **kwargs):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["ElectronID_documentation"] = "https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsToTauTauWorking2015#Electrons"
   config["ElectronReco"] = "mvanontrig"
   config["ElectronID"] = "user"
   config["ElectronIDType"] = "cutbased2015andlater" # still MVA, using boolean functionality of IsCutBased()
-  
+
   # signal electron ID
   config["ElectronIDName"] = "egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp90" # better S/sqrt(B)
   #config["ElectronIDName"] = "egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp90" # already has something like a iso cut ---> not good for side-band regions
@@ -46,7 +46,7 @@ def build_config(nickname, **kwargs):
     "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-medium",
     "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-tight",
   ]
-  
+
   config["ElectronIsoType"] = "user"
   config["ElectronIso"] = "none"
   config["ElectronIsoSignalConeSize"] = 0.3

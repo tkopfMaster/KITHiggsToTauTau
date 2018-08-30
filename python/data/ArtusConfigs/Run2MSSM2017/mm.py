@@ -237,7 +237,6 @@ def build_config(nickname):
         ]
 
     # BTag setting
-    config["BTagWPs"] = ["medium"]
     config["InvalidateNonMatchingElectrons"] = False
     config["InvalidateNonMatchingMuons"] = False
     config["InvalidateNonMatchingTaus"] = False

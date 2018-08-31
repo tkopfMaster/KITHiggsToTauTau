@@ -302,7 +302,7 @@ def build_config(nickname, **kwargs):
         "producer:Run2DecayChannelProducer",
         # "producer:MvaMetSelector",
         "producer:DiVetoMuonVetoProducer",
-        "producer:TaggedJetCorrectionsProducer",
+        # "producer:TaggedJetCorrectionsProducer",  # maybe needs to go one level lower
         "producer:ValidTaggedJetsProducer",
         "producer:ValidBTaggedJetsProducer",
     ))

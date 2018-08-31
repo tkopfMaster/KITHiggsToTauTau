@@ -13,6 +13,11 @@ import importlib
 import os
 
 def build_config(nickname, **kwargs):
+  # extract the known additional parameters --analysis-channels
+  analysis_channels = ['all'] if "analysis_channels" not in kwargs else kwargs["analysis_channels"]
+  btag_eff = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "btag-eff" else False
+  log.debug("%s \n %25s %-30r \n %30s %-25s" % ("    Run2MSSM2017_base::", "btag_eff:", btag_eff, "analysis_channels: ", ' '.join(analysis_channels)))
+
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
 
@@ -139,12 +144,18 @@ def build_config(nickname, **kwargs):
 
   # pipelines - channels including systematic shifts
   config["Pipelines"] = jsonTools.JsonDict()
-  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.ee").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.em").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.et").build_config(nickname)
-  #~ config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname)
+  # if "all" in analysis_channels or "ee" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.ee").build_config(nickname)
+  if "all" in analysis_channels or "em" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.em").build_config(nickname, **kwargs)
+  if "all" in analysis_channels or "et" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.et").build_config(nickname, **kwargs)
+  # if "all" in analysis_channels or "mm" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
+  if "all" in analysis_channels or "mt" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname, **kwargs)
+  if "all" in analysis_channels or "tt" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname, **kwargs)
 
+  if btag_eff:
+    for pipeline_config in config["Pipelines"].values():
+      if True:  # disable SVFit
+          pipeline_config["Quantities"] = list(set(pipeline_config["Quantities"]) - set(["m_sv", "pt_sv", "eta_sv", "phi_sv"]))
+          if "producer:SvfitProducer" in pipeline_config["Processors"]:
+            pipeline_config["Processors"].remove("producer:SvfitProducer")
 
   return config

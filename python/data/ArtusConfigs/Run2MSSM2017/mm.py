@@ -307,6 +307,8 @@ def build_config(nickname, **kwargs):
         "producer:ValidBTaggedJetsProducer",
     ))
 
+    if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
+
     if isDY or isWjets or isSignal:
         config["Processors"].append(
             "producer:MetCorrector",
@@ -356,6 +358,15 @@ def build_config(nickname, **kwargs):
         # "RunTimeConsumer",
         # "PrintEventsConsumer",
     ]
+
+    if btag_eff:
+        config["Processors"] = copy.deepcp(config["ProcessorsBtagEff"])
+
+        btag_eff_unwanted = ["KappaLambdaNtupleConsumer", "CutFlowTreeConsumer", "KappaElectronsConsumer", "KappaTausConsumer", "KappaTaggedJetsConsumer", "RunTimeConsumer", "PrintEventsConsumer"]
+        for unwanted in btag_eff_unwanted:
+            if unwanted in config["Consumers"]: config["Consumers"].remove(unwanted)
+
+        config["Consumers"].append("BTagEffConsumer")
 
     # pipelines - systematic shifts
     return ACU.apply_uncertainty_shift_configs(

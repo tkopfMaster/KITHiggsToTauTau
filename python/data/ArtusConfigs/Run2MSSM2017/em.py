@@ -276,6 +276,9 @@ def build_config(nickname, **kwargs):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
+
+  if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
+
   if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
   if not (isEmbedded):           config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
@@ -292,12 +295,21 @@ def build_config(nickname, **kwargs):
   #config["Processors"].extend((                               "producer:EmuQcdWeightProducer",
   config["Processors"].append(
                                                               "producer:EventWeightProducer")#)
-    
+
   config["AddGenMatchedParticles"] = True
   config["BranchGenMatchedElectrons"] = True
   config["BranchGenMatchedMuons"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
-  
+
+  if btag_eff:
+     config["Processors"] = copy.deepcp(config["ProcessorsBtagEff"])
+
+     btag_eff_unwanted = ["KappaLambdaNtupleConsumer", "CutFlowTreeConsumer", "KappaElectronsConsumer", "KappaTausConsumer", "KappaTaggedJetsConsumer", "RunTimeConsumer", "PrintEventsConsumer"]
+     for unwanted in btag_eff_unwanted:
+      if unwanted in config["Consumers"]: config["Consumers"].remove(unwanted)
+
+     config["Consumers"].append("BTagEffConsumer")
+
   # pipelines - systematic shifts
   return ACU.apply_uncertainty_shift_configs('em', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.syst_shifts_nom").build_config(nickname))

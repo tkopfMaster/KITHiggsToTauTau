@@ -15,16 +15,16 @@ import os
 def build_config(nickname, **kwargs):
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
-  
-  
+
+
   # define frequently used conditions
   isEmbedded = datasetsHelper.isEmbedded(nickname)
   isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   isTTbar = re.search("TT(To|_|Jets)", nickname)
   isDY = re.search("DY.?JetsToLL", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
-  
-  
+
+
   ## fill config:
   # includes
   includes = [
@@ -36,15 +36,15 @@ def build_config(nickname, **kwargs):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["SkipEvents"] = 0
   config["EventCount"] = -1
   config["InputIsData"] = "true" if isData else "false"
-  
+
   config["LumiWhiteList"] = [7582]
   config["EventWhitelist"] = [1473388]
-  
+
   BosonPdgIds = {
       "DY.?JetsToLL|EWKZ2Jets|Embedding(2016|MC)" : [
         23
@@ -64,7 +64,7 @@ def build_config(nickname, **kwargs):
   config["BosonPdgIds"] = [0]
   for key, pdgids in BosonPdgIds.items():
     if re.search(key, nickname): config["BosonPdgIds"] = pdgids
-  
+
   config["BosonStatuses"] = [11,62]
   config["DeltaRMatchingRecoElectronGenParticle"] = 0.2
   config["DeltaRMatchingRecoElectronGenTau"] = 0.2
@@ -84,7 +84,7 @@ def build_config(nickname, **kwargs):
   config["MatchGenTauDecayMode"] = "true"
   config["UpdateMetWithCorrectedLeptons"] = "true"
   config["TopPtReweightingStrategy"] = "Run1"
-  
+
   '''config["MetFilter"] = [
         "Flag_HBHENoiseFilter",
         "Flag_HBHENoiseIsoFilter",
@@ -125,16 +125,16 @@ def build_config(nickname, **kwargs):
         "!Flag_badGlobalMuonTaggerMAOD",
         "!Flag_cloneGlobalMuonTaggerMAOD"
     ]
-  
+
   config["OutputPath"] = "output.root"
-  
+
   if isData or isEmbedded:                config["PileupWeightFile"] = "not needed"
   elif re.search(".*Summer16", nickname): config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2016_271036-284044_13TeVMoriond17_23Sep2016ReReco_69p2mbMinBiasXS.root"
   else:                                   config["PileupWeightFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/pileup/Data_Pileup_2015_246908-260627_13TeVFall15MiniAODv2_PromptReco_69mbMinBiasXS.root"
-  
+
   config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/CSVv2_moriond17_BtoH.csv" if re.search("Summer16", nickname) else "$CMSSW_BASE/src/Artus/KappaAnalysis/data/CSVv2_76X.csv"
   config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root" if re.search("Summer16", nickname) else "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies.root"
-  
+
   config["MetRecoilCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/TypeI-PFMet_Run2016BtoH.root"
   config["MetShiftCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/MEtSys.root"
   config["MvaMetShiftCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/MEtSys.root"
@@ -145,12 +145,12 @@ def build_config(nickname, **kwargs):
   config["DoZptUncertainties"] = False
 
   config["ChooseMvaMet"] = False
-  
+
   if isData or isEmbedded:
     if   re.search("Run2016|Embedding2016", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"]
     elif re.search("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"]
     elif re.search("Run2015B", nickname):                   config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"]
-    
+
   if re.search("Fall15MiniAODv2", nickname):
     config["SimpleMuTauFakeRateWeightLoose"] = [1.0, 1.0, 1.0, 1.0, 1.0]
     config["SimpleMuTauFakeRateWeightTight"] = [1.0, 1.0, 1.0, 1.0, 1.0]
@@ -162,7 +162,7 @@ def build_config(nickname, **kwargs):
     config["SimpleEleTauFakeRateWeightVLoose"] = [1.213, 1.375]
     config["SimpleEleTauFakeRateWeightTight"] = [1.402, 1.90]
 
-  
+
   # pipelines - channels including systematic shifts
   config["Pipelines"] = jsonTools.JsonDict()
   #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.ee").build_config(nickname)
@@ -172,6 +172,6 @@ def build_config(nickname, **kwargs):
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.mt").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.tt").build_config(nickname)
   #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.inclusive").build_config(nickname)
-  
-  
+
+
   return config

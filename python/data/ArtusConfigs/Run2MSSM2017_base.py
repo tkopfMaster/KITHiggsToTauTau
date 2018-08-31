@@ -16,6 +16,8 @@ def build_config(nickname, **kwargs):
   # extract the known additional parameters --analysis-channels
   analysis_channels = ['all'] if "analysis_channels" not in kwargs else kwargs["analysis_channels"]
   btag_eff = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "btag-eff" else False
+  no_svfit = True if "no_svfit" in kwargs and kwargs["no_svfit"] else False
+
   log.debug("%s \n %25s %-30r \n %30s %-25s" % ("    Run2MSSM2017_base::", "btag_eff:", btag_eff, "analysis_channels: ", ' '.join(analysis_channels)))
 
   config = jsonTools.JsonDict()
@@ -151,11 +153,10 @@ def build_config(nickname, **kwargs):
   if "all" in analysis_channels or "mt" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname, **kwargs)
   if "all" in analysis_channels or "tt" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname, **kwargs)
 
-  if btag_eff:
+  if btag_eff or no_svfit:  # disable SVFit
     for pipeline_config in config["Pipelines"].values():
-      if True:  # disable SVFit
-          pipeline_config["Quantities"] = list(set(pipeline_config["Quantities"]) - set(["m_sv", "pt_sv", "eta_sv", "phi_sv"]))
-          if "producer:SvfitProducer" in pipeline_config["Processors"]:
-            pipeline_config["Processors"].remove("producer:SvfitProducer")
+      pipeline_config["Quantities"] = list(set(pipeline_config["Quantities"]) - set(["m_sv", "pt_sv", "eta_sv", "phi_sv"]))
+      if "producer:SvfitProducer" in pipeline_config["Processors"]:
+        pipeline_config["Processors"].remove("producer:SvfitProducer")
 
   return config

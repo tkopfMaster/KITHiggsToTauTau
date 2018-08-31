@@ -176,8 +176,10 @@ class HiggsToTauTauAnalysisWrapper():
 
 		self._parser.add_argument("-x", "--executable", help="Artus executable. [Default: %(default)s]", default=os.path.basename(sys.argv[0]))
 		self._parser.add_argument("-a", "--analysis", required=True, help="Analysis nick [SM, MSSM] or import path ('HiggsAnalysis.KITHiggsToTauTau. ...' or 'HiggsAnalysis/KITHiggsToTauTau/python/ ... .py') of the config module.")
+
 		self._parser.add_argument("--sub-analysis", default='', action='store', choices=['btag-eff'], help="Keys to run a sub-analysis on top of base analyseis. Example: btag-egg Option to simplify the configs in order to estimate the efficiencies faster. [Default: %(default)s]")
 		self._parser.add_argument("--analysis-channels", default='all', nargs='+', type=str, choices=['all', 'mt', 'tt', 'et', 'ee', 'em', 'mm'], help="List of channels processed from the analysi. [Default: %(default)s]")
+		self._parser.add_argument("--no-svfit", default=False, action="store_true", help="Disable SVfit. Default: %(default)s]")
 
 		fileOptionsGroup = self._parser.add_argument_group("File options")
 		fileOptionsGroup.add_argument("-i", "--input-files", nargs="+", required=True,
@@ -286,7 +288,12 @@ class HiggsToTauTauAnalysisWrapper():
 		log.debug("Prepare config for \""+nickname+"\" sample...")
 		self._config["Nickname"] = nickname
 		# import configs
-		self._config += analysis_config_module.build_config(nickname, sub_analysis=self._args.sub_analysis, analysis_channels=self._args.analysis_channels)
+		self._config += analysis_config_module.build_config(
+			nickname,
+			sub_analysis=self._args.sub_analysis,
+			analysis_channels=self._args.analysis_channels,
+			no_svfit=self._args.no_svfit,
+		)
 
 	def setInputFilenames(self, filelist, alreadyInGridControl = False): ###could be inherited from artusWrapper!
 		#if (not (isinstance(self._config["InputFiles"], list)) and not isinstance(self._config["InputFiles"], basestring)):

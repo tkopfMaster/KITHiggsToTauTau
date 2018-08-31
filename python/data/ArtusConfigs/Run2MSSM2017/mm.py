@@ -5,6 +5,7 @@ import logging
 import Artus.Utility.logger as logger
 log = logging.getLogger(__name__)
 
+import copy
 import re
 import importlib
 import os
@@ -14,7 +15,9 @@ import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
 import HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.ArtusConfigUtility as ACU
 
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
+    btag_eff = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "btag-eff" else False
+
     config = jsonTools.JsonDict()
     datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
 

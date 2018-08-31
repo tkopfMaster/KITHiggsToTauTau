@@ -25,7 +25,6 @@ def build_config(nickname, **kwargs):
   isSUSYggH = re.search("SUSYGluGluToHToTauTau", nickname)
   isSignal = re.search("HToTauTau",nickname)
 
-
   ## fill config:
   # includes
   includes = [

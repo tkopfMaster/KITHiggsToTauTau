@@ -78,6 +78,7 @@ def build_config(nickname):
         ]
 
     # RooWorksapce for Trigger&ID SFs of lepton in the final state
+    # https://github.com/CMS-HTT/CorrectionsWorkspace
     config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
     config["RooWorkspaceWeightNames"] = [
         "0:crossTriggerMCEfficiencyWeight",

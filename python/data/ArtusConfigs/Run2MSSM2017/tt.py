@@ -18,8 +18,7 @@ import HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.ArtusConfigUtil
 def build_config(nickname):
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
-  
-  
+
   # define frequently used conditions
   isEmbedded = datasetsHelper.isEmbedded(nickname)
   isData = datasetsHelper.isData(nickname) and (not isEmbedded)
@@ -27,7 +26,7 @@ def build_config(nickname):
   isDY = re.search("DY.?JetsToLLM(10to50|50)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
   isSignal = re.search("HToTauTau",nickname)
-  
+
   ## fill config:
   # includes
   includes = [
@@ -46,7 +45,7 @@ def build_config(nickname):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["Channel"] = "TT"
   config["MinNTaus"] = 2
@@ -56,7 +55,7 @@ def build_config(nickname):
           "HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg",
           "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1",
     ]
-  
+
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
   config["TauLowerPtCuts"] = ["20.0"]
@@ -150,7 +149,7 @@ def build_config(nickname):
   if isEmbedded:
     config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
     config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
-    config["EmbeddedWeightWorkspaceWeightNames"]=["0:muonEffTrgWeight"] 
+    config["EmbeddedWeightWorkspaceWeightNames"]=["0:muonEffTrgWeight"]
     config["EmbeddedWeightWorkspaceObjectNames"]=["0:m_sel_trg_ratio"]
     config["EmbeddedWeightWorkspaceObjectArguments"] = ["0:gt1_pt,gt1_eta,gt2_pt,gt2_eta"]
 
@@ -174,7 +173,7 @@ def build_config(nickname):
       "nobtag:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/nobtag/fakeFactors_20170628_medium.root",
       "btag:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/btag/fakeFactors_20170628_medium.root"
   ]
-  
+
   config["TauTauRestFrameReco"] = "collinear_approximation"
   config["TauTriggerFilterNames"] = [
           "HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg_v:hltDoublePFTau35TrackPt1TightChargedIsolationAndTightOOSCPhotonsDz02Reg",
@@ -194,7 +193,7 @@ def build_config(nickname):
   config["InvalidateNonMatchingTaus"] = False
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
-  
+
   config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.syncQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.lheWeights").build_list())
@@ -208,7 +207,7 @@ def build_config(nickname):
     config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.embeddedDecayModeWeightQuantities").build_list())
     config["Quantities"].extend([
           "muonEffTrgWeight"
-          ])   
+          ])
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run2"
 

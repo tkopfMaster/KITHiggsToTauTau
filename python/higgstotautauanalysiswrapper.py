@@ -26,7 +26,7 @@ import ROOT
 
 class HiggsToTauTauAnalysisWrapper():
 	def __init__(self, executable=None, userArgParsers=None):
-		
+
 		self._config = jsonTools.JsonDict()
 		self._executable = "HiggsToTauTauAnalysis"
 
@@ -36,17 +36,17 @@ class HiggsToTauTauAnalysisWrapper():
 		#Parse command line arguments and return dict
 		self._args = self._parser.parse_args()
 		logger.initLogger(self._args)
-		
+
 		self._date_now = datetime.now().strftime("%Y-%m-%d_%H-%M")
-			
+
 		self.tmp_directory_remote_files = None
-		
+
 		self._gridControlInputFiles = {}
-		
+
 	def run(self):
-		
+
 		exitCode = 0
-		
+
 		#Set input filenames
 		self._config["InputFiles"] = [] #overwrite settings from config file by command line
 		inputFileList = self._args.input_files
@@ -62,7 +62,7 @@ class HiggsToTauTauAnalysisWrapper():
 			self._config["InputFiles"] = [""]
 		elif not self._args.fast is None:
 			self._config["InputFiles"] = self._config["InputFiles"][:min(len(self._config["InputFiles"]), self._args.fast)]
-		
+
 		#run on batch system via grid-control or locally
 		if self._args.batch:
 			# artus config not needed at this stage, it will be generated when this is run on the batch node again
@@ -93,7 +93,7 @@ class HiggsToTauTauAnalysisWrapper():
 			self.saveConfig(self._args.save_config)
 			if self._args.print_config:
 				log.info(self._config)
-			
+
 			# set LD_LIBRARY_PATH
 			if not self._args.ld_library_paths is None:
 				for path in self._args.ld_library_paths:
@@ -104,17 +104,17 @@ class HiggsToTauTauAnalysisWrapper():
 			if self._args.print_envvars:
 				for envvar in self._args.print_envvars:
 					log.info("$%s = %s" % (envvar, os.environ.get(envvar, "")))
-			
+
 			# if desired, run artus locally or measure performance
 			if self._args.profile:
 				exitCode = self.measurePerformance(self._args.profile,self._args.profile_options)
 			elif not self._args.no_run:
 				exitCode = self.callExecutable()
-			
+
 			# clean up
 			if (not self.tmp_directory_remote_files is None):
 				shutil.rmtree(self.tmp_directory_remote_files)
-			
+
 			### comparison to configs generated in the former artusWrapper (to be removed when configs are successfully; Also remove -ii option
 			if not self._args.input_files_comp == None:
 				config2 = jsonTools.JsonDict(self._args.input_files_comp)
@@ -160,20 +160,20 @@ class HiggsToTauTauAnalysisWrapper():
 				print "compare baseline"
 				print config3.diff(config2)
 			### comparison end
-		
+
 		if exitCode < 256:
 			return exitCode
 		else:
 			return 1 # Artus sometimes returns exit codes >255 that are not supported
-		
+
 	def _initArgumentParser(self, userArgParsers=None):
-		
+
 		if userArgParsers is None:
 			userArgParsers = []
-		
+
 		self._parser = argparse.ArgumentParser(parents=[logger.loggingParser] + userArgParsers, fromfile_prefix_chars="@",
 		                                       description="Wrapper for Artus executables. Configs are to be set internally.")
-		
+
 		self._parser.add_argument("-x", "--executable", help="Artus executable. [Default: %(default)s]", default=os.path.basename(sys.argv[0]))
 		self._parser.add_argument("-a", "--analysis", required=True, help="Analysis nick [SM, MSSM] or import path ('HiggsAnalysis.KITHiggsToTauTau. ...' or 'HiggsAnalysis/KITHiggsToTauTau/python/ ... .py') of the config module.")
 
@@ -188,7 +188,7 @@ class HiggsToTauTauAnalysisWrapper():
 		                              help="Work directory base. [Default: %(default)s]")
 		fileOptionsGroup.add_argument("-n", "--project-name", default="analysis",
 		                              help="Name for this Artus project specifies the name of the work subdirectory.")
-		
+
 		configOptionsGroup = self._parser.add_argument_group("Config options")
 		#configOptionsGroup.add_argument("-c", "--base-configs", nargs="+", required=False, default={},
 		#                                help="JSON base configurations. All configs are merged.")
@@ -198,7 +198,7 @@ class HiggsToTauTauAnalysisWrapper():
 		#                                help="JSON pipeline configurations. Single entries (whitespace separated strings) are first merged. Then all entries are expanded to get all possible combinations. For each expansion, this option has to be used. Afterwards, all results are merged into the JSON base config.")
 		configOptionsGroup.add_argument("--nick", default="auto",
 		                                help="Kappa nickname name that can be used for switch between sample-dependent settings.")
-		
+
 		configOptionsGroup.add_argument("--disable-repo-versions", default=False, action="store_true",
 		                                help="Add repository versions to the JSON config.")
 		configOptionsGroup.add_argument("--repo-scan-base-dirs", nargs="+", required=False, default="$CMSSW_BASE/src/",
@@ -259,8 +259,8 @@ class HiggsToTauTauAnalysisWrapper():
 		                                 help="Write logfile in batch mode directly to SE. Does not work with remote batch system")
 		runningOptionsGroup.add_argument("--partition-lfn-modifier", default = None,
 		                                 help="Forces a certain access to input files. See base conf for corresponding dictionary")
-		
-	
+
+
 	def import_analysis_configs(self):
 		# define known analysis keys here
 		analysis_configs_dict = {
@@ -322,7 +322,7 @@ class HiggsToTauTauAnalysisWrapper():
 				self.setInputFilenames(txtFileContent)
 			else:
 				log.warning("Found file in input search path that is not further considered: " + entry + "\n")
-	
+
 	def readDbsFile(self, path):
 		dbsInput = {}
 		with open(path, "r") as dbsfile:
@@ -381,7 +381,7 @@ class HiggsToTauTauAnalysisWrapper():
 			length += len(item)
 		log.info("Final dbs consists of %i files" %length)
 		return dbs
-	
+
 	def extractNickname(self, string): ###could be inherited from artusWrapper!
 		filename = os.path.basename(string)
 		nickname = filename[filename.find("_")+1:filename.rfind("_")]
@@ -389,7 +389,7 @@ class HiggsToTauTauAnalysisWrapper():
 		if nickname == "":
 			nickname = self._args.nick
 		return nickname
-	
+
 	def saveConfig(self, filepath=None): ###could be inherited from artusWrapper!
 		"""Save Config to File"""
 		if not filepath:
@@ -408,7 +408,7 @@ class HiggsToTauTauAnalysisWrapper():
 					if not self._args.batch:
 						log.warning("Input files do have different nicknames, which could cause errors.")
 		return nickname
-	
+
 	def useLocalCopiesOfRemoteFiles(self, remote_identifiers=None):
 		if remote_identifiers is None:
 			remote_identifiers = ["dcap", "root"]
@@ -447,7 +447,7 @@ class HiggsToTauTauAnalysisWrapper():
 			for repoScanDir in repoScanDirs:
 				popenCout, popenCerr = subprocess.Popen(currentRevisionCommand.split(), stdout=subprocess.PIPE, cwd=repoScanDir).communicate()
 				self._config[repoScanDir] = popenCout.replace("\n", "")
-	
+
 	def readInExternals(self):
 		if not "NumberGeneratedEvents" in self._config or (int(self._config["NumberGeneratedEvents"]) < 0):
 			from Kappa.Skimming.registerDatasetHelper import get_n_generated_events_from_nick
@@ -475,7 +475,7 @@ class HiggsToTauTauAnalysisWrapper():
 			generator_weight = get_generator_weight(self._config["Nickname"])
 			if(generator_weight > 0 and generator_weight <= 1.0):
 				self._config["GeneratorWeight"] = generator_weight
-	
+
 	def measurePerformance(self, profTool, profOpt): ###could be inherited from artusWrapper!
 		"""run Artus with profiler"""
 
@@ -513,9 +513,9 @@ class HiggsToTauTauAnalysisWrapper():
 		# os.system("rm " + self._configFilename)
 
 		return exitCode
-	
+
 	def sendToBatchSystem(self):
-		
+
 		#set project paths
 		remote_se = False
 		projectPath = os.path.join(os.path.expandvars(self._args.work), self._date_now+"_"+self._args.project_name)
@@ -523,12 +523,12 @@ class HiggsToTauTauAnalysisWrapper():
 		if projectPath.startswith("srm://"):
 			remote_se = True
 			localProjectPath = os.path.join(os.path.expandvars(self._parser.get_default("work")), self._date_now+"_"+self._args.project_name)
-			
+
 		#create folders
 		if not os.path.exists(localProjectPath):
 			os.makedirs(localProjectPath)
 			os.makedirs(os.path.join(localProjectPath, "output"))
-			
+
 		# write dbs file
 		dbsFileContent = tools.write_dbsfile(self._gridControlInputFiles, max_files_per_nick=self._args.pilot_job_files)
 
@@ -625,6 +625,6 @@ class HiggsToTauTauAnalysisWrapper():
 			#log.info(self._configFilename)
 
 		return exitCode
-	
+
 	def modify_replacing_dict(self):
 		self.replacingDict["areafiles"] += " auxiliaries/mva_weights"

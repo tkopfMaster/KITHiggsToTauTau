@@ -17,7 +17,7 @@ def build_config(nickname):
 
     # 2017 settings for CSVv2 algorithm 94X recommendation
     # config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/CSVv2_94XSF_V2_B_F.csv"
-    # config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root"
+    # config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_march2018_btageff-all_samp-inc-CSVv2_medium.root"
     # config["BTaggedJetCombinedSecondaryVertexName"] = "pfCombinedInclusiveSecondaryVertexV2BJetTags"
     # config["BTaggerWorkingPoints"] = [
     #  "tight:0.9693",
@@ -27,7 +27,7 @@ def build_config(nickname):
 
     # settings for DeepCSV algorithm 94X recommendation (stated to perform better than CSVv2)
     config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/DeepCSV_94XSF_V3_B_F.csv"
-    config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_moriond2017.root"
+    config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_march2018_btageff-all_samp-inc-DeepCSV_medium.root"
     config["BTaggedJetCombinedSecondaryVertexName"] = "pfDeepCSVJetTagsprobbb+pfDeepCSVJetTagsprobb"
     config["BTaggerWorkingPoints"] = [
         "tight:0.8001",

@@ -16,8 +16,8 @@ class LabelsDict(labels.LabelsDict):
 			self.labels_dict["totalbkg"] = "Exp. unc."
 			self.labels_dict["data"] = "Observed"
 			self.labels_dict["zll"] = "Z #rightarrow ll"
-			self.labels_dict["zl"] = "Z #rightarrow ll (l #rightarrow #tau_{h})"
-			self.labels_dict["zj"] = "Z #rightarrow ll (jet #rightarrow #tau_{h})"
+			self.labels_dict["zl"] = "Z #rightarrow ll (l #rightarrow #tau)"
+			self.labels_dict["zj"] = "Z #rightarrow ll (jet/pu #rightarrow #tau)"
 			self.labels_dict["zmm"] = "Z #rightarrow #mu#mu"
 			self.labels_dict["ztomm"] = self.labels_dict["zmm"]
 			self.labels_dict["ztotttomm"] = "Z #rightarrow #tau#tau #rightarrow #mu#mu#nu#nu"
@@ -27,7 +27,7 @@ class LabelsDict(labels.LabelsDict):
 			self.labels_dict["emb"] = "#mu#rightarrow#tau embedded"
 			self.labels_dict["zttpospol"] = "Z #rightarrow #tau_{R}^{-}#tau_{L}^{+}"
 			self.labels_dict["zttnegpol"] = "Z #rightarrow #tau_{L}^{-}#tau_{R}^{+}"
-			self.labels_dict["tt"] = "t#bar{t}"
+			self.labels_dict["tt"] = "t#bar{t} + jets"
 			self.labels_dict["ttbartomm"] = "t#bar{t} #rightarrow #mu#mu"
 			self.labels_dict["ttbartotttomm"] = "t#bar{t} #rightarrow #tau#tau #rightarrow #mu#mu#nu#nu"
 			self.labels_dict["ttbartoleptons"] = "t#bar{t} + jets to leptons"
@@ -36,15 +36,9 @@ class LabelsDict(labels.LabelsDict):
 			self.labels_dict["tttautau"] = "t#bar{t} #rightarrow #tau#tau"
 			self.labels_dict["ttjt"] = "t#bar{t} + jets (tau)"
 			self.labels_dict["ttjl"] = "t#bar{t} + jets (lep)"
-<<<<<<< Updated upstream
 			self.labels_dict["ttt"] = "t#bar{t} (t#rightarrow#tau)"
 			self.labels_dict["ttj"] = "t#bar{t} (jet#rightarrow#tau)"
 			self.labels_dict["ttl"] = "t#bar{t} #rightarrow l#tau"
-=======
-			self.labels_dict["ttl"] = "t#bar{t} #rightarrow l#tau"
-			self.labels_dict["ttt"] = "t#bar{t} (t#rightarrow#tau_{h})"
-			self.labels_dict["ttj"] = "t#bar{t} (jet#rightarrow#tau_{h})"
->>>>>>> Stashed changes
 			self.labels_dict["ttjj"] = "t#bar{t} + jets (jet)"
 			self.labels_dict["wj"] = "W + jets"
 			self.labels_dict["wjt"] = "W + jets (tau)"
@@ -52,16 +46,8 @@ class LabelsDict(labels.LabelsDict):
 			self.labels_dict["vv"] = "Diboson"
 			self.labels_dict["vvt"] = "Diboson (V#rightarrow#tau)"
 			self.labels_dict["vvl"] = "Diboson (l#tau)"
-<<<<<<< Updated upstream
 			self.labels_dict["vvj"] = "Diboson (jet#rightarrow#tau)"
-=======
-			self.labels_dict["vvj"] = "Diboson (jet#rightarrow#tau_{h})"
->>>>>>> Stashed changes
 			self.labels_dict["ewk"] = "Electroweak"
-			self.labels_dict["ewkz"] = "Electroweak"
-			self.labels_dict["ewkl"] = "Electroweak (l#tau)"
-			self.labels_dict["ewkj"] = "Electroweak (jet#rightarrow#tau)"
-			self.labels_dict["emb"] = "#mu #rightarrow #tau embedded"
 			self.labels_dict["qcd"] = "QCD"
 			self.labels_dict["htt"] = "H #rightarrow #tau#tau"
 			self.labels_dict["ggh"] = "ggH"
@@ -1178,7 +1164,7 @@ class LabelsDict(labels.LabelsDict):
 					self.labels_dict["bbh{mass:d}_{scale:d}".format(mass=higgs_mass, scale=scale)] = self.labels_dict["bbh"]+" (\\times {scale:d})".format(scale=scale)
 
 		self.labels_dict["data_obs"] = "Observed"
-		self.labels_dict["ttj"] = "t#bar{t} (jet #rightarrow #tau_{h})"
+		self.labels_dict["ttj"] = self.labels_dict["tt"]
 		self.labels_dict["ttbar"] = self.labels_dict["tt"]
 		self.labels_dict["wjets"]  = self.labels_dict["wj"]
 		self.labels_dict["w"]  = self.labels_dict["wj"]
@@ -1198,5 +1184,4 @@ class LabelsDict(labels.LabelsDict):
 				#self.labels_dict["ggh{mass:d}_{scale:d}".format(mass=higgs_mass, scale=scale)] = self.labels_dict["ggh"].replace("H", "H({mass:d})".format(mass=higgs_mass))+" (\\times {scale:d})".format(scale=scale)
 				#self.labels_dict["qqh{mass:d}_{scale:d}".format(mass=higgs_mass, scale=scale)] = self.labels_dict["qqh"].replace("H", "H({mass:d})".format(mass=higgs_mass))+" (\\times {scale:d})".format(scale=scale)
 				#self.labels_dict["vh{mass:d}_{scale:d}".format(mass=higgs_mass, scale=scale)] = self.labels_dict["vh"].replace("H", "H({mass:d})".format(mass=higgs_mass))+" (\\times {scale:d})".format(scale=scale)
-
 

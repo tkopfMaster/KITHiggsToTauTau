@@ -581,7 +581,14 @@ class HiggsToTauTauAnalysisWrapper():
 		if self._args.copy_remote_files:
 			epilogArguments += "--copy-remote-files "
 		if not self._args.ld_library_paths is None:
-			epilogArguments += ("--ld-library-paths %s" % " ".join(self._args.ld_library_paths))
+			epilogArguments += ("--ld-library-paths %s " % " ".join(self._args.ld_library_paths))
+
+		if self._args.sub_analysis != "":
+			epilogArguments += (" --sub-analysis %s " % " ".join(self._args.sub_analysis))
+		epilogArguments += (" --analysis-channels %s " % " ".join(self._args.analysis_channels))
+		if self._args.no_svfit:
+			epilogArguments += (" --no-svfit ")
+		print "single job arguments epilogArguments:", epilogArguments
 
 		sepath = "se path = " + (self._args.se_path if self._args.se_path else sepathRaw)
 		workdir = "workdir = " + os.path.join(localProjectPath, "workdir")

@@ -406,6 +406,12 @@ class HiggsToTauTauAnalysisWrapper():
 			filepath = os.path.join(tempfile.gettempdir(), basename)
 		self._configFilename = filepath
 		self._config.save(self._configFilename, indent=4)
+
+		if self._args.batch:
+			import pprint
+			pp = pprint.PrettyPrinter(indent=4)
+			pp.pprint(self._config)
+
 		log.info("Saved JSON config \"%s\" for temporary usage." % self._configFilename)
 
 	def determineNickname(self, nickname):

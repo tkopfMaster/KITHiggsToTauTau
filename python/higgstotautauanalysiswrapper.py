@@ -231,7 +231,7 @@ class HiggsToTauTauAnalysisWrapper():
 		                                help="Path to grid-control configs to include in the base config.")
 
 		runningOptionsGroup = self._parser.add_argument_group("Running options")
-		runningOptionsGroup.add_argument("--no-run", default=False, action="store_true",
+		runningOptionsGroup.add_argument("--no-run", "--dry", "--dry-run", default=False, action="store_true",
 		                                 help="Exit before running Artus to only check the configs.")
 		runningOptionsGroup.add_argument("--copy-remote-files", default=False, action="store_true",
 		                                 help="Copy remote files first to avoid too many open connections.")

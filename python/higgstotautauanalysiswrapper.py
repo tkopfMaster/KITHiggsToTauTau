@@ -245,6 +245,8 @@ class HiggsToTauTauAnalysisWrapper():
 		                                 help="Open output file in ROOT TBrowser after completion.")
 		runningOptionsGroup.add_argument("-b", "--batch", default=False, const="naf", nargs="?",
 		                                 help="Run with grid-control. Optionally select backend. [Default: %(default)s]")
+		runningOptionsGroup.add_argument("--batch-jobs-debug", default=False, action="store_true",
+		                                 help="Option enables more printouts for single jobs for example: printing the artus config to stdout.")  # TODO: this needs to be redirected in separate file to transfer as output
 		runningOptionsGroup.add_argument("--pilot-job-files", "--pilot-jobs", default=None, const=1, type=int, nargs="?",
 		                                 help="Number of files per sample to be submitted as pilot jobs. [Default: all/1]")
 		runningOptionsGroup.add_argument("--files-per-job", type=int, default=15,
@@ -407,7 +409,7 @@ class HiggsToTauTauAnalysisWrapper():
 		self._configFilename = filepath
 		self._config.save(self._configFilename, indent=4)
 
-		if self._args.batch:
+		if self._args.batch and self._args.batch_jobs_debug:
 			import pprint
 			pp = pprint.PrettyPrinter(indent=4)
 			pp.pprint(self._config)
@@ -588,7 +590,9 @@ class HiggsToTauTauAnalysisWrapper():
 		epilogArguments += (" --analysis-channels %s " % " ".join(self._args.analysis_channels))
 		if self._args.no_svfit:
 			epilogArguments += (" --no-svfit ")
-		print "single job arguments epilogArguments:", epilogArguments
+
+		if self._args.batch_jobs_debug:
+			print "single job arguments epilogArguments:", epilogArguments
 
 		sepath = "se path = " + (self._args.se_path if self._args.se_path else sepathRaw)
 		workdir = "workdir = " + os.path.join(localProjectPath, "workdir")

@@ -42,34 +42,34 @@ def build_config(nickname):
     config["tauEsOneProngUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEsOneProngUp"]["TauEnergyCorrectionOneProng"] = 1.007
+    config["tauEsOneProngUp"]["TauEnergyCorrectionOneProng"] = 1.016
     
     config["tauEsOneProngDown"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEsOneProngDown"]["TauEnergyCorrectionOneProng"] = 0.983
+    config["tauEsOneProngDown"]["TauEnergyCorrectionOneProng"] = 0.999
     
     
     config["tauEsOneProngOnePiZeroUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEsOneProngOnePiZeroUp"]["TauEnergyCorrectionOneProngPiZeros"] = 1.023
+    config["tauEsOneProngOnePiZeroUp"]["TauEnergyCorrectionOneProngPiZeros"] = 0.999
     
     config["tauEsOneProngOnePiZeroDown"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEsOneProngOnePiZeroDown"]["TauEnergyCorrectionOneProngPiZeros"] = 0.999
+    config["tauEsOneProngOnePiZeroDown"]["TauEnergyCorrectionOneProngPiZeros"] = 0.986
     
     
     config["tauEsThreeProngUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEsThreeProngUp"]["TauEnergyCorrectionThreeProng"] = 1.018
+    config["tauEsThreeProngUp"]["TauEnergyCorrectionThreeProng"] = 0.996
     
     config["tauEsThreeProngDown"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEsThreeProngDown"]["TauEnergyCorrectionThreeProng"] = 0.994
+    config["tauEsThreeProngDown"]["TauEnergyCorrectionThreeProng"] = 0.983
     
     
   if isDY or isEmbedded:

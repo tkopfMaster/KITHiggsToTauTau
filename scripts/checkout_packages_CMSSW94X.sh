@@ -59,7 +59,7 @@ git clone https://github.com/CMS-HTT/QCDModelingEMu.git HTT-utilities/QCDModelin
 sed '/CombineHarvester/d' ${CMSSW_BASE}/src/HiggsAnalysis/KITHiggsToTauTau/BuildFile.xml -i
 
 # TauTriggerSFs2017 tool
-git clone https://github.com/truggles/TauTriggerSFs2017.git TauTriggerSFs2017/TauTriggerSFs2017 -b tauTriggers2017_MCv2_PreReMiniaod
+git clone https://github.com/truggles/TauTriggerSFs2017.git TauTriggerSFs2017/TauTriggerSFs2017 -b tauTriggers2017_reMiniaod_test
 
 # Grid-Control
 git clone https://github.com/janekbechtel/grid-control.git

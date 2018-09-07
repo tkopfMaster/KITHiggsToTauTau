@@ -15,11 +15,12 @@ import os
 
 import HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.ArtusConfigUtility as ACU
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
+  btag_eff = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "btag-eff" else False
+
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
-  
-  
+
   # define frequently used conditions
   isEmbedded = datasetsHelper.isEmbedded(nickname)
   isData = datasetsHelper.isData(nickname) and (not isEmbedded)
@@ -27,7 +28,7 @@ def build_config(nickname):
   isDY = re.search("DY.?JetsToLLM(10to50|50)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
   isSignal = re.search("HToTauTau",nickname)
-  
+
   ## fill config:
   # includes
   includes = [
@@ -45,7 +46,7 @@ def build_config(nickname):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["Channel"] = "EM"
   config["MinNElectrons"] = 1
@@ -133,7 +134,7 @@ def build_config(nickname):
           "0:isoWeight",
           "0:idWeight",
           "0:triggerWeight"
-          ] 
+          ]
     config["EmbeddedWeightWorkspaceObjectNames"]=[
           "0:m_sel_trg_ratio",
           "1:m_looseiso_ratio",
@@ -206,14 +207,14 @@ def build_config(nickname):
       "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_dummy.root",
       "1:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_dummy.root",
       "1:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_dummy.root"]
-  
+
   config["TriggerEfficiencyMode"] = "correlate_triggers"
   config["IdentificationEfficiencyMode"] = "multiply_weights"
   config["EventWeight"] = "eventWeight"
 
 
   config["TauTauRestFrameReco"] = "collinear_approximation"
-  
+
   config["ElectronTriggerFilterNames"] = [
         "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu8TrkIsoVVLEle23CaloIdLTrackIdLIsoVLElectronlegTrackIsoFilter",
         "HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu8TrkIsoVVLEle23CaloIdLTrackIdLIsoVLDZFilter",
@@ -230,14 +231,13 @@ def build_config(nickname):
         "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLMuonlegL3IsoFiltered23",
         "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ_v:hltMu23TrkIsoVVLEle12CaloIdLTrackIdLIsoVLDZFilter"
       ]
-  
-  config["BTagWPs"] = ["medium"]
+
   config["InvalidateNonMatchingElectrons"] = False
   config["InvalidateNonMatchingMuons"] = False
   config["InvalidateNonMatchingTaus"] = False
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
-  
+
   config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.syncQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.lheWeights").build_list())
@@ -250,10 +250,10 @@ def build_config(nickname):
     config["Quantities"].extend([
           "muonEffTrgWeight"
           ])
-  
+
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run2"
-  
+
   config["Processors"] = []
   if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
   config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
@@ -276,6 +276,9 @@ def build_config(nickname):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
                                                               "producer:ValidBTaggedJetsProducer"))
+
+  if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
+
   if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
   if not (isEmbedded):           config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
@@ -292,12 +295,21 @@ def build_config(nickname):
   #config["Processors"].extend((                               "producer:EmuQcdWeightProducer",
   config["Processors"].append(
                                                               "producer:EventWeightProducer")#)
-    
+
   config["AddGenMatchedParticles"] = True
   config["BranchGenMatchedElectrons"] = True
   config["BranchGenMatchedMuons"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
-  
+
+  if btag_eff:
+     config["Processors"] = copy.deepcp(config["ProcessorsBtagEff"])
+
+     btag_eff_unwanted = ["KappaLambdaNtupleConsumer", "CutFlowTreeConsumer", "KappaElectronsConsumer", "KappaTausConsumer", "KappaTaggedJetsConsumer", "RunTimeConsumer", "PrintEventsConsumer"]
+     for unwanted in btag_eff_unwanted:
+      if unwanted in config["Consumers"]: config["Consumers"].remove(unwanted)
+
+     config["Consumers"].append("BTagEffConsumer")
+
   # pipelines - systematic shifts
   return ACU.apply_uncertainty_shift_configs('em', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.syst_shifts_nom").build_config(nickname))

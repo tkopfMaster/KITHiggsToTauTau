@@ -13,11 +13,11 @@ import Artus.Utility.jsonTools as jsonTools
 import importlib
 #import os
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
   config = jsonTools.JsonDict()
   #datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
-  
-  
+
+
   ## fill config:
   # includes
   includes = [
@@ -25,7 +25,7 @@ def build_config(nickname):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["JetID"] = "tight"
   config["JetIDVersion"] = "2017"
@@ -36,6 +36,6 @@ def build_config(nickname):
   config["JetLowerPtCuts"] = ["20.0"]
   config["JetUpperAbsEtaCuts"] = ["4.7"]
   config["JetLeptonLowerDeltaRCut"] = 0.5
-  
+
 
   return config

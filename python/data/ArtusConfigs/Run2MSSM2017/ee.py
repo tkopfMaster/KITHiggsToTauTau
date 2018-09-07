@@ -15,11 +15,12 @@ import os
 
 import HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.ArtusConfigUtility as ACU
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
+  btag_eff = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "btag-eff" else False
+
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
-  
-  
+
   # define frequently used conditions
   isEmbedded = datasetsHelper.isEmbedded(nickname)
   isData = datasetsHelper.isData(nickname) and (not isEmbedded)
@@ -27,8 +28,8 @@ def build_config(nickname):
   isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
   isHtt = re.search("HToTauTau", nickname)
-  
-  
+
+
   ## fill config:
   # includes
   includes = [
@@ -47,7 +48,7 @@ def build_config(nickname):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["Channel"] = "EE"
   config["MinNElectrons"] = 2
@@ -132,7 +133,7 @@ def build_config(nickname):
   config["InvalidateNonMatchingTaus"] = False
   config["InvalidateNonMatchingJets"] = False
   config["DirectIso"] = True
-  
+
   config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.Includes.syncQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
   #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.MVAInputQuantities").build_list())
@@ -151,10 +152,10 @@ def build_config(nickname):
       "muR0p5_muF2p0_weight",
       "muR0p5_muF0p5_weight"
   ])
-  
+
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run1"
-  
+
   config["Processors"] = [                                  "producer:HttValidLooseElectronsProducer",
                                                             "producer:HttValidLooseMuonsProducer",
                                                             "producer:HltProducer",
@@ -185,7 +186,7 @@ def build_config(nickname):
   if not isData:               config["Processors"].append( #"producer:TriggerWeightProducer", "producer:IdentificationWeightProducer"
                                                             "producer:RooWorkspaceWeightProducer")
   config["Processors"].append(                              "producer:EventWeightProducer")
-  
+
   config["AddGenMatchedParticles"] = True
   config["AddGenMatchedTaus"] = True
   config["AddGenMatchedTauJets"] = True
@@ -199,7 +200,7 @@ def build_config(nickname):
                          #"KappaTaggedJetsConsumer",
                          #"RunTimeConsumer",
                          #"PrintEventsConsumer"
-  
-  
+
+
   # pipelines - systematic shifts
   return ACU.apply_uncertainty_shift_configs('ee', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM.syst_shifts_nom").build_config(nickname))

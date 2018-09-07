@@ -12,7 +12,14 @@ import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
 import importlib
 import os
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
+  # extract the known additional parameters --analysis-channels
+  analysis_channels = ['all'] if "analysis_channels" not in kwargs else kwargs["analysis_channels"]
+  btag_eff = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "btag-eff" else False
+  no_svfit = True if "no_svfit" in kwargs and kwargs["no_svfit"] else False
+
+  log.debug("%s \n %25s %-30r \n %30s %-25s" % ("    Run2MSSM2017_base::", "btag_eff:", btag_eff, "analysis_channels: ", ' '.join(analysis_channels)))
+
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
 
@@ -24,8 +31,7 @@ def build_config(nickname):
   isWjets = re.search("W.?JetsToLNu", nickname)
   isSUSYggH = re.search("SUSYGluGluToHToTauTau", nickname)
   isSignal = re.search("HToTauTau",nickname)
-  
-  
+
   ## fill config:
   # includes
   includes = [
@@ -36,13 +42,13 @@ def build_config(nickname):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["SkipEvents"] = 0
   config["EventCount"] = -1
   config["Year"] = 2017
   config["InputIsData"] = isData
-  
+
   if isSUSYggH:
     config["HiggsBosonMass"] = re.search("SUSYGluGluToHToTauTauM(\d+)_", nickname).groups()[0] #extracts generator mass from nickname
     config["NLOweightsRooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/NLOWeights/higgs_pt_v2_mssm_mode.root"
@@ -66,13 +72,13 @@ def build_config(nickname):
   config["BosonPdgIds"] = [0]
   for key, pdgids in BosonPdgIds.items():
     if re.search(key, nickname): config["BosonPdgIds"] = pdgids
-  
+
   config["BosonStatuses"] = [62]
   config["ChooseMvaMet"] = False
   config["UseUWGenMatching"] = True
   config["UpdateMetWithCorrectedLeptons"] = True
   config["UpdateMetWithCorrectedLeptonsFromSignalOnly"] = True
-  
+
   config["MetFilterToFlag"] = [
         "Flag_HBHENoiseFilter",
         "Flag_HBHENoiseIsoFilter",
@@ -87,9 +93,9 @@ def build_config(nickname):
     config["MetFilterToFlag"].extend((
         "Flag_eeBadScFilter",
     ))
-  
+
   config["OutputPath"] = "output.root"
-  
+
   config["Processors"] = []
   #config["Processors"].append("filter:RunLumiEventFilter")
   if isData or isEmbedded:             config["Processors"].append( "filter:JsonFilter")
@@ -98,7 +104,7 @@ def build_config(nickname):
   config["Processors"].append(                                      "producer:MetFilterFlagProducer")
   if not isData:
 
-    if not isEmbedded:                 
+    if not isEmbedded:
       config["Processors"].append( "producer:PUWeightProducer")
       config["Processors"].extend((                                   "producer:CrossSectionWeightProducer",
                                                                     "producer:NumberGeneratedEventsWeightProducer"))
@@ -126,27 +132,31 @@ def build_config(nickname):
   config["MetShiftCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/PFMEtSys_2016.root"
   config["MvaMetRecoilCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/MvaMET_2016BCD.root"
   config["MetCorrectionMethod"] = "none"
-  
+
   if isData or isEmbedded:
     if   re.search("Run2017|Embedding2017", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt"]
     elif re.search("Run2016|Embedding2016", nickname):      config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt"]
     elif re.search("Run2015(C|D)|Embedding2015", nickname): config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_25ns_JSON_v2.txt"]
     elif re.search("Run2015B", nickname):                   config["JsonFiles"] = ["$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/json/Cert_13TeV_16Dec2015ReReco_Collisions15_50ns_JSON_v2.txt"]
-    
+
   config["SimpleMuTauFakeRateWeightLoose"] = [1.06, 1.02, 1.10, 1.03, 1.94]
   config["SimpleMuTauFakeRateWeightTight"] = [1.17, 1.29, 1.14, 0.93, 1.61]
   config["SimpleEleTauFakeRateWeightVLoose"] = [1.09, 1.19]
   config["SimpleEleTauFakeRateWeightTight"] = [1.80, 1.53]
 
-  
   # pipelines - channels including systematic shifts
   config["Pipelines"] = jsonTools.JsonDict()
-  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.ee").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.em").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.et").build_config(nickname)
-  #~ config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname)
+  # if "all" in analysis_channels or "ee" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.ee").build_config(nickname)
+  if "all" in analysis_channels or "em" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.em").build_config(nickname, **kwargs)
+  if "all" in analysis_channels or "et" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.et").build_config(nickname, **kwargs)
+  # if "all" in analysis_channels or "mm" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
+  if "all" in analysis_channels or "mt" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname, **kwargs)
+  if "all" in analysis_channels or "tt" in analysis_channels: config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname, **kwargs)
 
+  if btag_eff or no_svfit:  # disable SVFit
+    for pipeline_config in config["Pipelines"].values():
+      pipeline_config["Quantities"] = list(set(pipeline_config["Quantities"]) - set(["m_sv", "pt_sv", "eta_sv", "phi_sv"]))
+      if "producer:SvfitProducer" in pipeline_config["Processors"]:
+        pipeline_config["Processors"].remove("producer:SvfitProducer")
 
   return config

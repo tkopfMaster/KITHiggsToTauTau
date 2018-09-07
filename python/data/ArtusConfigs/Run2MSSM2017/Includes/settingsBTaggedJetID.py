@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 import Artus.Utility.jsonTools as jsonTools
 
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
     config = jsonTools.JsonDict()
 
     # explicit configuration
@@ -15,17 +15,18 @@ def build_config(nickname):
         "https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsToTauTauWorking2016#b_tagging",
     ]
 
-    # 2017 settings for CSVv2 algorithm 94X recommendation
+    # 2017 CSVv2
     # config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/CSVv2_94XSF_V2_B_F.csv"
     # config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_march2018_btageff-all_samp-inc-CSVv2_medium.root"
     # config["BTaggedJetCombinedSecondaryVertexName"] = "pfCombinedInclusiveSecondaryVertexV2BJetTags"
     # config["BTaggerWorkingPoints"] = [
-    #  "tight:0.9693",
-    #  "medium:0.8838",
-    #  "loose:0.5803"
+    #     "tight:0.9693",
+    #     "medium:0.8838",
+    #     "loose:0.5803",
     # ]
 
-    # settings for DeepCSV algorithm 94X recommendation (stated to perform better than CSVv2)
+    # TODO: add to the skims: DeepFlavour https://twiki.cern.ch/twiki/bin/view/CMS/DeepJet
+    # Settings for DeepCSV algorithm 94X recommendation (stated to perform better than CSVv2)
     config["BTagScaleFactorFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/DeepCSV_94XSF_V3_B_F.csv"
     config["BTagEfficiencyFile"] = "$CMSSW_BASE/src/Artus/KappaAnalysis/data/tagging_efficiencies_march2018_btageff-all_samp-inc-DeepCSV_medium.root"
     config["BTaggedJetCombinedSecondaryVertexName"] = "pfDeepCSVJetTagsprobbb+pfDeepCSVJetTagsprobb"
@@ -35,6 +36,8 @@ def build_config(nickname):
         "loose:0.1522"
     ]
 
+    config["BTagWPs"] = ["medium"]
+
     config["BTaggedJetAbsEtaCut"] = 2.5  # 2017 value
     config["ApplyBTagSF"] = True
     config["JetTaggerUpperCuts"] = []
@@ -42,6 +45,7 @@ def build_config(nickname):
     config["BTagShift"] = 0
     config["BMistagShift"] = 0
 
+    config["ValidTaggedJetsProducerDebug"] = False
     # Further settings taken into account by ValidBTaggedJetsProducer:
     # - Year (should be 2017), written into the 'base' config
 

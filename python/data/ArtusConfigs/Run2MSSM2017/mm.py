@@ -5,6 +5,7 @@ import logging
 import Artus.Utility.logger as logger
 log = logging.getLogger(__name__)
 
+import copy
 import re
 import importlib
 import os
@@ -14,7 +15,9 @@ import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
 import HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.ArtusConfigUtility as ACU
 
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
+    btag_eff = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "btag-eff" else False
+
     config = jsonTools.JsonDict()
     datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
 
@@ -78,6 +81,7 @@ def build_config(nickname):
         ]
 
     # RooWorksapce for Trigger&ID SFs of lepton in the final state
+    # https://github.com/CMS-HTT/CorrectionsWorkspace
     config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
     config["RooWorkspaceWeightNames"] = [
         "0:crossTriggerMCEfficiencyWeight",
@@ -237,7 +241,6 @@ def build_config(nickname):
         ]
 
     # BTag setting
-    config["BTagWPs"] = ["medium"]
     config["InvalidateNonMatchingElectrons"] = False
     config["InvalidateNonMatchingMuons"] = False
     config["InvalidateNonMatchingTaus"] = False
@@ -299,10 +302,12 @@ def build_config(nickname):
         "producer:Run2DecayChannelProducer",
         # "producer:MvaMetSelector",
         "producer:DiVetoMuonVetoProducer",
-        "producer:TaggedJetCorrectionsProducer",
+        # "producer:TaggedJetCorrectionsProducer",  # maybe needs to go one level lower
         "producer:ValidTaggedJetsProducer",
         "producer:ValidBTaggedJetsProducer",
     ))
+
+    if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
 
     if isDY or isWjets or isSignal:
         config["Processors"].append(
@@ -353,6 +358,15 @@ def build_config(nickname):
         # "RunTimeConsumer",
         # "PrintEventsConsumer",
     ]
+
+    if btag_eff:
+        config["Processors"] = copy.deepcp(config["ProcessorsBtagEff"])
+
+        btag_eff_unwanted = ["KappaLambdaNtupleConsumer", "CutFlowTreeConsumer", "KappaElectronsConsumer", "KappaTausConsumer", "KappaTaggedJetsConsumer", "RunTimeConsumer", "PrintEventsConsumer"]
+        for unwanted in btag_eff_unwanted:
+            if unwanted in config["Consumers"]: config["Consumers"].remove(unwanted)
+
+        config["Consumers"].append("BTagEffConsumer")
 
     # pipelines - systematic shifts
     return ACU.apply_uncertainty_shift_configs(

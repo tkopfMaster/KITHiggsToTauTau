@@ -28,7 +28,8 @@ def build_config(nickname, **kwargs):
   isDY = re.search("DY.?JetsToLLM(10to50|50)", nickname)
   isWjets = re.search("W.?JetsToLNu", nickname)
   isSignal = re.search("HToTauTau",nickname)
-
+  isGluonFusion = re.search("GluGluHToTauTauM125", nickname)
+  
   ## fill config:
   # includes
   includes = [
@@ -43,7 +44,7 @@ def build_config(nickname, **kwargs):
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsJetID",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsBTaggedJetID",
     "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsTauES",
-    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.settingsMinimalPlotlevelFilter_mt"
+    "HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.settingsMinimalPlotlevelFilter_mt"
   ]
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
@@ -63,9 +64,9 @@ def build_config(nickname, **kwargs):
 
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["MuonLowerPtCuts"] = ["10.0"]
+  config["MuonLowerPtCuts"] = ["20.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.1"]
-  config["TauLowerPtCuts"] = ["20.0"]
+  config["TauLowerPtCuts"] = ["30.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DeltaRTriggerMatchingTaus"] = 0.5
@@ -241,16 +242,26 @@ def build_config(nickname, **kwargs):
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.zptQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.lheWeights").build_list())
-  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.fakeFactorWeightQuantities").build_list())
+  #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.fakeFactorWeightQuantities").build_list())
   config["Quantities"].extend([
       "had_gen_match_pT_1",
-      "had_gen_match_pT_2"
+      "had_gen_match_pT_2",
+      "flagMETFilter",
+      "pt_ttjj"
   ])
   if isEmbedded:
     config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.embeddedDecayModeWeightQuantities").build_list())
     config["Quantities"].extend([
           "muonEffTrgWeight"
           ])
+  if re.search("HToTauTauM125", nickname):
+    config["Quantities"].extend([
+      "htxs_stage0cat",
+      "htxs_stage1cat"
+    ])
+  if isGluonFusion:
+    config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.ggHNNLOQuantities").build_list())
+
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run2"
 
@@ -283,6 +294,7 @@ def build_config(nickname, **kwargs):
 
   if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
 
+  config["Processors"].append(                                "producer:GroupedJetUncertaintyShiftProducer")
   if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
@@ -292,7 +304,7 @@ def build_config(nickname, **kwargs):
                                                               "producer:SimpleMuTauFakeRateWeightProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
-  #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
+  config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   if not isData and not isEmbedded:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")
@@ -300,8 +312,8 @@ def build_config(nickname, **kwargs):
   if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
-
-
+  if isGluonFusion:              config["Processors"].append( "producer:SMggHNNLOProducer")
+  
   config["AddGenMatchedParticles"] = True
   config["AddGenMatchedTaus"] = True
   config["AddGenMatchedTauJets"] = True
@@ -320,4 +332,8 @@ def build_config(nickname, **kwargs):
      config["Consumers"].append("BTagEffConsumer")
 
   # pipelines - systematic shifts
-  return ACU.apply_uncertainty_shift_configs('mt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.syst_shifts_nom").build_config(nickname))
+  return ACU.apply_uncertainty_shift_configs('mt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.nominal").build_config(nickname)) + \
+         ACU.apply_uncertainty_shift_configs('mt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauESperDM_shifts").build_config(nickname)) + \
+         ACU.apply_uncertainty_shift_configs('mt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.JECunc_shifts").build_config(nickname)) + \
+         ACU.apply_uncertainty_shift_configs('mt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.regionalJECunc_shifts").build_config(nickname)) + \
+         ACU.apply_uncertainty_shift_configs('mt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.muonES_shifts").build_config(nickname))

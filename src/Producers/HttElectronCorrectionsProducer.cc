@@ -33,8 +33,17 @@ void HttElectronCorrectionsProducer::AdditionalCorrections(KElectron* electron, 
 	float eleEnergyCorrectionShift = static_cast<HttSettings const&>(settings).GetElectronEnergyCorrectionShift();
 	float eleEnergyCorrectionShiftEB = static_cast<HttSettings const&>(settings).GetElectronEnergyCorrectionShiftEB();
 	float eleEnergyCorrectionShiftEE = static_cast<HttSettings const&>(settings).GetElectronEnergyCorrectionShiftEE();
-
-        // Apply constant electron ES corrections
+	
+	// Apply scale & smear corrections for electrons
+	if (static_cast<HttSettings const&>(settings).GetElectronScaleAndSmearUsed())
+	{
+			float corrected_energy = electron->getId("electronCorrection:ecalTrkEnergyPostCorr", event.m_electronMetadata);
+			float correction_factor = corrected_energy/electron->p4.E();
+			electron->p4 = electron->p4 * correction_factor;
+			LOG(DEBUG) << "Applying scale & smear. Corrected energy: " << corrected_energy << " correction factor: " << correction_factor;
+	}
+	// Apply constant electron ES corrections
+	//
 	if (eleEnergyCorrectionShift != 1.0 && (eleEnergyCorrectionShiftEB != 1.0 || eleEnergyCorrectionShiftEE != 1.0))
 	{
 		LOG(FATAL) << "Too many different electron energy corrections (all eta, barrel-only, endcap-only)";
@@ -54,13 +63,7 @@ void HttElectronCorrectionsProducer::AdditionalCorrections(KElectron* electron, 
 		{
 			electron->p4 = electron->p4 * eleEnergyCorrectionShiftEE;
 		}
+
 	}
-        // Apply scale & smear corrections for electrons
-        if (static_cast<HttSettings const&>(settings).GetElectronScaleAndSmearUsed())
-        {
-                float corrected_energy = electron->getId("electronCorrection:ecalTrkEnergyPostCorr", event.m_electronMetadata);
-                float correction_factor = corrected_energy/electron->p4.E();
-                electron->p4 = electron->p4 * correction_factor;
-                LOG(DEBUG) << "Applying scale & smear. Corrected energy: " << corrected_energy << " correction factor: " << correction_factor;
-        }
+
 }

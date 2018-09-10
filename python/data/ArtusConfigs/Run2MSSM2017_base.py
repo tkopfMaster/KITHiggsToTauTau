@@ -138,11 +138,18 @@ def build_config(nickname):
   config["SimpleEleTauFakeRateWeightVLoose"] = [1.09, 1.19]
   config["SimpleEleTauFakeRateWeightTight"] = [1.80, 1.53]
 
+  if re.search("GluGluHToTauTauM125", nickname):
+    config["ggHNNLOweightsRootfile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/NNLOWeights/NNLOPS_reweight.root"
+    if "powheg" in nickname:
+      config["Generator"] = "powheg"
+    elif "amcatnlo" in nickname:
+      config["Generator"] = "amcatnlo"
+  
   
   # pipelines - channels including systematic shifts
   config["Pipelines"] = jsonTools.JsonDict()
   #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.ee").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.em").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.em").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.et").build_config(nickname)
   #~ config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mm").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname)

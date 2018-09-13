@@ -259,13 +259,13 @@ def build_config(nickname, **kwargs):
                                                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))#,
-  config["Processors"].append(                                "producer:SvfitProducer")
                                                               # "producer:JetToTauFakesProducer"))
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")
   if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   if isGluonFusion:              config["Processors"].append( "producer:SMggHNNLOProducer")
+  config["Processors"].append(                                "producer:SvfitProducer")
 
   config["AddGenMatchedTaus"] = True
   config["AddGenMatchedTauJets"] = True

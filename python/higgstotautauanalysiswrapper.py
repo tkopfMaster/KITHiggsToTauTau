@@ -177,7 +177,8 @@ class HiggsToTauTauAnalysisWrapper():
 		self._parser.add_argument("-x", "--executable", help="Artus executable. [Default: %(default)s]", default=os.path.basename(sys.argv[0]))
 		self._parser.add_argument("-a", "--analysis", required=True, help="Analysis nick [SM, MSSM] or import path ('HiggsAnalysis.KITHiggsToTauTau. ...' or 'HiggsAnalysis/KITHiggsToTauTau/python/ ... .py') of the config module.")
 
-		self._parser.add_argument("--sub-analysis", default='', action='store', choices=['btag-eff', 'etau-fake-es'], help="Keys to run a sub-analysis on top of base analyseis. Example: btag-egg Option to simplify the configs in order to estimate the efficiencies faster. [Default: %(default)s]")
+		self._parser.add_argument("--sub-analysis", default='', type=str, action='store', choices=['btag-eff', 'etau-fake-es'],
+			help="Keys to run a sub-analysis on top of base analyseis. Only one sub-analysis can be run at a time! Example: btag-egg Option to simplify the configs in order to estimate the efficiencies faster. [Default: %(default)s]")
 		self._parser.add_argument("--analysis-channels", default=['all'], nargs='+', type=str, choices=['all', 'mt', 'tt', 'et', 'ee', 'em', 'mm'], help="List of channels processed from the analysis. [Default: %(default)s]")
 		self._parser.add_argument("--no-svfit", default=False, action="store_true", help="Disable SVfit. Default: %(default)s]")
 
@@ -586,7 +587,7 @@ class HiggsToTauTauAnalysisWrapper():
 			epilogArguments += ("--ld-library-paths %s " % " ".join(self._args.ld_library_paths))
 
 		if self._args.sub_analysis != "":
-			epilogArguments += (" --sub-analysis %s " % " ".join(self._args.sub_analysis))
+			epilogArguments += (" --sub-analysis %s " % self._args.sub_analysis)
 		epilogArguments += (" --analysis-channels %s " % " ".join(self._args.analysis_channels))
 		if self._args.no_svfit:
 			epilogArguments += (" --no-svfit ")

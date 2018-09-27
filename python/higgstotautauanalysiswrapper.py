@@ -264,7 +264,7 @@ class HiggsToTauTauAnalysisWrapper():
 		                                 help="Custom SE path, if it should different from the work directory.")
 		runningOptionsGroup.add_argument("--log-to-se", default=False, action="store_true",
 		                                 help="Write logfile in batch mode directly to SE. Does not work with remote batch system")
-		runningOptionsGroup.add_argument("--partition-lfn-modifier", default = None,
+		runningOptionsGroup.add_argument("--partition-lfn-modifier", default=None,
 		                                 help="Forces a certain access to input files. See base conf for corresponding dictionary")
 
 
@@ -313,7 +313,7 @@ class HiggsToTauTauAnalysisWrapper():
                                                 if self._args.n_events:
                                                         f = ROOT.TFile.Open(entry)
                                                         fileevents = f.Get("Events").GetEntries()
-                                                        print "Checking events for",entry,":",fileevents
+                                                        print "Checking events for", entry, ":", fileevents
                                                         f.Close()
 						self._gridControlInputFiles.setdefault(self.extractNickname(entry), []).append(entry + " = " + str(fileevents))
 			elif os.path.splitext(entry)[1] == ".dbs":

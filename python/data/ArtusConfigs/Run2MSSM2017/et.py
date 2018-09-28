@@ -179,12 +179,12 @@ def build_config(nickname):
           "0:e_pt,e_eta,e_iso"
           ))  
   else:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
     config["RooWorkspaceWeightNames"] = [
         "0:crossTriggerMCEfficiencyWeight",
         "0:crossTriggerDataEfficiencyWeight",
-        "0:singleTriggerMCEfficiencyWeight",
-        "0:singleTriggerDataEfficiencyWeight",
+        #"0:singleTriggerMCEfficiencyWeight",
+        #"0:singleTriggerDataEfficiencyWeight",
         "0:singleTriggerMCEfficiencyWeightKIT",
         "0:singleTriggerDataEfficiencyWeightKIT",
     
@@ -195,20 +195,20 @@ def build_config(nickname):
     config["RooWorkspaceObjectNames"] = [
         "0:e_trg_EleTau_Ele24Leg_desy_mc",
         "0:e_trg_EleTau_Ele24Leg_desy_data",
-        "0:e_trg_SingleEle_Ele32OREle35_desy_mc",
-        "0:e_trg_SingleEle_Ele32OREle35_desy_data",
-        "0:e_trg32or35_mc",
-        "0:e_trg32or35_data",
+        #"0:e_trg_SingleEle_Ele32OREle35_desy_mc",
+        #"0:e_trg_SingleEle_Ele32OREle35_desy_data",
+        "0:e_trg_27_32_35_mc",
+        "0:e_trg_27_32_35_data",
 
         "0:e_iso_ratio",
         "0:e_id_ratio",
-        "0:e_reco_ratio",
+        "0:e_trk_ratio",
     ]
     config["RooWorkspaceObjectArguments"] = [
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
-        "0:e_pt,e_eta",
-        "0:e_pt,e_eta",
+        #"0:e_pt,e_eta",
+        #"0:e_pt,e_eta",
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
     

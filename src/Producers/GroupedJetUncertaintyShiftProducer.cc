@@ -27,7 +27,8 @@ void GroupedJetUncertaintyShiftProducer::Init(setting_type const& settings)
 	assert(uncertaintyFile != "");
 	if (settings.GetUseGroupedJetEnergyCorrectionUncertainty()) assert(individualUncertainties.size() > 0);
 
-	jetIDVersion = KappaEnumTypes::ToJetIDVersion(boost::algorithm::to_lower_copy(boost::algorithm::trim_copy(settings.GetJetIDVersion())));
+	validJetsInput = KappaEnumTypes::ToValidJetsInput(boost::algorithm::to_lower_copy(boost::algorithm::trim_copy(settings.GetValidJetsInput())));
+        jetIDVersion = KappaEnumTypes::ToJetIDVersion(boost::algorithm::to_lower_copy(boost::algorithm::trim_copy(settings.GetJetIDVersion())));
 	jetID = KappaEnumTypes::ToJetID(boost::algorithm::to_lower_copy(boost::algorithm::trim_copy(settings.GetJetID())));
 
 	// implementation not nice at the moment. feel free to improve it :)
@@ -133,9 +134,32 @@ void GroupedJetUncertaintyShiftProducer::Produce(event_type const& event, produc
 	// only do all of this if uncertainty shifts should be applied
 	if (settings.GetUseGroupedJetEnergyCorrectionUncertainty() && settings.GetJetEnergyCorrectionUncertaintyShift() != 0.0)
 	{
-		// run over all jets
-                for (std::vector<KBasicJet*>::iterator jet = (product.m_validJets).begin();
-                                 jet != (product.m_validJets).end(); ++jet)
+		// select input source
+                std::vector<KJet*> jets;
+                if ((validJetsInput == KappaEnumTypes::ValidJetsInput::AUTO && ((product.m_correctedTaggedJets).size() > 0)) || (validJetsInput == KappaEnumTypes::ValidJetsInput::CORRECTED))
+                {
+                        jets.resize((product.m_correctedTaggedJets).size());
+                        size_t jetIndex = 0;
+                        for (typename std::vector<std::shared_ptr<KJet> >::iterator jet = (product.m_correctedTaggedJets).begin();
+                             jet != (product.m_correctedTaggedJets).end(); ++jet)
+                        {
+                                jets[jetIndex] = jet->get();
+                                ++jetIndex;
+                        }
+                }
+                else
+                {
+                        jets.resize((event.m_tjets)->size());
+                        size_t jetIndex = 0;
+                        for (typename std::vector<KJet>::iterator jet = (event.m_tjets)->begin(); jet != (event.m_tjets)->end(); ++jet)
+                        {
+                                jets[jetIndex] = &(*jet);
+                                ++jetIndex;
+                        }
+                }
+                
+                // run over all jets
+                for (std::vector<KJet*>::iterator jet = jets.begin(); jet != jets.end(); ++jet)
                         {
                             // add jet momentum to met shift and later subtract shifted momentum in order to get MET shift
                             product.m_MET_shift.p4 += (*jet)->p4;
@@ -158,14 +182,14 @@ void GroupedJetUncertaintyShiftProducer::Produce(event_type const& event, produc
                             product.m_MET_shift.p4 -= (*jet)->p4;
 			}
 		// sort vectors of shifted jets by pt
-		std::sort(product.m_validJets.begin(), product.m_validJets.end(),
-				  [](KBasicJet* jet1, KBasicJet* jet2) -> bool
+		std::sort(jets.begin(), jets.end(),
+				  [](KJet* jet1, KJet* jet2) -> bool
 				  { return jet1->p4.Pt() > jet2->p4.Pt(); });
 
                 // reevaluate ID as in ValidJetsProducer
 		std::vector<KBasicJet*> shiftedJets;
 		std::vector<KJet*> shiftedBTaggedJets;
-		for (std::vector<KBasicJet*>::iterator jet = product.m_validJets.begin(); jet != product.m_validJets.end(); ++jet)
+		for (std::vector<KJet*>::iterator jet = jets.begin(); jet != jets.end(); ++jet)
 		{
 			bool validJet = true;
 

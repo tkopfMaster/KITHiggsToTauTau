@@ -172,12 +172,12 @@ def build_config(nickname, **kwargs):
           "0:m_pt,m_eta"
           ]
   else:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
     config["RooWorkspaceWeightNames"] = [
         "0:crossTriggerMCEfficiencyWeight",
         "0:crossTriggerDataEfficiencyWeight",
-        "0:singleTriggerMCEfficiencyWeight",
-        "0:singleTriggerDataEfficiencyWeight",
+        #"0:singleTriggerMCEfficiencyWeight",
+        #"0:singleTriggerDataEfficiencyWeight",
         "0:singleTriggerMCEfficiencyWeightKIT",
         "0:singleTriggerDataEfficiencyWeightKIT",
 
@@ -186,13 +186,13 @@ def build_config(nickname, **kwargs):
 #        "0:trackWeight", # new recommendation for 2017 data/MC is to remove it (will result in SF = 1.0).
     ]
     config["RooWorkspaceObjectNames"] = [
-        "0:m_trg_MuTau_Mu20Leg_desy_mc",
-        "0:m_trg_MuTau_Mu20Leg_desy_data",
-        "0:m_trg_SingleMu_Mu24ORMu27_desy_mc",
-        "0:m_trg_SingleMu_Mu24ORMu27_desy_data",
-        "0:m_trg24or27_mc",
-        "0:m_trg24or27_data",
-
+        "0:m_trg20_mc",
+        "0:m_trg20_data",
+        #"0:m_trg_SingleMu_Mu24ORMu27_desy_mc",
+        #"0:m_trg_SingleMu_Mu24ORMu27_desy_data",
+        "0:m_trg_mc",
+        "0:m_trg_data",
+  
         "0:m_iso_ratio",
         "0:m_id_ratio",
 #        "0:m_trk_ratio",
@@ -200,8 +200,8 @@ def build_config(nickname, **kwargs):
     config["RooWorkspaceObjectArguments"] = [
         "0:m_pt,m_eta",
         "0:m_pt,m_eta",
-        "0:m_pt,m_eta",
-        "0:m_pt,m_eta",
+        #"0:m_pt,m_eta",
+        #"0:m_pt,m_eta",
         "0:m_pt,m_eta",
         "0:m_pt,m_eta",
 

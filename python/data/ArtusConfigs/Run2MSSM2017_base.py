@@ -155,6 +155,4 @@ def build_config(nickname):
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.mt").build_config(nickname)
   #~ config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tt").build_config(nickname)
 
-  print config["Pipelines"]
-
   return config

@@ -38,7 +38,8 @@ private:
 	std::map<HttEnumTypes::JetEnergyUncertaintyShiftName, JetCorrectorParameters const*> JetCorParMap;
 	std::map<HttEnumTypes::JetEnergyUncertaintyShiftName, JetCorrectionUncertainty *> JetUncMap;
 
-	KappaEnumTypes::JetIDVersion jetIDVersion;
+	KappaEnumTypes::ValidJetsInput validJetsInput;
+        KappaEnumTypes::JetIDVersion jetIDVersion;
 	KappaEnumTypes::JetID jetID;
 
 	std::map<std::string, std::vector<float> > lowerPtCuts;

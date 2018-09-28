@@ -34,26 +34,26 @@ def build_config(nickname):
   
   # explicit configuration
   if isDY or isEmbedded:
-    config["eleTauEsOneProngZeroPiZeroUp"] = {
+    config["tauEleFakeEsOneProngUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["eleTauEsOneProngZeroPiZeroUp"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.029
+    config["tauEleFakeEsOneProngUp"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.029
     
-    config["eleTauEsOneProngZeroPiZeroDown"] = {
+    config["tauEleFakeEsOneProngDown"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["eleTauEsOneProngZeroPiZeroDown"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.019
+    config["tauEleFakeEsOneProngDown"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.019
     
     
-    config["eleTauEsOneProngOnePiZeroUp"] = {
+    config["tauEleFakeEsOneProngPiZerosUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["eleTauEsOneProngOnePiZeroUp"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.086
+    config["tauEleFakeEsOneProngPiZerosUp"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.086
     
-    config["eleTauEsOneProngOnePiZeroDown"] = {
+    config["tauEleFakeEsOneProngPiZerosDown"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["eleTauEsOneProngOnePiZeroDown"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.066
+    config["tauEleFakeEsOneProngPiZerosDown"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.066
   
   
   return config

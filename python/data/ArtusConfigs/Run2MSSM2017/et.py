@@ -156,29 +156,56 @@ def build_config(nickname, **kwargs):
       "1:crossTriggerDataEfficiencyWeight",
   ]
   if isEmbedded:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
-    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
-    config["EmbeddedWeightWorkspaceWeightNames"]=[]
-    config["EmbeddedWeightWorkspaceWeightNames"].extend((
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
+    config["EmbeddedWeightWorkspaceWeightNames"]=[
           "0:muonEffTrgWeight",
+          "0:muonEffIDWeight",
+          "1:muonEffIDWeight",
+          
+          "0:crossTriggerMCEfficiencyWeight",
+          "0:crossTriggerDataEfficiencyWeight",
+          
+          "0:singleTriggerMCEfficiencyWeightKIT",
+          "0:singleTriggerDataEfficiencyWeightKIT",
+          "0:singleTriggerEmbeddedEfficiencyWeightKIT",
+          
           "0:isoWeight",
           "0:idWeight",
           "0:triggerWeight"
-          ))
-    config["EmbeddedWeightWorkspaceObjectNames"]=[]
-    config["EmbeddedWeightWorkspaceObjectNames"].extend((
+          ]
+    config["EmbeddedWeightWorkspaceObjectNames"]=[
           "0:m_sel_trg_ratio",
-          "0:e_iso_binned_ratio",
-          "0:e_id_ratio",
-          "0:e_trg_binned_ratio"
-          ))
-    config["EmbeddedWeightWorkspaceObjectArguments"] = []
-    config["EmbeddedWeightWorkspaceObjectArguments"].extend((
+          "0:m_sel_idEmb_ratio",
+          "1:m_sel_idEmb_ratio",
+          
+          "0:e_trg_EleTau_Ele24Leg_desy_mc",
+          "0:e_trg_EleTau_Ele24Leg_desy_data",
+          
+          "0:e_trg_27_32_35_mc",
+          "0:e_trg_27_32_35_data",
+          "0:e_trg_27_32_35_embed",
+
+          "0:e_iso_embed_ratio",
+          "0:e_id_embed_ratio",
+          "0:e_trg_embed_ratio"
+          ]
+    config["EmbeddedWeightWorkspaceObjectArguments"] = [
           "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
-          "0:e_pt,e_eta,e_iso",
+          "0:gt_pt,gt_eta",
+          "1:gt_pt,gt_eta",
+          
           "0:e_pt,e_eta",
-          "0:e_pt,e_eta,e_iso"
-          ))
+          "0:e_pt,e_eta",
+          
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta"
+          ]
   else:
     config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
     config["RooWorkspaceWeightNames"] = [
@@ -263,7 +290,7 @@ def build_config(nickname, **kwargs):
   if isEmbedded:
     config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.embeddedDecayModeWeightQuantities").build_list())
     config["Quantities"].extend([
-          "muonEffTrgWeight"
+          "muonEffTrgWeight", "muonEffIDWeight_1","muonEffIDWeight_2"
           ])
   if re.search("HToTauTauM125", nickname):
     config["Quantities"].extend([
@@ -304,9 +331,9 @@ def build_config(nickname, **kwargs):
                                                               "producer:ValidBTaggedJetsProducer"))
 
   if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
-,
-  config["Processors"].append(                                "producer:GroupedJetUncertaintyShiftProducer")
-  if not (isEmbedded):           config["Processors"].append( "producer:MetCorrector")
+  
+  if not (isData or isEmbedded): config["Processors"].append( "producer:GroupedJetUncertaintyShiftProducer")
+  if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))
@@ -346,4 +373,6 @@ def build_config(nickname, **kwargs):
          ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauESperDM_shifts").build_config(nickname)) + \
          ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.JECunc_shifts").build_config(nickname)) + \
          ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.regionalJECunc_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauEleFakeESperDM_shifts").build_config(nickname))
+         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauEleFakeESperDM_shifts").build_config(nickname))# + \
+         #ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.METunc_shifts").build_config(nickname))
+        # crashes with too many open files when METunc_shifts are included..

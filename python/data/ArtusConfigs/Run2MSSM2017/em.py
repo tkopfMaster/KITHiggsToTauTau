@@ -124,10 +124,12 @@ def build_config(nickname, **kwargs):
       "trg_muonelectron_mu8ele23:HLT_Mu8_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ_v",
   ]
   if isEmbedded:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
-    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
     config["EmbeddedWeightWorkspaceWeightNames"]=[
           "0:muonEffTrgWeight",
+          "0:muonEffIDWeight",
+          "1:muonEffIDWeight",
           "1:isoWeight",
           "1:idWeight",
           "1:triggerWeight",
@@ -137,15 +139,19 @@ def build_config(nickname, **kwargs):
           ]
     config["EmbeddedWeightWorkspaceObjectNames"]=[
           "0:m_sel_trg_ratio",
-          "1:m_looseiso_ratio",
-          "1:m_id_ratio",
-          "1:m_trg_ratio",
-          "0:e_looseiso_ratio",
-          "0:e_id_ratio",
-          "0:e_trg_ratio"
+          "0:m_sel_idEmb_ratio",
+          "1:m_sel_idEmb_ratio",
+          "1:m_iso_embed_ratio",
+          "1:m_id_embed_ratio",
+          "1:m_trg_embed_ratio",
+          "0:e_iso_embed_ratio",
+          "0:e_id_embed_ratio",
+          "0:e_trg_embed_ratio"
           ]
     config["EmbeddedWeightWorkspaceObjectArguments"] = [
           "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
+          "0:gt_pt,gt_eta",
+          "1:gt_pt,gt_eta",
           "1:m_pt,m_eta",
           "1:m_pt,m_eta",
           "1:m_pt,m_eta",
@@ -248,7 +254,7 @@ def build_config(nickname, **kwargs):
   ])
   if isEmbedded:
     config["Quantities"].extend([
-          "muonEffTrgWeight"
+          "muonEffTrgWeight", "muonEffIDWeight_1","muonEffIDWeight_2"
           ])
 
   config["OSChargeLeptons"] = True

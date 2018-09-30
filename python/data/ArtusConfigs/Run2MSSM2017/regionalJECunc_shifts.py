@@ -34,14 +34,6 @@ def build_config(nickname):
   
   # explicit configuration
   if not re.search("Run201|Embedding", nickname):
-    config["jecUncUp"] = {
-      "JetEnergyCorrectionUncertaintyShift" : 1.0,
-      "SvfitCacheFileFolder" : "nominal"
-    }
-    config["jecUncDown"] = {
-      "JetEnergyCorrectionUncertaintyShift" : -1.0,
-      "SvfitCacheFileFolder" : "nominal"
-    }
     # grouped JEC uncs documented in https://indico.cern.ch/event/740094/contributions/3055870/attachments/1680587/2699877/RegionalJES.pdf
     config["jecUncEta0to5Up"] = {
       "UseGroupedJetEnergyCorrectionUncertainty" : True,
@@ -159,6 +151,24 @@ def build_config(nickname):
       "UseJECShiftsForBJets" : True,
       "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
             "RelativeBal"
+        ]
+    }
+    config["jecUncRelativeSampleUp"] = {
+      "UseGroupedJetEnergyCorrectionUncertainty" : True,
+      "JetEnergyCorrectionUncertaintyShift" : 1.0,
+      "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
+      "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
+            "RelativeSample"
+        ]
+    }
+    config["jecUncRelativeSampleDown"] = {
+      "UseGroupedJetEnergyCorrectionUncertainty" : True,
+      "JetEnergyCorrectionUncertaintyShift" : -1.0,
+      "SvfitCacheFileFolder" : "nominal",
+      "UseJECShiftsForBJets" : True,
+      "JetEnergyCorrectionSplitUncertaintyParameterNames" : [
+            "RelativeSample"
         ]
     }
   

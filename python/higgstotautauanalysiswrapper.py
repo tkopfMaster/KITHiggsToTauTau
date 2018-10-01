@@ -266,6 +266,13 @@ class HiggsToTauTauAnalysisWrapper():
 		                                 help="Write logfile in batch mode directly to SE. Does not work with remote batch system")
 		runningOptionsGroup.add_argument("--partition-lfn-modifier", default=None,
 		                                 help="Forces a certain access to input files. See base conf for corresponding dictionary")
+		runningOptionsGroup.add_argument("--hashed-rootfiles-info", action='store_true', default=False,
+		                                 help="Use the hashed root-files info [Default: %(default)s]")
+		runningOptionsGroup.add_argument("--hashed-rootfiles-info-path", type=str,
+		                                 default="srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/ohlushch/higgs-kit/hashed_samples/hashed_samples",
+		                                 help="Path to root files info hashes [Default: %(default)s]")
+		runningOptionsGroup.add_argument("--hashed-rootfiles-info-force", action='store_true', default=False,
+		                                 help="Force to update the file that is set by hashed-rootfiles-info-path [Default: %(default)s]")
 
 
 	def import_analysis_configs(self):
@@ -298,8 +305,35 @@ class HiggsToTauTauAnalysisWrapper():
 			no_svfit=self._args.no_svfit,
 		)
 
-	def setInputFilenames(self, filelist, alreadyInGridControl = False): ###could be inherited from artusWrapper!
-		#if (not (isinstance(self._config["InputFiles"], list)) and not isinstance(self._config["InputFiles"], basestring)):
+	def gfal_copy(self, from_path="", where_path="", force=False):
+		import subprocess
+		bashCommand = "gfal-copy " + force * " -f " + from_path + " " + where_path
+		if self._args.no_run:
+			log.debug("\tWould call with subprocess: " + bashCommand)
+		else:
+			process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+			output, error = process.communicate()
+			log.debug(output)
+			if error is not None:
+				print "\tsubprocess copy call error:", error
+				exit(1)
+
+	def setInputFilenames(self, filelist, alreadyInGridControl=False): ###could be inherited from artusWrapper!
+		log.debug("setInputFilenames:: start")
+		if self._args.hashed_rootfiles_info:
+			hashed_data_path = self._args.hashed_rootfiles_info_path
+
+			# a way to check that gfal-tools should be use - maybe there is smtg more intelligent
+			if ":/" in self._args.hashed_rootfiles_info_path:
+				hashed_data_path = "temp_hashed_samples_{0}".format(hashlib.md5(str(self._config)).hexdigest())
+				self.gfal_copy(from_path=self._args.hashed_rootfiles_info_path, where_path=hashed_data_path)
+
+			import shelve
+			hashed_data_path = os.path.abspath(hashed_data_path)
+			log.debug("hashed_data_path: " + hashed_data_path)
+			d = shelve.open(hashed_data_path)
+
+		# if (not (isinstance(self._config["InputFiles"], list)) and not isinstance(self._config["InputFiles"], basestring)):
 		self._config["InputFiles"] = []
 		for entry in filelist:
 			if os.path.splitext(entry)[1] == ".root":
@@ -308,14 +342,24 @@ class HiggsToTauTauAnalysisWrapper():
 					self.setInputFilenames(filelist, alreadyInGridControl)
 				else:
 					self._config["InputFiles"].append(entry)
+
 					if not alreadyInGridControl:
-                                                fileevents = 1
-                                                if self._args.n_events:
-                                                        f = ROOT.TFile.Open(entry)
-                                                        fileevents = f.Get("Events").GetEntries()
-                                                        print "Checking events for", entry, ":", fileevents
-                                                        f.Close()
+						fileevents = 1
+						if self._args.n_events:
+							if self._args.hashed_rootfiles_info and entry in d:
+								fileevents = d[entry]
+								log.debug("hashed_data_path for " + entry + " : " + str(fileevents))
+							else:
+								f = ROOT.TFile.Open(entry)
+								fileevents = f.Get("Events").GetEntries()
+								log.debug("Checking events that are not found in the cashes for " + str(entry) + " : " + str(fileevents))
+								f.Close()
+
+								if self._args.hashed_rootfiles_info and self._args.hashed_rootfiles_info_force:
+									d[entry] = fileevents
+
 						self._gridControlInputFiles.setdefault(self.extractNickname(entry), []).append(entry + " = " + str(fileevents))
+
 			elif os.path.splitext(entry)[1] == ".dbs":
 				tmpDBS = self.readDbsFile(entry)
 				tmpDBS = self.removeProcessedFiles(tmpDBS, entry)
@@ -334,6 +378,12 @@ class HiggsToTauTauAnalysisWrapper():
 				self.setInputFilenames(txtFileContent)
 			else:
 				log.warning("Found file in input search path that is not further considered: " + entry + "\n")
+
+		if self._args.hashed_rootfiles_info:
+			d.close()
+			if self._args.hashed_rootfiles_info_force and "temp_hashed_samples" in hashed_data_path:
+				self.gfal_copy(from_path=hashed_data_path, where_path=self._args.hashed_rootfiles_info_path, force=True)
+
 
 	def readDbsFile(self, path):
 		dbsInput = {}

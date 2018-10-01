@@ -12,7 +12,9 @@ import os
 import importlib
 
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
+    etau_fake_es = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "etau-fake-es" else False
+
     config = jsonTools.JsonDict()
     datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
 
@@ -20,6 +22,7 @@ def build_config(nickname):
     isEmbedded = datasetsHelper.isEmbedded(nickname)
     isData = datasetsHelper.isData(nickname) and (not isEmbedded)
     isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+    isEWKZ2Jets = re.search("EWKZ2Jets", nickname)
 
     # includes
     includes = []

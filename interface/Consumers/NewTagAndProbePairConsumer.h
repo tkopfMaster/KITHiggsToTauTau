@@ -85,10 +85,6 @@ class NewTagAndProbePairConsumerBase : public ConsumerBase<HttTypes>
 
                 IntQuantities["decayModeFinding_p"] = DefaultValues::UndefinedInt;
 
-		// IntQuantities["trg_t_IsoMu24"]=false;
-		// IntQuantities["trg_t_IsoMu27"]=false;
-		// IntQuantities["trg_p_IsoMu24"]=false;
-		// IntQuantities["trg_p_IsoMu27"]=false;
 		// Create Map entries for selected trigger quantities
 		m_hltFiredBranchNames = Utility::ParseVectorToMap(settings.GetHLTBranchNames());
 		for (auto hltNames : m_hltFiredBranchNames)

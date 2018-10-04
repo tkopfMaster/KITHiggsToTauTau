@@ -202,6 +202,8 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new NewValidMMPairCandidatesProducer();
 	else if(id == NewMMTagAndProbePairCandidatesProducer().GetProducerId())
 		return new NewMMTagAndProbePairCandidatesProducer();	
+	else if(id == NewMTTagAndProbePairCandidatesProducer().GetProducerId())
+		return new NewMTTagAndProbePairCandidatesProducer();	
 	else if(id == NewValidEEPairCandidatesProducer().GetProducerId())
 		return new NewValidEEPairCandidatesProducer();
 	else if(id == GenTTPairCandidatesProducer().GetProducerId())
@@ -364,6 +366,8 @@ ConsumerBaseUntemplated * HttFactory::createConsumer (std::string const& id)
 		return new BTagEffConsumer();
 	else if(id == NewMMTagAndProbePairConsumer().GetConsumerId())
 		return new NewMMTagAndProbePairConsumer();
+	else if(id == NewMTTagAndProbePairConsumer().GetConsumerId())
+		return new NewMTTagAndProbePairConsumer();
 	else if (id == AcceptanceEfficiencyConsumer().GetConsumerId())
 		return new AcceptanceEfficiencyConsumer();
 	else if(id == TagAndProbeMuonPairConsumer<HttTypes>().GetConsumerId())

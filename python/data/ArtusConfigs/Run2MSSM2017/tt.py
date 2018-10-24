@@ -280,7 +280,7 @@ def build_config(nickname, **kwargs):
   if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
-                                                              "producer:DiJetQuantitiesProducer"))#,
+                                                              "producer:DiJetQuantitiesProducer",
                                                               "filter:MinimalPlotlevelFilter"))
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")

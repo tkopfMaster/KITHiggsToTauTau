@@ -298,6 +298,10 @@ void DecayChannelProducer::Init(setting_type const& settings)
 	{
 		return product.m_flavourOrderedLeptons.at(0)->p4.Pt();
 	});
+	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("lep1E", [](event_type const& event, product_type const& product)
+	{
+		return product.m_flavourOrderedLeptons.at(0)->p4.E();
+	});
 	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("lep1Eta", [](event_type const& event, product_type const& product)
 	{
 		return product.m_flavourOrderedLeptons.at(0)->p4.Eta();
@@ -462,6 +466,10 @@ void DecayChannelProducer::Init(setting_type const& settings)
 	{
 		return product.m_flavourOrderedLeptons.at(1)->p4.Pt();
 	});
+	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("lep2E", [](event_type const& event, product_type const& product)
+	{
+		return product.m_flavourOrderedLeptons.at(1)->p4.E();
+	});
 	LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("lep2Eta", [](event_type const& event, product_type const& product)
 	{
 		return product.m_flavourOrderedLeptons.at(1)->p4.Eta();
@@ -624,6 +632,8 @@ void DecayChannelProducer::Init(setting_type const& settings)
 	std::vector<std::string> electronDiscriminators;
         electronDiscriminators.push_back("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values");
         electronDiscriminators.push_back("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values");
+        electronDiscriminators.push_back("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2Values");
+        electronDiscriminators.push_back("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV2Values");
         electronDiscriminators.push_back("electronCorrection:ecalTrkEnergyPostCorr");
 
 	for (size_t leptonIndex = 0; leptonIndex < 2; ++leptonIndex)

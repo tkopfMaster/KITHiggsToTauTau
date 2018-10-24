@@ -36,10 +36,10 @@ def build_config(nickname, **kwargs):
     config["TauElectronFakeEnergyCorrectionOneProng"] = 1.0
     config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.0
   else:
-    config["TauEnergyCorrectionOneProng"] = 1.008
-    config["TauEnergyCorrectionOneProngPiZeros"] = 0.992
-    config["TauEnergyCorrectionThreeProng"] = 0.990
-    config["TauElectronFakeEnergyCorrectionOneProng"] = 1.024
-    config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.076
-  
+    # recent numbers for Tau ES: Slide 14, m_vis fit: https://indico.cern.ch/event/763206/contributions/3170631/attachments/1730040/2795667/Izaak_TauPOG_TauES_20181008_v0.pdf
+    config["TauEnergyCorrectionOneProng"] = 1.007 # down: 0.999, central: 1.007, up: 1.015
+    config["TauEnergyCorrectionOneProngPiZeros"] = 0.998 # down: 0.990, central: 0.998, up: 1.006
+    config["TauEnergyCorrectionThreeProng"] = 1.001 # down: 0.992, central: 1.001, up: 1.010
+    config["TauElectronFakeEnergyCorrectionOneProng"] = 1.024 #TODO these are 2016 values!
+    config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.076 #TODO these are 2016 values!
   return config

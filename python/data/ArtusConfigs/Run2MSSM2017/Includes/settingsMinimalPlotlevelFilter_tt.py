@@ -18,6 +18,7 @@ def build_config(nickname, **kwargs):
   #datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
 
   config["PlotlevelFilterExpressionQuantities"] = [
+    "flagMETFilter",
     "againstElectronVLooseMVA6_2",
     "extraelec_veto",
     "againstMuonLoose3_2",
@@ -25,6 +26,6 @@ def build_config(nickname, **kwargs):
     "byVLooseIsolationMVArun2017v2DBoldDMwLT2017_1",
     "byVLooseIsolationMVArun2017v2DBoldDMwLT2017_2"
   ]
-  config["PlotlevelFilterExpression"] = "(extraelec_veto < 0.5)*(extramuon_veto < 0.5)*(againstMuonLoose3_2 > 0.5)*(againstElectronVLooseMVA6_2 > 0.5)*(byVLooseIsolationMVArun2017v2DBoldDMwLT2017_1 > 0.5)*(byVLooseIsolationMVArun2017v2DBoldDMwLT2017_2 > 0.5)"
+  config["PlotlevelFilterExpression"] = "(flagMETFilter > 0.5)*(extraelec_veto < 0.5)*(extramuon_veto < 0.5)*(againstMuonLoose3_2 > 0.5)*(againstElectronVLooseMVA6_2 > 0.5)*(byVLooseIsolationMVArun2017v2DBoldDMwLT2017_1 > 0.5)*(byVLooseIsolationMVArun2017v2DBoldDMwLT2017_2 > 0.5)"
   
   return config

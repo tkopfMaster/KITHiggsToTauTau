@@ -296,7 +296,7 @@ def build_config(nickname, **kwargs):
   config["TopPtReweightingStrategy"] = "Run2"
 
   config["Processors"] =   []#                                  ["producer:MuonCorrectionsProducer"] if isEmbedded else []
-  if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+  #if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
   config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
@@ -339,7 +339,6 @@ def build_config(nickname, **kwargs):
   if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")
 
   if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")
-  #if not isEmbedded:             config["Processors"].append( "producer:JetToTauFakesProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   if isGluonFusion:              config["Processors"].append( "producer:SMggHNNLOProducer")
   config["Processors"].append(                                "producer:SvfitProducer")

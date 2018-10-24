@@ -248,7 +248,7 @@ def build_config(nickname, **kwargs):
   config["TopPtReweightingStrategy"] = "Run2"
 
   config["Processors"] = []
-  if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+  #if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
   config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
@@ -278,11 +278,10 @@ def build_config(nickname, **kwargs):
   #                                                            "producer:TauTauTriggerWeightProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
-  config["Processors"].extend((                               "filter:MinimalPlotlevelFilter",
-                                                              "producer:TauTauRestFrameSelector",
+  config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))#,
-                                                              # "producer:JetToTauFakesProducer"))
+                                                              "filter:MinimalPlotlevelFilter"))
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")
   if not isData:                 config["Processors"].append( "producer:TauTrigger2017EfficiencyProducer")

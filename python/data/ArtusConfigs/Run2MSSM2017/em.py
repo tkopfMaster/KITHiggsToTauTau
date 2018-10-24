@@ -261,7 +261,7 @@ def build_config(nickname, **kwargs):
   config["TopPtReweightingStrategy"] = "Run2"
 
   config["Processors"] = []
-  if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+  #if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
   config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
@@ -290,10 +290,9 @@ def build_config(nickname, **kwargs):
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))
-  config["Processors"].append(                                "producer:SvfitProducer")
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
-  #config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
+  config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   #if not (isData or isEmbedded): config["Processors"].extend(("producer:TriggerWeightProducer",
   #                                                            "producer:IdentificationWeightProducer"))
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
@@ -301,6 +300,7 @@ def build_config(nickname, **kwargs):
   #config["Processors"].extend((                               "producer:EmuQcdWeightProducer",
   config["Processors"].append(
                                                               "producer:EventWeightProducer")#)
+  config["Processors"].append(                                "producer:SvfitProducer")
 
   config["AddGenMatchedParticles"] = True
   config["BranchGenMatchedElectrons"] = True

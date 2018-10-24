@@ -32,7 +32,7 @@ def build_config(nickname, **kwargs):
   config["VetoElectronID"] = "user"
   config["VetoElectronIDType"] = "cutbased2015andlater"
   # dilepton veto electron ID
-  config["VetoElectronIDName"] = "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-veto"
+  config["VetoElectronIDName"] = "egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"
 
   config["VetoElectronIsoType"] = "user"
   config["VetoElectronIso"] = "none"

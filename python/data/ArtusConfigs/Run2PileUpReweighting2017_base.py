@@ -13,7 +13,7 @@ import Kappa.Skimming.datasetsHelperTwopz as datasetsHelperTwopz
 import importlib
 import os
 
-def build_config(nickname):
+def build_config(nickname, **kwargs):
   config = jsonTools.JsonDict()
   datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
   

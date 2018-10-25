@@ -266,8 +266,11 @@ class HiggsToTauTauAnalysisWrapper():
 		                                 help="Write logfile in batch mode directly to SE. Does not work with remote batch system")
 		runningOptionsGroup.add_argument("--partition-lfn-modifier", default=None,
 		                                 help="Forces a certain access to input files. See base conf for corresponding dictionary")
+
 		runningOptionsGroup.add_argument("--hashed-rootfiles-info", action='store_true', default=False,
-		                                 help="Use the hashed root-files info [Default: %(default)s]")
+		                                 help="Use the hashed root-files info. "
+		                                 "Hashes have to be DELETED FIRST in case an update is needed and the path of the inputs is unchanged "
+		                                 "[Default: %(default)s]")
 		runningOptionsGroup.add_argument("--hashed-rootfiles-info-path", type=str,
 		                                 default="srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/ohlushch/higgs-kit/hashed_samples/hashed_samples",
 		                                 help="Path to root files info hashes [Default: %(default)s]")
@@ -381,6 +384,12 @@ class HiggsToTauTauAnalysisWrapper():
 
 		if self._args.hashed_rootfiles_info:
 			d.close()
+
+			if self._args.hashed_rootfiles_info and self._args.hashed_rootfiles_info_force:
+				log.info("Hashes updated: " + hashed_data_path)
+			else:
+				log.info("Hashes NOT updated: " + hashed_data_path)
+
 			if self._args.hashed_rootfiles_info_force and "temp_hashed_samples" in hashed_data_path:
 				self.gfal_copy(from_path=hashed_data_path, where_path=self._args.hashed_rootfiles_info_path, force=True)
 

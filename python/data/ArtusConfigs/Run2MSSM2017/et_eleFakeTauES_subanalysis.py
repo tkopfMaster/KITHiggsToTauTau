@@ -21,7 +21,7 @@ def build_config(nickname, **kwargs):
     # define frequently used conditions
     isEmbedded = datasetsHelper.isEmbedded(nickname)
     isData = datasetsHelper.isData(nickname) and (not isEmbedded)
-    isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+    isDY = re.search("DY.?JetsToLLM", nickname)
     isEWKZ2Jets = re.search("EWKZ2Jets", nickname)
 
     # includes

@@ -268,7 +268,7 @@ def build_config(nickname, **kwargs):
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer"))
   if not (isData or isEmbedded): config["Processors"].append( "producer:GroupedJetUncertaintyShiftProducer")
-  config["Processors"].append(                                "producer:ValidBTaggedJetsProducer"))
+  config["Processors"].append(                                "producer:ValidBTaggedJetsProducer")
 
   if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
 

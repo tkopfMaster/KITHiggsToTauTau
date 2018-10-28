@@ -41,7 +41,7 @@ void GroupedJetUncertaintyShiftProducer::Init(setting_type const& settings)
 		LOG(FATAL) << "GroupedJetUncertaintyShiftProducer: upperAbsEtaCuts.size() = " << upperAbsEtaCuts.size() << ". Current implementation requires it to be <= 1.";
 	
 	// some inputs needed for b-tagging
-	std::map<std::string, std::vector<float> > bTagWorkingPointsTmp = Utility::ParseMapTypes<std::string, float>(
+	/*std::map<std::string, std::vector<float> > bTagWorkingPointsTmp = Utility::ParseMapTypes<std::string, float>(
 			Utility::ParseVectorToMap(settings.GetBTaggerWorkingPoints())
 	);
 
@@ -58,7 +58,7 @@ void GroupedJetUncertaintyShiftProducer::Init(setting_type const& settings)
 			m_bTagSFMethod = KappaEnumTypes::ToBTagScaleFactorMethod(boost::algorithm::to_lower_copy(boost::algorithm::trim_copy(settings.GetBTagSFMethod())));
 			m_bTagSf.initBtagwp(bTagWorkingPointsTmp.begin()->first);
 		}
-	}
+	}*/
 
 	for (auto const& uncertainty : individualUncertainties)
 	{
@@ -225,7 +225,12 @@ void GroupedJetUncertaintyShiftProducer::Produce(event_type const& event, produc
 			if (validJet)
 			{
 				shiftedJets.push_back(*jet);
-			}
+                        }
+                }
+                product.m_validJets = shiftedJets;
+                /*for (std::vector<KBasicJet*>::iterator jet = product.m_validJets.begin();
+                        jet != product.m_validJets.end(); ++jet)
+                {
 			if (settings.GetUseJECShiftsForBJets())
 			{
 				// determine if jet is btagged
@@ -272,15 +277,14 @@ void GroupedJetUncertaintyShiftProducer::Produce(event_type const& event, produc
 
 				if (validBJet) {
 					shiftedBTaggedJets.push_back(tjet);
-					validJet = true; //mark jet as not to be deleted
 				}
 			}
 			//delete non valid (b)jets
-			//if(!validJet) delete *jet; instead replace collections below
+			//if(!validJet) delete *jet; //instead replace collections below
 		}
 
-		product.m_validJets = shiftedJets;
-		product.m_bTaggedJets = shiftedBTaggedJets;
+		//product.m_validJets = shiftedJets;
+		product.m_bTaggedJets = shiftedBTaggedJets;*/
 	}
 }
 

@@ -319,12 +319,12 @@ def build_config(nickname, **kwargs):
                                                               "producer:Run2DecayChannelProducer",
                                                               "producer:DiVetoMuonVetoProducer",
   #                                                            "producer:TaggedJetCorrectionsProducer",
-                                                              "producer:ValidTaggedJetsProducer",
-                                                              "producer:ValidBTaggedJetsProducer"))
+                                                              "producer:ValidTaggedJetsProducer"))
+  if not (isData or isEmbedded): config["Processors"].append( "producer:GroupedJetUncertaintyShiftProducer")
+  config["Processors"].append(                                "producer:ValidBTaggedJetsProducer")
 
   if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
 
-  if not (isData or isEmbedded): config["Processors"].append( "producer:GroupedJetUncertaintyShiftProducer")
   if not (isData or isEmbedded): config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",

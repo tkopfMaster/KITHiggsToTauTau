@@ -14,6 +14,7 @@ import importlib
 #import os
 
 def build_config(nickname, **kwargs):
+  etau_fake_es = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "etau-fake-es" else False
   config = jsonTools.JsonDict()
   #datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
 
@@ -24,8 +25,11 @@ def build_config(nickname, **kwargs):
     "againstMuonLoose3_2",
     "extramuon_veto",
     "byVLooseIsolationMVArun2017v2DBoldDMwLT2017_2",
-    "nDiElectronVetoPairsOS",
   ]
-  config["PlotlevelFilterExpression"] = "(flagMETFilter > 0.5)*(nDiElectronVetoPairsOS < 0.5)*(extraelec_veto < 0.5)*(extramuon_veto < 0.5)*(againstMuonLoose3_2 > 0.5)*(againstElectronTightMVA6_2 > 0.5)*(byVLooseIsolationMVArun2017v2DBoldDMwLT2017_2 > 0.5)"
+  config["PlotlevelFilterExpression"] = "(flagMETFilter > 0.5)*(extraelec_veto < 0.5)*(extramuon_veto < 0.5)*(againstMuonLoose3_2 > 0.5)*(againstElectronTightMVA6_2 > 0.5)*(byVLooseIsolationMVArun2017v2DBoldDMwLT2017_2 > 0.5)"
+
+  if not etau_fake_es:
+    config["PlotlevelFilterExpressionQuantities"].append('nDiElectronVetoPairsOS')
+    config["PlotlevelFilterExpression"] += '*(nDiElectronVetoPairsOS < 0.5)'
 
   return config

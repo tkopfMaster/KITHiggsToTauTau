@@ -31,5 +31,12 @@ def build_config(nickname, **kwargs):
   if not etau_fake_es:
     config["PlotlevelFilterExpressionQuantities"].append('nDiElectronVetoPairsOS')
     config["PlotlevelFilterExpression"] += '*(nDiElectronVetoPairsOS < 0.5)'
+  else:
+    # Should not be used with da-driven bg estimation techniques
+    # config["PlotlevelFilterExpressionQuantities"].append('njets')
+    # config["PlotlevelFilterExpression"] += '*(njets == 0)'
+    config["PlotlevelFilterExpressionQuantities"].append('byLooseIsolationMVArun2017v2DBoldDMwLT2017_2')
+    config["PlotlevelFilterExpression"] += '*(byLooseIsolationMVArun2017v2DBoldDMwLT2017_2 > 0.5)'
+
 
   return config

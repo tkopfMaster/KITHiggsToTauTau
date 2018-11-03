@@ -240,7 +240,7 @@ def build_config(nickname, **kwargs):
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
 
-        "0:e_pt,e_eta, e_iso",
+        "0:e_pt,e_eta",
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
     ]

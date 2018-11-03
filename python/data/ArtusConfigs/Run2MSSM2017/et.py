@@ -156,8 +156,8 @@ def build_config(nickname, **kwargs):
       "1:crossTriggerDataEfficiencyWeight",
   ]
   if isEmbedded:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
-    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_2.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_2.root"
     config["EmbeddedWeightWorkspaceWeightNames"]=[
           "0:muonEffTrgWeight",
           "0:muonEffIDWeight",
@@ -182,13 +182,13 @@ def build_config(nickname, **kwargs):
           "0:e_trg_EleTau_Ele24Leg_desy_mc",
           "0:e_trg_EleTau_Ele24Leg_desy_data",
           
-          "0:e_trg_27_32_35_mc",
-          "0:e_trg_27_32_35_data",
-          "0:e_trg_27_32_35_embed",
+          "0:e_trg_kit_mc",
+          "0:e_trg_kit_data",
+          "0:e_trg_kit_embed",
 
-          "0:e_iso_embed_ratio",
-          "0:e_id_embed_ratio",
-          "0:e_trg_embed_ratio"
+          "0:e_iso_binned_embed_kit_ratio",
+          "0:e_id90_embed_kit_ratio",
+          "0:e_trg_embed_kit_ratio"
           ]
     config["EmbeddedWeightWorkspaceObjectArguments"] = [
           "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
@@ -202,7 +202,7 @@ def build_config(nickname, **kwargs):
           "0:e_pt,e_eta",
           "0:e_pt,e_eta",
           
-          "0:e_pt,e_eta",
+          "0:e_pt,e_eta,e_iso",
           "0:e_pt,e_eta",
           "0:e_pt,e_eta"
           ]
@@ -228,9 +228,9 @@ def build_config(nickname, **kwargs):
         "0:e_trg_27_32_35_mc",
         "0:e_trg_27_32_35_data",
 
-        "0:e_iso_ratio",
-        "0:e_id_ratio",
-        "0:e_trk_ratio",
+        "0:e_iso_kit_ratio",
+        "0:e_id_kit_ratio",
+        "0:e_trk_kit_ratio",
     ]
     config["RooWorkspaceObjectArguments"] = [
         "0:e_pt,e_eta",
@@ -240,7 +240,7 @@ def build_config(nickname, **kwargs):
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
 
-        "0:e_pt,e_eta",
+        "0:e_pt,e_eta, e_iso",
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
     ]
@@ -268,7 +268,7 @@ def build_config(nickname, **kwargs):
           "HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1_v:hltOverlapFilterIsoEle24WPTightGsfLooseIsoPFTau30",
           "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:hltPFTau180TrackPt50LooseAbsOrRelMediumHighPtRelaxedIsoIso",
           "HLT_MediumChargedIsoPFTau180HighPtRelaxedIso_Trk50_eta2p1_v:hltSelectedPFTau180MediumChargedIsolationL1HLTMatched"
-    ]
+]
 
   config["InvalidateNonMatchingElectrons"] = False
   config["InvalidateNonMatchingMuons"] = False

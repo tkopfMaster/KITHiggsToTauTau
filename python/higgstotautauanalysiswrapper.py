@@ -178,7 +178,7 @@ class HiggsToTauTauAnalysisWrapper():
 		self._parser.add_argument("-a", "--analysis", required=True, help="Analysis nick [SM, MSSM] or import path ('HiggsAnalysis.KITHiggsToTauTau. ...' or 'HiggsAnalysis/KITHiggsToTauTau/python/ ... .py') of the config module.")
 
 		self._parser.add_argument("--sub-analysis", default='', action='store', choices=['btag-eff'], help="Keys to run a sub-analysis on top of base analyseis. Example: btag-egg Option to simplify the configs in order to estimate the efficiencies faster. [Default: %(default)s]")
-		self._parser.add_argument("--analysis-channels", default=['all'], nargs='+', type=str, choices=['all', 'mt', 'tt', 'et', 'ee', 'em', 'mm'], help="List of channels processed from the analysis. [Default: %(default)s]")
+		self._parser.add_argument("-c", "--analysis-channels", default=['all'], nargs='+', type=str, choices=['all', 'mt', 'tt', 'et', 'ee', 'em', 'mm'], help="List of channels processed from the analysis. [Default: %(default)s]")
 		self._parser.add_argument("--no-svfit", default=False, action="store_true", help="Disable SVfit. Default: %(default)s]")
 
 		fileOptionsGroup = self._parser.add_argument_group("File options")
@@ -194,8 +194,6 @@ class HiggsToTauTauAnalysisWrapper():
 		                              help="Name for this Artus project specifies the name of the work subdirectory.")
 
 		configOptionsGroup = self._parser.add_argument_group("Config options")
-		#configOptionsGroup.add_argument("-c", "--base-configs", nargs="+", required=False, default={},
-		#                                help="JSON base configurations. All configs are merged.")
 		#configOptionsGroup.add_argument("-C", "--pipeline-base-configs", nargs="+",
 		#                                help="JSON pipeline base configurations. All pipeline configs will be merged with these common configs.")
 		#configOptionsGroup.add_argument("-p", "--pipeline-configs", nargs="+", action="append",

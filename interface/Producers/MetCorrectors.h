@@ -307,7 +307,8 @@ public:
 		(product.*m_metMemberCorrected) = *(product.*m_metMemberUncorrected);
 		
 		// Apply the recoil correction to the MET object (only for DY, W and Higgs samples)
-		if (m_processType == MEtSys::ProcessType::BOSON && !(m_correctionMethod == MetCorrectorBase::CorrectionMethod::NONE))
+		bool apply_RC = m_processType == MEtSys::ProcessType::BOSON && !(m_correctionMethod == MetCorrectorBase::CorrectionMethod::NONE);
+		if (apply_RC)
 		{
                         LOG(DEBUG) << "Applying recoil & lepton corrections";
 			(product.*m_metMemberCorrected).p4.SetPxPyPzE(
@@ -333,7 +334,8 @@ public:
 				product.m_met = product.*m_metMemberCorrected;
 			}
 		}
-		else if (settings.GetMetUncertaintyShift()) // If no other corrections are applied, use MET shifted by uncertainty if required by configuration TODO: if lepton corrections are applied, this is not accounted for ---> new Producer?
+		
+		if (!apply_RC && settings.GetMetUncertaintyShift()) // If no other corrections are applied, use MET shifted by uncertainty if required by configuration TODO: if lepton corrections are applied, this is not accounted for ---> new Producer?
 		{
 			(product.*m_metMemberCorrected).p4.SetPxPyPzE(
 				(product.*m_metMemberUncorrected)->p4_shiftedByUncertainties[m_metUncertaintyType].Px(),
@@ -345,7 +347,7 @@ public:
 				product.m_met = product.*m_metMemberCorrected;
 			}
 		}
-		else if (settings.GetUseGroupedJetEnergyCorrectionUncertainty())
+		if (!apply_RC && settings.GetUseGroupedJetEnergyCorrectionUncertainty())
                 {
                         product.m_met.p4 += product.m_MET_shift.p4;
                 }

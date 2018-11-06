@@ -63,7 +63,7 @@ def build_config(nickname, **kwargs):
   config["ElectronScaleAndSmearUsed"] = True
   config["ElectronLowerPtCuts"] = ["13.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.5"]
-  config["MuonLowerPtCuts"] = ["9.0"]
+  config["MuonLowerPtCuts"] = ["10.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.4"]
   config["DiTauPairMinDeltaRCut"] = 0.3
   config["DeltaRTriggerMatchingMuons"] = 0.3

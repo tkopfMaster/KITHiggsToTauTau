@@ -169,6 +169,19 @@ def build_config(nickname, **kwargs):
           "0:singleTriggerMCEfficiencyWeightKIT",
           "0:singleTriggerDataEfficiencyWeightKIT",
           "0:singleTriggerEmbeddedEfficiencyWeightKIT",
+
+          "0:singleTriggerMCEfficiencyWeightKIT_27",
+          "0:singleTriggerDataEfficiencyWeightKIT_27",
+          "0:singleTriggerEmbeddedEfficiencyWeightKIT_27",
+          "0:singleTriggerMCEfficiencyWeightKIT_32",
+          "0:singleTriggerDataEfficiencyWeightKIT_32",
+          "0:singleTriggerEmbeddedEfficiencyWeightKIT_32",
+          "0:singleTriggerMCEfficiencyWeightKIT_32fb",
+          "0:singleTriggerDataEfficiencyWeightKIT_32fb",
+          "0:singleTriggerEmbeddedEfficiencyWeightKIT_32fb",
+          "0:singleTriggerMCEfficiencyWeightKIT_35",
+          "0:singleTriggerDataEfficiencyWeightKIT_35",
+          "0:singleTriggerEmbeddedEfficiencyWeightKIT_35",
           
           "0:isoWeight",
           "0:idWeight",
@@ -186,6 +199,19 @@ def build_config(nickname, **kwargs):
           "0:e_trg_kit_data",
           "0:e_trg_kit_embed",
 
+          "0:e_trg27_kit_mc",
+          "0:e_trg27_kit_data",
+          "0:e_trg27_kit_embed",
+          "0:e_trg32_kit_mc",
+          "0:e_trg32_kit_data",
+          "0:e_trg32_kit_embed",
+          "0:e_trg32fb_kit_mc",
+          "0:e_trg32fb_kit_data",
+          "0:e_trg32fb_kit_embed",
+          "0:e_trg35_kit_mc",
+          "0:e_trg35_kit_data",
+          "0:e_trg35_kit_embed",
+
           "0:e_iso_binned_embed_kit_ratio",
           "0:e_id90_embed_kit_ratio",
           "0:e_trg_embed_kit_ratio"
@@ -198,6 +224,19 @@ def build_config(nickname, **kwargs):
           "0:e_pt,e_eta",
           "0:e_pt,e_eta",
           
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
           "0:e_pt,e_eta",
           "0:e_pt,e_eta",
           "0:e_pt,e_eta",
@@ -216,6 +255,15 @@ def build_config(nickname, **kwargs):
         "0:singleTriggerMCEfficiencyWeightKIT",
         "0:singleTriggerDataEfficiencyWeightKIT",
 
+        "0:singleTriggerMCEfficiencyWeightKIT_27",
+        "0:singleTriggerDataEfficiencyWeightKIT_27",
+        "0:singleTriggerMCEfficiencyWeightKIT_32",
+        "0:singleTriggerDataEfficiencyWeightKIT_32",
+        "0:singleTriggerMCEfficiencyWeightKIT_32fb",
+        "0:singleTriggerDataEfficiencyWeightKIT_32fb",
+        "0:singleTriggerMCEfficiencyWeightKIT_35",
+        "0:singleTriggerDataEfficiencyWeightKIT_35",
+
         "0:idWeight",
         "0:isoWeight",
         "0:trackWeight",
@@ -228,6 +276,15 @@ def build_config(nickname, **kwargs):
         "0:e_trg_kit_mc",
         "0:e_trg_kit_data",
 
+        "0:e_trg27_kit_mc",
+        "0:e_trg27_kit_data",
+        "0:e_trg32_kit_mc",
+        "0:e_trg32_kit_data",
+        "0:e_trg32fb_kit_mc",
+        "0:e_trg32fb_kit_data",
+        "0:e_trg35_kit_mc",
+        "0:e_trg35_kit_data",
+
         "0:e_iso_kit_ratio",
         "0:e_id90_kit_ratio",
         "0:e_trk_ratio",
@@ -237,6 +294,15 @@ def build_config(nickname, **kwargs):
         "0:e_pt,e_eta",
         #"0:e_pt,e_eta",
         #"0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
 
@@ -368,13 +434,13 @@ def build_config(nickname, **kwargs):
      config["Consumers"].append("BTagEffConsumer")
 
   # pipelines - systematic shifts
-  return ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.nominal").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauESperDM_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.regionalJECunc_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauEleFakeESperDM_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.METunc_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.METrecoil_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.eleES_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.btagging_shifts").build_config(nickname))
+  return ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.nominal").build_config(nickname)) #+ \
+         #ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauESperDM_shifts").build_config(nickname)) + \
+         #ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.regionalJECunc_shifts").build_config(nickname)) + \
+         #ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauEleFakeESperDM_shifts").build_config(nickname)) + \
+         #ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.METunc_shifts").build_config(nickname)) + \
+         #ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.METrecoil_shifts").build_config(nickname)) + \
+         #ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.eleES_shifts").build_config(nickname)) + \
+         #ACU.apply_uncertainty_shift_configs('et', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.btagging_shifts").build_config(nickname))
 
 

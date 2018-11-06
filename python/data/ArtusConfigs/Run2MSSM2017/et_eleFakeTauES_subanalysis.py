@@ -46,7 +46,7 @@ def build_config(nickname, **kwargs):
         root_str = lambda x: str(x).replace("-", "neg").replace(".", "p")
 
         for es in etau_es_shifts:
-            config["eleTauEsOneProng_" + root_str(es)] = fshift_dict(es, "TauElectronFakeEnergyCorrectionOneProng")
+            config["eleTauEsInclusiveShift_" + root_str(es)] = fshift_dict(es, "TauElectronFakeEnergyCorrectionShift")
             config["eleTauEsOneProngShift_" + root_str(es)] = fshift_dict(es, "TauElectronFakeEnergyCorrectionOneProngShift")
             config["eleTauEsOneProngPiZerosShift_" + root_str(es)] = fshift_dict(es, "TauElectronFakeEnergyCorrectionOneProngPiZerosShift")
             config["eleTauEsThreeProngShift_" + root_str(es)] = fshift_dict(es, "TauElectronFakeEnergyCorrectionThreeProngShift")

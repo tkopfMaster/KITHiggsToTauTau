@@ -14,6 +14,7 @@ import importlib
 #import os
 
 def build_config(nickname, **kwargs):
+  etau_fake_es = True if "sub_analysis" in kwargs and kwargs["sub_analysis"] == "etau-fake-es" else False
   config = jsonTools.JsonDict()
   #datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
 
@@ -40,6 +41,11 @@ def build_config(nickname, **kwargs):
     config["TauEnergyCorrectionOneProng"] = 1.007 # down: 0.999, central: 1.007, up: 1.015
     config["TauEnergyCorrectionOneProngPiZeros"] = 0.998 # down: 0.990, central: 0.998, up: 1.006
     config["TauEnergyCorrectionThreeProng"] = 1.001 # down: 0.992, central: 1.001, up: 1.010
-    config["TauElectronFakeEnergyCorrectionOneProng"] = 1.024 #TODO these are 2016 values!
-    config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.076 #TODO these are 2016 values!
+    if not etau_fake_es:
+      config["TauElectronFakeEnergyCorrectionOneProng"] = 1.024 #TODO these are 2016 values!
+      config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.076 #TODO these are 2016 values!
+    else:
+      config["TauElectronFakeEnergyCorrectionOneProng"] = 1.0
+      config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.0
+
   return config

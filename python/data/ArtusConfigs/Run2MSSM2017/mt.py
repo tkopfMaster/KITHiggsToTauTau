@@ -66,7 +66,7 @@ def build_config(nickname, **kwargs):
   config["TauUseOldDMs"] = True
   config["MuonLowerPtCuts"] = ["20.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.1"]
-  config["TauLowerPtCuts"] = ["30.0"]
+  config["TauLowerPtCuts"] = ["23.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DeltaRTriggerMatchingTaus"] = 0.5

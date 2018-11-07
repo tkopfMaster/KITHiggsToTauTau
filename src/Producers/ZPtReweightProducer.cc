@@ -20,8 +20,8 @@ void ZPtReweightProducer::Init(setting_type const& settings)
 	gDirectory = savedir;
 	gFile = savefile;
 
-	//m_ZptWeightFunktor = m_workspace->function("zpt_weight_nom")->functor(m_workspace->argSet({"z_gen_mass,z_gen_pt"}));
-	m_ZptWeightFunktor = m_workspace->function("zpt_weight_nom")->functor(m_workspace->argSet({"z_gen_pt"}));
+	m_ZptWeightFunktor = m_workspace->function("zptmass_weight_nom")->functor(m_workspace->argSet({"z_gen_mass,z_gen_pt"}));
+	//m_ZptWeightFunktor = m_workspace->function("zpt_weight_nom")->functor(m_workspace->argSet({"z_gen_pt"}));
 	if (settings.GetDoZptUncertainties())
 	{
 		//m_ZptWeightUncertaintiesFunktor["zPtWeightEsUp"] = m_workspace->function("zpt_weight_esup")->functor(m_workspace->argSet("z_gen_mass,z_gen_pt"));
@@ -54,7 +54,7 @@ void ZPtReweightProducer::Produce( event_type const& event, product_type & produ
 	                     setting_type const& settings) const
 {
 	float genPt = 0.;  // generator Z(W) pt
-	//float genMass = 0.;  // generator Z(W) mass
+	float genMass = 0.;  // generator Z(W) mass
 	RMFLV genMomentum;
 	if (m_applyReweighting)
 	{
@@ -69,9 +69,9 @@ void ZPtReweightProducer::Produce( event_type const& event, product_type & produ
 			}
 		}
 		genPt = genMomentum.Pt();
-		//genMass = genMomentum.M();
-		//auto args = std::vector<double>{genMass,genPt};
-		auto args = std::vector<double>{genPt};
+		genMass = genMomentum.M();
+		auto args = std::vector<double>{genMass,genPt};
+		//auto args = std::vector<double>{genPt};
 		product.m_optionalWeights["zPtReweightWeight"] = m_ZptWeightFunktor->eval(args.data());
 		if (settings.GetDoZptUncertainties())
 		{

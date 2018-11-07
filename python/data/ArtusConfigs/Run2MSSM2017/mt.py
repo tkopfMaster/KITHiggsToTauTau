@@ -308,7 +308,7 @@ def build_config(nickname, **kwargs):
     config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.ggHNNLOQuantities").build_list())
 
   config["OSChargeLeptons"] = True
-  config["TopPtReweightingStrategy"] = "Run2"
+  config["TopPtReweightingStrategy"] = "Run1"
 
   config["Processors"] =   []#                                  ["producer:MuonCorrectionsProducer"] if isEmbedded else []
   #if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")

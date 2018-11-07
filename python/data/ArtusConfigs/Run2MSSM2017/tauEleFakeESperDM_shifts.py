@@ -37,23 +37,23 @@ def build_config(nickname):
     config["tauEleFakeEsOneProngUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEleFakeEsOneProngUp"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.029
+    config["tauEleFakeEsOneProngUp"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.024
     
     config["tauEleFakeEsOneProngDown"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEleFakeEsOneProngDown"]["TauElectronFakeEnergyCorrectionOneProng"] = 1.019
+    config["tauEleFakeEsOneProngDown"]["TauElectronFakeEnergyCorrectionOneProng"] = 0.996
     
     
     config["tauEleFakeEsOneProngPiZerosUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEleFakeEsOneProngPiZerosUp"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.086
+    config["tauEleFakeEsOneProngPiZerosUp"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.059
     
     config["tauEleFakeEsOneProngPiZerosDown"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }
-    config["tauEleFakeEsOneProngPiZerosDown"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.066
+    config["tauEleFakeEsOneProngPiZerosDown"]["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.023
   
   
   return config

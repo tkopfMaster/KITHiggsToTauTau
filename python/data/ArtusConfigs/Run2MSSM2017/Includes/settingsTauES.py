@@ -40,6 +40,6 @@ def build_config(nickname, **kwargs):
     config["TauEnergyCorrectionOneProng"] = 1.007 # down: 0.999, central: 1.007, up: 1.015
     config["TauEnergyCorrectionOneProngPiZeros"] = 0.998 # down: 0.990, central: 0.998, up: 1.006
     config["TauEnergyCorrectionThreeProng"] = 1.001 # down: 0.992, central: 1.001, up: 1.010
-    config["TauElectronFakeEnergyCorrectionOneProng"] = 1.024 #TODO these are 2016 values!
-    config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.076 #TODO these are 2016 values!
+    config["TauElectronFakeEnergyCorrectionOneProng"] = 1.01 #TODO these are 2017 values from IC!
+    config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.041 #TODO these are 2017 values from IC!
   return config

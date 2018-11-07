@@ -161,6 +161,9 @@ def build_config(nickname, **kwargs):
           "0:crossTriggerMCEfficiencyWeight",
           "0:crossTriggerDataEfficiencyWeight",
           
+          "0:singleTriggerMCEfficiencyWeightIC",
+          "0:singleTriggerDataEfficiencyWeightIC",
+          "0:singleTriggerEmbeddedEfficiencyWeightIC",
           "0:singleTriggerMCEfficiencyWeightKIT",
           "0:singleTriggerDataEfficiencyWeightKIT",
           "0:singleTriggerEmbeddedEfficiencyWeightKIT",
@@ -177,9 +180,12 @@ def build_config(nickname, **kwargs):
           "0:m_trg_MuTau_Mu20Leg_desy_mc",
           "0:m_trg_MuTau_Mu20Leg_desy_data",
           
-          "0:m_trg_kit_mc",
-          "0:m_trg_kit_data",
-          "0:m_trg_kit_embed",
+          "0:m_trg_mc",
+          "0:m_trg_data",
+          "0:m_trg_embed",
+          "0:m_trg24_27_kit_mc",
+          "0:m_trg24_27_kit_data",
+          "0:m_trg24_27_kit_embed",
 
           "0:m_iso_binned_embed_kit_ratio",
           "0:m_id_embed_kit_ratio",
@@ -196,18 +202,23 @@ def build_config(nickname, **kwargs):
           "0:m_pt,m_eta",
           "0:m_pt,m_eta",
           "0:m_pt,m_eta",
+          "0:m_pt,m_eta",
+          "0:m_pt,m_eta",
+          "0:m_pt,m_eta",
           
           "0:m_pt,m_eta,m_iso",
           "0:m_pt,m_eta",
           "0:m_pt,m_eta"
           ]
   else:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v2.root"
     config["RooWorkspaceWeightNames"] = [
         "0:crossTriggerMCEfficiencyWeight",
         "0:crossTriggerDataEfficiencyWeight",
         #"0:singleTriggerMCEfficiencyWeight",
         #"0:singleTriggerDataEfficiencyWeight",
+        "0:singleTriggerMCEfficiencyWeightIC",
+        "0:singleTriggerDataEfficiencyWeightIC",
         "0:singleTriggerMCEfficiencyWeightKIT",
         "0:singleTriggerDataEfficiencyWeightKIT",
 
@@ -222,9 +233,11 @@ def build_config(nickname, **kwargs):
         #"0:m_trg_SingleMu_Mu24ORMu27_desy_data",
         "0:m_trg_mc",
         "0:m_trg_data",
+        "0:m_trg24_27_kit_mc",
+        "0:m_trg24_27_kit_data",
   
-        "0:m_iso_ratio",
-        "0:m_id_ratio",
+        "0:m_iso_kit_ratio",
+        "0:m_id_kit_ratio",
 #        "0:m_trk_ratio",
     ]
     config["RooWorkspaceObjectArguments"] = [
@@ -232,6 +245,8 @@ def build_config(nickname, **kwargs):
         "0:m_pt,m_eta",
         #"0:m_pt,m_eta",
         #"0:m_pt,m_eta",
+        "0:m_pt,m_eta",
+        "0:m_pt,m_eta",
         "0:m_pt,m_eta",
         "0:m_pt,m_eta",
 

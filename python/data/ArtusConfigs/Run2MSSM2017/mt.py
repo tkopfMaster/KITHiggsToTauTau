@@ -64,7 +64,7 @@ def build_config(nickname, **kwargs):
 
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["MuonLowerPtCuts"] = ["20.0"]
+  config["MuonLowerPtCuts"] = ["21.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.1"]
   config["TauLowerPtCuts"] = ["23.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]

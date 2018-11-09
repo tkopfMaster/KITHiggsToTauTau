@@ -67,7 +67,7 @@ def build_config(nickname, **kwargs):
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
   config["ElectronScaleAndSmearUsed"] = True if not isEmbedded else False
-  config["ElectronLowerPtCuts"] = ["20.0"]
+  config["ElectronLowerPtCuts"] = ["25.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.1"]
   config["TauLowerPtCuts"] = ["23.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]

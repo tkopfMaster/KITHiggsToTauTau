@@ -63,7 +63,7 @@ def build_config(nickname, **kwargs):
   config["ElectronScaleAndSmearUsed"] = True
   config["ElectronLowerPtCuts"] = ["13.0"]
   config["ElectronUpperAbsEtaCuts"] = ["2.5"]
-  config["MuonLowerPtCuts"] = ["10.0"]
+  config["MuonLowerPtCuts"] = ["9.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.4"]
   config["DiTauPairMinDeltaRCut"] = 0.3
   config["DeltaRTriggerMatchingMuons"] = 0.3
@@ -130,55 +130,105 @@ def build_config(nickname, **kwargs):
           "0:muonEffTrgWeight",
           "0:muonEffIDWeight",
           "1:muonEffIDWeight",
+          
           "1:isoWeight",
+          "1:looseIsoWeight",
           "1:idWeight",
-          "1:triggerWeight",
+          "1:idisoWeight",
+          
+          "1:trigger_23_data_Weight",
+          "1:trigger_23_embed_Weight",
+          "1:trigger_8_data_Weight",
+          "1:trigger_8_embed_Weight",
+          
           "0:isoWeight",
           "0:idWeight",
-          "0:triggerWeight"
-          ]
+          "0:idisoWeight",
+          "0:trigger_23_data_Weight",
+          "0:trigger_23_embed_Weight",
+          "0:trigger_12_data_Weight",
+          "0:trigger_12_embed_Weight",
+          ]          
     config["EmbeddedWeightWorkspaceObjectNames"]=[
           "0:m_sel_trg_ratio",
           "0:m_sel_idEmb_ratio",
           "1:m_sel_idEmb_ratio",
+          
           "1:m_iso_embed_ratio",
+          "1:m_looseiso_embed_ratio",
           "1:m_id_embed_ratio",
-          "1:m_trg_embed_ratio",
+          "1:m_idiso_binned_embed_ratio",
+          
+          "1:m_trg_23_data",
+          "1:m_trg_23_embed",         
+          "1:m_trg_8_data",
+          "1:m_trg_8_embed",
+          
           "0:e_iso_embed_ratio",
           "0:e_id_embed_ratio",
-          "0:e_trg_embed_ratio"
+          "0:e_idiso_binned_embed_ratio",
+          
+          "0:e_trg_23_data",
+          "0:e_trg_23_embed",    
+          "0:e_trg_12_data",
+          "0:e_trg_12_embed",
           ]
     config["EmbeddedWeightWorkspaceObjectArguments"] = [
           "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
           "0:gt_pt,gt_eta",
           "1:gt_pt,gt_eta",
+          
           "1:m_pt,m_eta",
           "1:m_pt,m_eta",
           "1:m_pt,m_eta",
+          "1:m_pt,m_eta,m_iso",
+          
+          "1:m_pt,m_eta",
+          "1:m_pt,m_eta",
+          "1:m_pt,m_eta",
+          "1:m_pt,m_eta",
+          
           "0:e_pt,e_eta",
           "0:e_pt,e_eta",
-          "0:e_pt,e_eta"
+          "0:e_pt,e_eta,e_iso",
+          
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
           ]
   else:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_1.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
     config["RooWorkspaceWeightNames"] = [
         "0:idWeight",
         "0:isoWeight",
-        "0:trackWeight",
+        #~ "0:trackWeight",
         "1:isoWeight",
         "1:idWeight",
+        "0:trigger_12_Weight",
+        "0:trigger_23_Weight",
+        "1:trigger_8_Weight",
+        "1:trigger_23_Weight",        
 #        "1:trackWeight", # new recommendation for 2017 data/MC is to remove it (will result in SF = 1.0).
     ]
     config["RooWorkspaceObjectNames"] = [
         "0:e_iso_ratio",
         "0:e_id_ratio",
-        "0:e_reco_ratio",
+        #~ "0:e_reco_ratio",
         "1:m_iso_ratio",
         "1:m_id_ratio",
+        "0:e_trg_12_ratio",
+        "0:e_trg_23_ratio",
+        "1:m_trg_8_ratio",
+        "1:m_trg_23_ratio",  
 #        "1:m_trk_ratio",
     ]
     config["RooWorkspaceObjectArguments"] = [
         "0:e_pt,e_eta",
+        "0:e_pt,e_eta",
+        #~ "0:e_pt,e_eta",
+        "1:m_pt,m_eta",
+        "1:m_pt,m_eta",
         "0:e_pt,e_eta",
         "0:e_pt,e_eta",
         "1:m_pt,m_eta",
@@ -252,16 +302,22 @@ def build_config(nickname, **kwargs):
       "had_gen_match_pT_1",
       "had_gen_match_pT_2"
   ])
+
   if isEmbedded:
     config["Quantities"].extend([
-          "muonEffTrgWeight", "muonEffIDWeight_1","muonEffIDWeight_2"
-          ])
-
+          "muonEffTrgWeight", "muonEffIDWeight_1","muonEffIDWeight_2", 
+          "trigger_23_data_Weight_2","trigger_23_embed_Weight_2","trigger_8_embed_Weight_2" ,"trigger_8_embed_Weight_2",
+          "trigger_23_data_Weight_1","trigger_23_embed_Weight_1","trigger_12_embed_Weight_1" ,"trigger_12_embed_Weight_1",
+          "looseIsoWeight_2","idisoWeight_1","idisoWeight_2"             
+           ])
+  config["Quantities"].extend([
+    "trigger_12_Weight_1","trigger_23_Weight_1","trigger_8_Weight_2","trigger_23_Weight_2"         
+       ])
   config["OSChargeLeptons"] = True
   config["TopPtReweightingStrategy"] = "Run2"
 
   config["Processors"] = []
-  #if not (isEmbedded):           config["Processors"].append( "producer:ElectronCorrectionsProducer")
+  #config["Processors"].append( "producer:ElectronCorrectionsProducer")
   config["Processors"].extend((                               "producer:HttValidLooseElectronsProducer",
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
@@ -286,17 +342,17 @@ def build_config(nickname, **kwargs):
   if btag_eff: config["ProcessorsBtagEff"] = copy.deepcp(config["Processors"])
 
   if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
-  if not (isEmbedded):           config["Processors"].append( "producer:MetCorrector")
+  if not (isData or isEmbedded):           config["Processors"].append( "producer:MetCorrector")
   config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
-  config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   #if not (isData or isEmbedded): config["Processors"].extend(("producer:TriggerWeightProducer",
   #                                                            "producer:IdentificationWeightProducer"))
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
-  if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  if not isData and not isEmbedded:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  config["Processors"].append(                                "filter:MinimalPlotlevelFilter")
   #config["Processors"].extend((                               "producer:EmuQcdWeightProducer",
   config["Processors"].append(
                                                               "producer:EventWeightProducer")#)

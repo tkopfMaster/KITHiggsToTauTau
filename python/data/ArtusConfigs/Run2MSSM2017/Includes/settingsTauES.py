@@ -40,6 +40,6 @@ def build_config(nickname, **kwargs):
     config["TauEnergyCorrectionOneProng"] = 1.007 # down: 0.999, central: 1.007, up: 1.015
     config["TauEnergyCorrectionOneProngPiZeros"] = 0.998 # down: 0.990, central: 0.998, up: 1.006
     config["TauEnergyCorrectionThreeProng"] = 1.001 # down: 0.992, central: 1.001, up: 1.010
-    config["TauElectronFakeEnergyCorrectionOneProng"] = 1.001 # values for 2017 measured by RWTH/KIT; #TODO uncertainties, current proposal: down: 0.996, central: 1.001, up: 1.006
-    config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.029 # values for 2017 measured by RWTH/KIT; #TODO uncertainties, current proposal: down: 1.026, central 1.029, up: 1.032
+    config["TauElectronFakeEnergyCorrectionOneProng"] = 1.003 # values for 2017 measured by RWTH/KIT; uncertainties down: 0.996, central: 1.003, up: 1.01
+    config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.036 # values for 2017 measured by RWTH/KIT; uncertainties down: 1.029, central 1.036, up: 1.043
   return config

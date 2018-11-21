@@ -16,10 +16,10 @@ import importlib
 def build_config(nickname):
   config = jsonTools.JsonDict()
   #datasetsHelper = datasetsHelperTwopz.datasetsHelperTwopz(os.path.expandvars("$CMSSW_BASE/src/Kappa/Skimming/data/datasets.json"))
-  
+
   # define frequently used conditions
   isMC = not re.search("(?<!PFembedded).Run201", nickname)
-  
+
   ## fill config:
   # includes
   includes = [
@@ -27,7 +27,7 @@ def build_config(nickname):
   for include_file in includes:
     analysis_config_module = importlib.import_module(include_file)
     config += analysis_config_module.build_config(nickname)
-  
+
   # explicit configuration
   config["GenParticles"] = "genParticles" if isMC else ""
   config["GenTaus"] = "genTaus" if isMC else ""
@@ -40,13 +40,19 @@ def build_config(nickname):
   config["Taus"] = "taus"
   config["L1Taus"] = "l1taus"
   config["TauMetadata"] = "taus"
-  
+
   if re.search("MINIAOD|USER", nickname): config["TaggedJets"] = "ak4PF"
-  
+
   if re.search("13TeV", nickname): config["PileupDensity"] = "pileupDensity"
-  
+
   config["Met"] = "met"
-  config["PuppiMet"] = "metPuppi" if re.search("(16Dec2015v1|Fall15|Spring16|Run2015)", nickname) else ""
+  config["PuppiMet"] = "metPuppi" #if re.search("(16Dec2015v1|Fall15|Spring16|Run2015)", nickname) else ""
+  config["NoPUMet"] = "noPuMet"
+  config["PUMet"] = "puMet"
+  config["PUCorrectedMet"] = "puCorMet"
+  config["TrackMet"] = "trackMet"
+  #ToDo andere METdefs definieren
+  #die linken sachen definieren
   #config["MvaMets"] = "MVAMET"
   #config["PFChargedHadronsPileUp"] = "pfPileUpChargedHadrons"
   #config["PFChargedHadronsNoPileUp"] = "pfNoPileUpChargedHadrons"
@@ -65,6 +71,6 @@ def build_config(nickname):
   config["BeamSpot"] = "offlineBeamSpot"
   config["TriggerInfos"] = "triggerObjectMetadata"
   config["TriggerObjects"] = "triggerObjects"
-  
+
 
   return config

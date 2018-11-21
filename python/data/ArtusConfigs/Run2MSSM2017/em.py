@@ -300,7 +300,26 @@ def build_config(nickname, **kwargs):
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.zptQuantities").build_list())
   config["Quantities"].extend([
       "had_gen_match_pT_1",
-      "had_gen_match_pT_2"
+      "had_gen_match_pT_2",
+      "metPt",
+      "metPuppiPt",
+      "metNoPUPt",
+      "metPUPt",
+      "metPUCorrectedPt",
+      "metTrackPt",
+      "metPhi",
+      "metPuppiPhi",
+      "metNoPUPhi",
+      "metPUPhi",
+      "metPUCorrectedPhi",
+      "metTrackPhi",
+      "metSumEt",
+      "metTrackSumEt",
+      "metPuppiSumEt",
+      "metNoPUSumEt",
+      "metPUSumEt",
+      "metPUCorrectedSumEt",
+      "metTrackSumEt"
   ])
 
   if isEmbedded:
